@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		335D84EB2460717300637344 /* MangaDexLib in Frameworks */ = {isa = PBXBuildFile; productRef = 335D84EA2460717300637344 /* MangaDexLib */; };
 		33A7E2BF24606E3C00BB1103 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7E2BE24606E3C00BB1103 /* AppDelegate.swift */; };
 		33A7E2C124606E3C00BB1103 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7E2C024606E3C00BB1103 /* ViewController.swift */; };
 		33A7E2C324606E4200BB1103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C224606E4200BB1103 /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				335D84EB2460717300637344 /* MangaDexLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +82,9 @@
 			dependencies = (
 			);
 			name = "Kitsune-macos";
+			packageProductDependencies = (
+				335D84EA2460717300637344 /* MangaDexLib */,
+			);
 			productName = "Kitsune-macos";
 			productReference = 33A7E2BB24606E3C00BB1103 /* Kitsune-macos.app */;
 			productType = "com.apple.product-type.application";
@@ -108,6 +113,9 @@
 				Base,
 			);
 			mainGroup = 33A7E2B224606E3B00BB1103;
+			packageReferences = (
+				335D84E92460717300637344 /* XCRemoteSwiftPackageReference "MangaDexLib" */,
+			);
 			productRefGroup = 33A7E2BC24606E3C00BB1103 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -353,6 +361,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		335D84E92460717300637344 /* XCRemoteSwiftPackageReference "MangaDexLib" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JRomainG/MangaDexLib";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		335D84EA2460717300637344 /* MangaDexLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 335D84E92460717300637344 /* XCRemoteSwiftPackageReference "MangaDexLib" */;
+			productName = MangaDexLib;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 33A7E2B324606E3B00BB1103 /* Project object */;
 }

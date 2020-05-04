@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		33A7E2BB24606E3C00BB1103 /* Kitsune-macos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kitsune-macos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33A7E2BB24606E3C00BB1103 /* Kitsune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kitsune.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33A7E2BE24606E3C00BB1103 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33A7E2C024606E3C00BB1103 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		33A7E2C224606E4200BB1103 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		33A7E2BC24606E3C00BB1103 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				33A7E2BB24606E3C00BB1103 /* Kitsune-macos.app */,
+				33A7E2BB24606E3C00BB1103 /* Kitsune.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,9 +68,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		33A7E2BA24606E3C00BB1103 /* Kitsune-macos */ = {
+		33A7E2BA24606E3C00BB1103 /* Kitsune */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 33A7E2CB24606E4200BB1103 /* Build configuration list for PBXNativeTarget "Kitsune-macos" */;
+			buildConfigurationList = 33A7E2CB24606E4200BB1103 /* Build configuration list for PBXNativeTarget "Kitsune" */;
 			buildPhases = (
 				33A7E2B724606E3C00BB1103 /* Sources */,
 				33A7E2B824606E3C00BB1103 /* Frameworks */,
@@ -81,12 +81,12 @@
 			);
 			dependencies = (
 			);
-			name = "Kitsune-macos";
+			name = Kitsune;
 			packageProductDependencies = (
 				335D84EA2460717300637344 /* MangaDexLib */,
 			);
 			productName = "Kitsune-macos";
-			productReference = 33A7E2BB24606E3C00BB1103 /* Kitsune-macos.app */;
+			productReference = 33A7E2BB24606E3C00BB1103 /* Kitsune.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -120,7 +120,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				33A7E2BA24606E3C00BB1103 /* Kitsune-macos */,
+				33A7E2BA24606E3C00BB1103 /* Kitsune */,
 			);
 		};
 /* End PBXProject section */
@@ -300,6 +300,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Kitsune-macos/Kitsune_macos.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9J75238463;
@@ -322,6 +323,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Kitsune-macos/Kitsune_macos.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9J75238463;
@@ -351,7 +353,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		33A7E2CB24606E4200BB1103 /* Build configuration list for PBXNativeTarget "Kitsune-macos" */ = {
+		33A7E2CB24606E4200BB1103 /* Build configuration list for PBXNativeTarget "Kitsune" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				33A7E2CC24606E4200BB1103 /* Debug */,

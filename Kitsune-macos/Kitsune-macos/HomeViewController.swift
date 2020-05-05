@@ -14,7 +14,8 @@ class HomeViewController: NSViewController {
     @IBOutlet var collectionView: NSCollectionView!
 
     let itemIdentifier = NSUserInterfaceItemIdentifier(rawValue: "mangaCVItem")
-    var mangas: [String] = []
+    let defaultItemSize = NSSize(width: 158, height: 250)
+    var mangas: [MangaItem] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,12 @@ class HomeViewController: NSViewController {
         configureCollectionView()
         collectionView.needsLayout = true
 
+        mangas = [
+            MangaItem(title: "Agravity Boys", cover: "https://mangadex.org/images/manga/43649.large.jpg?1585634228"),
+            MangaItem(title: "Last Paradise", cover: "https://mangadex.org/images/manga/25417.large.jpg?1542942153"),
+            MangaItem(title: "Fate/stay night: Heaven's Feel", cover: "https://mangadex.org/images/manga/15286.large.jpg?1557857812"),
+            MangaItem(title: "The Ghostly Doctor", cover: "https://mangadex.org/images/manga/28495.large.jpg?1532793052")
+        ]
 
         // Catch key events to generated preview / open manga
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
@@ -34,14 +41,13 @@ class HomeViewController: NSViewController {
 
     func configureCollectionView() {
         let flowLayout = NSCollectionViewFlowLayout()
-        flowLayout.itemSize = NSSize(width: 200, height: 290)
+        flowLayout.itemSize = defaultItemSize
         flowLayout.sectionInset = NSEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         flowLayout.minimumInteritemSpacing = 20
         flowLayout.minimumLineSpacing = 20
         collectionView.collectionViewLayout = flowLayout
 
         collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.isSelectable = true
         collectionView.allowsEmptySelection = true
         collectionView.allowsMultipleSelection = false
@@ -107,18 +113,17 @@ class HomeViewController: NSViewController {
 
         // Find out the index of the new selected element
         var newItem = indexPath.item + nItems
+        newItem = max(0, min(mangas.count - 1, newItem))
         let newIndexPath = IndexPath(item: newItem, section: indexPath.section)
 
+        // Update the selection
         collectionView.deselectItems(at: [indexPath])
         collectionView.selectItems(at: [newIndexPath], scrollPosition: .top)
-        QLPreviewPanel.shared()?.currentPreviewItemIndex = newItem
     }
 
     /// Toggles the quick look view
     func togglePreviewPanel() {
-        }
 
-        }
     }
 
 }
@@ -130,6 +135,7 @@ extension HomeViewController: NSCollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+        return mangas.count
     }
 
     func collectionView(_ collectionView: NSCollectionView,
@@ -138,9 +144,8 @@ extension HomeViewController: NSCollectionViewDataSource {
         guard let collectionViewItem = item as? MangaCVItem else {
             return item
         }
-        collectionViewItem.title = "Test"
+        collectionViewItem.manga = mangas[indexPath.item]
         return collectionViewItem
     }
 
-}
 }

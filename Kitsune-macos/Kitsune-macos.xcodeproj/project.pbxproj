@@ -14,6 +14,8 @@
 		33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7E2C024606E3C00BB1103 /* HomeViewController.swift */; };
 		33A7E2C324606E4200BB1103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C224606E4200BB1103 /* Assets.xcassets */; };
 		33A7E2C624606E4200BB1103 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C424606E4200BB1103 /* Main.storyboard */; };
+		33FB14A92461DBF400F236FF /* MangaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FB14A82461DBF400F236FF /* MangaItem.swift */; };
+		33FB14AC2461F2B100F236FF /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 33FB14AB2461F2B100F236FF /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,7 @@
 		33A7E2C524606E4200BB1103 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		33A7E2C724606E4200BB1103 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33A7E2C824606E4200BB1103 /* Kitsune_macos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kitsune_macos.entitlements; sourceTree = "<group>"; };
+		33FB14A82461DBF400F236FF /* MangaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33FB14AC2461F2B100F236FF /* SDWebImage in Frameworks */,
 				335D84EB2460717300637344 /* MangaDexLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,6 +67,7 @@
 				33A7E2C024606E3C00BB1103 /* HomeViewController.swift */,
 				33A7E2C224606E4200BB1103 /* Assets.xcassets */,
 				33A7E2C424606E4200BB1103 /* Main.storyboard */,
+				33FB14A82461DBF400F236FF /* MangaItem.swift */,
 				337638952460882D00A1B042 /* MangaCVItem.swift */,
 				337638962460882D00A1B042 /* MangaCVItem.xib */,
 				33A7E2C724606E4200BB1103 /* Info.plist */,
@@ -90,6 +95,7 @@
 			name = Kitsune;
 			packageProductDependencies = (
 				335D84EA2460717300637344 /* MangaDexLib */,
+				33FB14AB2461F2B100F236FF /* SDWebImage */,
 			);
 			productName = "Kitsune-macos";
 			productReference = 33A7E2BB24606E3C00BB1103 /* Kitsune.app */;
@@ -121,6 +127,7 @@
 			mainGroup = 33A7E2B224606E3B00BB1103;
 			packageReferences = (
 				335D84E92460717300637344 /* XCRemoteSwiftPackageReference "MangaDexLib" */,
+				33FB14AA2461F2B100F236FF /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = 33A7E2BC24606E3C00BB1103 /* Products */;
 			projectDirPath = "";
@@ -171,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				337638972460882D00A1B042 /* MangaCVItem.swift in Sources */,
+				33FB14A92461DBF400F236FF /* MangaItem.swift in Sources */,
 				33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */,
 				33A7E2BF24606E3C00BB1103 /* AppDelegate.swift in Sources */,
 			);
@@ -381,6 +389,14 @@
 				kind = branch;
 			};
 		};
+		33FB14AA2461F2B100F236FF /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -388,6 +404,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 335D84E92460717300637344 /* XCRemoteSwiftPackageReference "MangaDexLib" */;
 			productName = MangaDexLib;
+		};
+		33FB14AB2461F2B100F236FF /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33FB14AA2461F2B100F236FF /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

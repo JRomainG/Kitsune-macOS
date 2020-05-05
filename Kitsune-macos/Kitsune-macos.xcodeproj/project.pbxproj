@@ -8,16 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		335D84EB2460717300637344 /* MangaDexLib in Frameworks */ = {isa = PBXBuildFile; productRef = 335D84EA2460717300637344 /* MangaDexLib */; };
+		337638972460882D00A1B042 /* MangaCVItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337638952460882D00A1B042 /* MangaCVItem.swift */; };
+		337638982460882D00A1B042 /* MangaCVItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337638962460882D00A1B042 /* MangaCVItem.xib */; };
 		33A7E2BF24606E3C00BB1103 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7E2BE24606E3C00BB1103 /* AppDelegate.swift */; };
-		33A7E2C124606E3C00BB1103 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7E2C024606E3C00BB1103 /* ViewController.swift */; };
+		33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7E2C024606E3C00BB1103 /* HomeViewController.swift */; };
 		33A7E2C324606E4200BB1103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C224606E4200BB1103 /* Assets.xcassets */; };
 		33A7E2C624606E4200BB1103 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C424606E4200BB1103 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		337638952460882D00A1B042 /* MangaCVItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaCVItem.swift; sourceTree = "<group>"; };
+		337638962460882D00A1B042 /* MangaCVItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MangaCVItem.xib; sourceTree = "<group>"; };
 		33A7E2BB24606E3C00BB1103 /* Kitsune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kitsune.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33A7E2BE24606E3C00BB1103 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		33A7E2C024606E3C00BB1103 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		33A7E2C024606E3C00BB1103 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		33A7E2C224606E4200BB1103 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33A7E2C524606E4200BB1103 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		33A7E2C724606E4200BB1103 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,9 +60,11 @@
 			isa = PBXGroup;
 			children = (
 				33A7E2BE24606E3C00BB1103 /* AppDelegate.swift */,
-				33A7E2C024606E3C00BB1103 /* ViewController.swift */,
+				33A7E2C024606E3C00BB1103 /* HomeViewController.swift */,
 				33A7E2C224606E4200BB1103 /* Assets.xcassets */,
 				33A7E2C424606E4200BB1103 /* Main.storyboard */,
+				337638952460882D00A1B042 /* MangaCVItem.swift */,
+				337638962460882D00A1B042 /* MangaCVItem.xib */,
 				33A7E2C724606E4200BB1103 /* Info.plist */,
 				33A7E2C824606E4200BB1103 /* Kitsune_macos.entitlements */,
 			);
@@ -132,6 +138,7 @@
 			files = (
 				33A7E2C324606E4200BB1103 /* Assets.xcassets in Resources */,
 				33A7E2C624606E4200BB1103 /* Main.storyboard in Resources */,
+				337638982460882D00A1B042 /* MangaCVItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +170,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33A7E2C124606E3C00BB1103 /* ViewController.swift in Sources */,
+				337638972460882D00A1B042 /* MangaCVItem.swift in Sources */,
+				33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */,
 				33A7E2BF24606E3C00BB1103 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,7 +240,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -286,7 +294,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -310,7 +318,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JustKodding.Kitsune-macos";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -333,7 +341,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.JustKodding.Kitsune-macos";
 				PRODUCT_NAME = "$(TARGET_NAME)";

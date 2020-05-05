@@ -14,6 +14,7 @@ class HomeViewController: NSViewController {
     @IBOutlet var collectionView: NSCollectionView!
 
     let itemIdentifier = NSUserInterfaceItemIdentifier(rawValue: "mangaCVItem")
+    var mangas: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +22,6 @@ class HomeViewController: NSViewController {
         configureCollectionView()
         collectionView.needsLayout = true
 
-        collectionView.content = [
-            NSURL(fileURLWithPath: "/Library/Desktop Pictures/Beach.jpg"),
-            NSURL(fileURLWithPath: "/Library/Desktop Pictures/Brushes.jpg"),
-            NSURL(fileURLWithPath: "/Library/Desktop Pictures/Circles.jpg"),
-            NSURL(fileURLWithPath: "/Library/Desktop Pictures/Ducks on a Misty Pond.jpg")
-        ]
 
         // Catch key events to generated preview / open manga
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
@@ -112,10 +107,8 @@ class HomeViewController: NSViewController {
 
         // Find out the index of the new selected element
         var newItem = indexPath.item + nItems
-        newItem = max(0, min(collectionView.content.count - 1, newItem))
         let newIndexPath = IndexPath(item: newItem, section: indexPath.section)
 
-        // Update the selection and preview
         collectionView.deselectItems(at: [indexPath])
         collectionView.selectItems(at: [newIndexPath], scrollPosition: .top)
         QLPreviewPanel.shared()?.currentPreviewItemIndex = newItem
@@ -123,16 +116,8 @@ class HomeViewController: NSViewController {
 
     /// Toggles the quick look view
     func togglePreviewPanel() {
-        guard let panel = QLPreviewPanel.shared() else {
-            return
         }
 
-        if panel.isVisible {
-            panel.orderOut(nil)
-        } else {
-            panel.delegate = self
-            panel.dataSource = self
-            panel.makeKeyAndOrderFront(nil)
         }
     }
 
@@ -145,7 +130,6 @@ extension HomeViewController: NSCollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView.content.count
     }
 
     func collectionView(_ collectionView: NSCollectionView,
@@ -159,54 +143,4 @@ extension HomeViewController: NSCollectionViewDataSource {
     }
 
 }
-
-extension HomeViewController: NSCollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-        print("Did select at", indexPaths.first!.item)
-    }
-
-}
-
-extension HomeViewController: QLPreviewPanelDelegate {
-
-    override class func acceptsPreviewPanelControl(_ panel: QLPreviewPanel!) -> Bool {
-        return true
-    }
-
-    override func beginPreviewPanelControl(_ panel: QLPreviewPanel!) {
-        print("beginPreviewPanelControl")
-    }
-
-    override class func endPreviewPanelControl(_ panel: QLPreviewPanel!) {
-        print("endPreviewPanelControl")
-    }
-
-    func previewPanel(_ panel: QLPreviewPanel!, sourceFrameOnScreenFor item: QLPreviewItem!) -> NSRect {
-        guard let indexPath = collectionView.selectionIndexPaths.first,
-            let rect = collectionView.item(at: indexPath)?.view.frame else {
-            return .zero
-        }
-        let viewRect = collectionView.convert(rect, to: view)
-        return view.window?.convertToScreen(viewRect) ?? .zero
-    }
-
-    func previewPanel(_ panel: QLPreviewPanel!, handle event: NSEvent!) -> Bool {
-        // Disable events because they're caught in handleKeyDown
-        return false
-    }
-
-}
-
-extension HomeViewController: QLPreviewPanelDataSource {
-
-    func numberOfPreviewItems(in panel: QLPreviewPanel!) -> Int {
-        return collectionView.content.count
-    }
-
-    func previewPanel(_ panel: QLPreviewPanel!, previewItemAt index: Int) -> QLPreviewItem! {
-        // swiftlint:disable:next force_cast
-        return collectionView.content[index] as! QLPreviewItem
-    }
-
 }

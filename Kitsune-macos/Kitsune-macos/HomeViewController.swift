@@ -13,6 +13,7 @@ import MangaDexLib
 class HomeViewController: NSViewController {
 
     @IBOutlet var collectionView: NSCollectionView!
+    var quickLookVC: QuickLookViewController?
 
     let itemIdentifier = NSUserInterfaceItemIdentifier(rawValue: "mangaCVItem")
     let defaultItemSize = NSSize(width: 248, height: 420)
@@ -35,10 +36,16 @@ class HomeViewController: NSViewController {
         configureCollectionView()
         collectionView.needsLayout = true
 
+        // Init a QuickLookViewController for manga previews
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateController(withIdentifier: "quickLookViewController")
+        quickLookVC = controller as? QuickLookViewController
 
+        // Create providers used to download manga info
         mangaProviders = [
             LatestMangaProvider(api: api)
         ]
+        quickLookVC?.mangaProvider = currentProvider
 
         // Mark provider as loading while the API is getting ready
         for provider in mangaProviders {
@@ -91,6 +98,7 @@ class HomeViewController: NSViewController {
         collectionView.collectionViewLayout = flowLayout
 
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.isSelectable = true
         collectionView.allowsEmptySelection = true
         collectionView.allowsMultipleSelection = false
@@ -159,14 +167,28 @@ class HomeViewController: NSViewController {
         newItem = max(0, min(mangas.count - 1, newItem))
         let newIndexPath = IndexPath(item: newItem, section: indexPath.section)
 
+        // Force-stop scroll
+        for recognizer in collectionView.gestureRecognizers {
+            recognizer.isEnabled = false
+            recognizer.isEnabled = true
+        }
+
         // Update the selection
         collectionView.deselectItems(at: [indexPath])
         collectionView.selectItems(at: [newIndexPath], scrollPosition: .top)
+        quickLookVC?.manga = mangas[newItem]
     }
 
     /// Toggles the quick look view
     func togglePreviewPanel() {
-
+        guard let popup = quickLookVC else {
+            return
+        }
+        if popup.isBeingPresented {
+            popup.close()
+        } else {
+            popup.open(in: self, from: view)
+        }
     }
 
 }
@@ -193,6 +215,21 @@ extension HomeViewController: NSCollectionViewDataSource {
 
 }
 
+extension HomeViewController: NSCollectionViewDelegate {
+
+    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+        guard let index = indexPaths.first?.item else {
+            return
+        }
+        quickLookVC?.manga = mangas[index]
+    }
+
+    func collectionView(_ collectionView: NSCollectionView, didDeselectItemsAt indexPaths: Set<IndexPath>) {
+        quickLookVC?.close()
+    }
+
+}
+
 extension HomeViewController: MangaProviderDelegate {
 
     @objc
@@ -207,6 +244,9 @@ extension HomeViewController: MangaProviderDelegate {
         default:
             break
         }
+
+        quickLookVC?.close()
+        quickLookVC?.mangaProvider = currentProvider
     }
 
     func didStartLoading(provider: MangaProvider) {

@@ -63,4 +63,23 @@ class MangaProvider: NSObject {
         delegate?.didStartLoadingMore(provider: self)
     }
 
+    func getDetails(for manga: MDManga, completion: @escaping (MDManga?) -> Void) {
+        guard let mangaId = manga.mangaId else {
+            completion(nil)
+            return
+        }
+
+        api.getMangaDetails(mangaId: mangaId, title: manga.title) { (response) in
+            // Update the array so the info is kept for later
+            let index = self.mangas.firstIndex { (manga) -> Bool in
+                return manga.mangaId == mangaId
+            }
+            if index != nil, let manga = response.manga {
+                self.mangas[index!] = manga
+            }
+
+            completion(response.manga)
+        }
+    }
+
 }

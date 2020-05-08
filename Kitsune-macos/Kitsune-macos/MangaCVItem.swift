@@ -39,6 +39,7 @@ class MangaCVItem: NSCollectionViewItem {
 
         imageView?.wantsLayer = true
         imageView?.layer?.cornerRadius = 4.0
+        imageView?.layer?.masksToBounds = true
         imageView?.image = NSImage(named: "CoverPlaceholder")
 
         containerView.wantsLayer = true

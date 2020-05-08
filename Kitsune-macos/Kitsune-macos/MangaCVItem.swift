@@ -7,22 +7,18 @@
 //
 
 import Cocoa
+import MangaDexLib
 import SDWebImage
 
 class MangaCVItem: NSCollectionViewItem {
 
     @IBOutlet var containerView: NSView!
 
-    var manga: MangaItem? {
+    var manga: MDManga? {
         didSet {
+            // Update the display
             textField?.stringValue = manga?.title ?? "-"
-
-            imageView?.sd_setImage(with: manga?.coverUrl,
-                                   placeholderImage: nil,
-                                   options: .scaleDownLargeImages,
-                                   progress: nil) { (_, _, _, _) in
-                                    self.updateImageBackgroundColor()
-            }
+            downloadCover()
         }
     }
 
@@ -43,6 +39,7 @@ class MangaCVItem: NSCollectionViewItem {
 
         imageView?.wantsLayer = true
         imageView?.layer?.cornerRadius = 4.0
+        imageView?.image = NSImage(named: "CoverPlaceholder")
 
         containerView.wantsLayer = true
         containerView.layer?.borderWidth = 1
@@ -69,16 +66,7 @@ class MangaCVItem: NSCollectionViewItem {
         // When the computer's theme (e.g. dark mode) is changed, NSAppearance.current is not updated
         // Thus, the values read from NSColor are still the ones for the old theme, so we manually change it
         NSAppearance.current = view.effectiveAppearance
-        updateImageBackgroundColor()
         updateBorderColor()
-    }
-
-    private func updateImageBackgroundColor() {
-        if imageView?.image == nil {
-            imageView?.layer?.backgroundColor = NSColor(named: "CVItemBackground")?.cgColor
-        } else {
-            imageView?.layer?.backgroundColor = NSColor.clear.cgColor
-        }
     }
 
     private func updateBorderColor() {
@@ -87,6 +75,19 @@ class MangaCVItem: NSCollectionViewItem {
         } else {
             containerView.layer?.borderColor = NSColor.clear.cgColor
         }
+    }
+
+    func downloadCover() {
+        guard let coverUrl = manga?.coverUrl,
+            let url = URL(string: coverUrl) else {
+            return
+        }
+
+        let placeholder = NSImage(named: "CoverPlaceholder")
+        imageView?.sd_setImage(with: url,
+                               placeholderImage: placeholder,
+                               options: .scaleDownLargeImages,
+                               completed: nil)
     }
 
 }

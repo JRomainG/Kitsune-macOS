@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		332C4250246549BF00413940 /* ToolbarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332C424F246549BF00413940 /* ToolbarManager.swift */; };
+		332C42542465575100413940 /* MangaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332C42532465575100413940 /* MangaProvider.swift */; };
+		332C4257246558CB00413940 /* LatestMangaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332C4256246558CB00413940 /* LatestMangaProvider.swift */; };
 		335D84EB2460717300637344 /* MangaDexLib in Frameworks */ = {isa = PBXBuildFile; productRef = 335D84EA2460717300637344 /* MangaDexLib */; };
 		337638972460882D00A1B042 /* MangaCVItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337638952460882D00A1B042 /* MangaCVItem.swift */; };
 		337638982460882D00A1B042 /* MangaCVItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337638962460882D00A1B042 /* MangaCVItem.xib */; };
@@ -15,12 +17,13 @@
 		33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7E2C024606E3C00BB1103 /* HomeViewController.swift */; };
 		33A7E2C324606E4200BB1103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C224606E4200BB1103 /* Assets.xcassets */; };
 		33A7E2C624606E4200BB1103 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C424606E4200BB1103 /* Main.storyboard */; };
-		33FB14A92461DBF400F236FF /* MangaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FB14A82461DBF400F236FF /* MangaItem.swift */; };
 		33FB14AC2461F2B100F236FF /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 33FB14AB2461F2B100F236FF /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		332C424F246549BF00413940 /* ToolbarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarManager.swift; sourceTree = "<group>"; };
+		332C42532465575100413940 /* MangaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaProvider.swift; sourceTree = "<group>"; };
+		332C4256246558CB00413940 /* LatestMangaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestMangaProvider.swift; sourceTree = "<group>"; };
 		337638952460882D00A1B042 /* MangaCVItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaCVItem.swift; sourceTree = "<group>"; };
 		337638962460882D00A1B042 /* MangaCVItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MangaCVItem.xib; sourceTree = "<group>"; };
 		33A7E2BB24606E3C00BB1103 /* Kitsune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kitsune.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,7 +33,6 @@
 		33A7E2C524606E4200BB1103 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		33A7E2C724606E4200BB1103 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33A7E2C824606E4200BB1103 /* Kitsune_macos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kitsune_macos.entitlements; sourceTree = "<group>"; };
-		33FB14A82461DBF400F236FF /* MangaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +48,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		332C4255246558B300413940 /* Fetch jobs */ = {
+			isa = PBXGroup;
+			children = (
+				332C42532465575100413940 /* MangaProvider.swift */,
+				332C4256246558CB00413940 /* LatestMangaProvider.swift */,
+			);
+			path = "Fetch jobs";
+			sourceTree = "<group>";
+		};
 		33A7E2B224606E3B00BB1103 = {
 			isa = PBXGroup;
 			children = (
@@ -68,10 +79,10 @@
 				33A7E2BE24606E3C00BB1103 /* AppDelegate.swift */,
 				332C424F246549BF00413940 /* ToolbarManager.swift */,
 				33A7E2C024606E3C00BB1103 /* HomeViewController.swift */,
+				337638952460882D00A1B042 /* MangaCVItem.swift */,
+				332C4255246558B300413940 /* Fetch jobs */,
 				33A7E2C224606E4200BB1103 /* Assets.xcassets */,
 				33A7E2C424606E4200BB1103 /* Main.storyboard */,
-				33FB14A82461DBF400F236FF /* MangaItem.swift */,
-				337638952460882D00A1B042 /* MangaCVItem.swift */,
 				337638962460882D00A1B042 /* MangaCVItem.xib */,
 				33A7E2C724606E4200BB1103 /* Info.plist */,
 				33A7E2C824606E4200BB1103 /* Kitsune_macos.entitlements */,
@@ -181,10 +192,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				337638972460882D00A1B042 /* MangaCVItem.swift in Sources */,
-				33FB14A92461DBF400F236FF /* MangaItem.swift in Sources */,
 				33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */,
+				332C42542465575100413940 /* MangaProvider.swift in Sources */,
 				332C4250246549BF00413940 /* ToolbarManager.swift in Sources */,
 				33A7E2BF24606E3C00BB1103 /* AppDelegate.swift in Sources */,
+				332C4257246558CB00413940 /* LatestMangaProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,14 +8,26 @@
 
 import Cocoa
 import Quartz
+import MangaDexLib
 
 class HomeViewController: NSViewController {
 
     @IBOutlet var collectionView: NSCollectionView!
 
     let itemIdentifier = NSUserInterfaceItemIdentifier(rawValue: "mangaCVItem")
-    let defaultItemSize = NSSize(width: 158, height: 250)
-    var mangas: [MangaItem] = []
+    let defaultItemSize = NSSize(width: 248, height: 420)
+
+    let api = MDApi()
+    var mangaProviders: [MangaProvider] = []
+    var currentProviderIndex: Int = 0
+
+    var currentProvider: MangaProvider {
+        return mangaProviders[currentProviderIndex]
+    }
+
+    var mangas: [MDManga] {
+        return currentProvider.mangas
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +35,25 @@ class HomeViewController: NSViewController {
         configureCollectionView()
         collectionView.needsLayout = true
 
-        mangas = [
-            MangaItem(title: "Agravity Boys", cover: "https://mangadex.org/images/manga/43649.large.jpg?1585634228"),
-            MangaItem(title: "Last Paradise", cover: "https://mangadex.org/images/manga/25417.large.jpg?1542942153"),
-            MangaItem(title: "Fate/stay night: Heaven's Feel", cover: "https://mangadex.org/images/manga/15286.large.jpg?1557857812"),
-            MangaItem(title: "The Ghostly Doctor", cover: "https://mangadex.org/images/manga/28495.large.jpg?1532793052")
+
+        mangaProviders = [
+            LatestMangaProvider(api: api)
         ]
+
+        // Mark provider as loading while the API is getting ready
+        for provider in mangaProviders {
+            provider.isLoading = true
+            provider.delegate = self
+        }
+
+        api.getHomepage { (response) in
+            print("Should show announcement:", response.announcement?.textBody)
+
+            for provider in self.mangaProviders {
+                provider.isLoading = false
+            }
+            self.currentProvider.startLoading()
+        }
 
         // Catch key events to generated preview / open manga
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
@@ -40,6 +65,13 @@ class HomeViewController: NSViewController {
     }
 
     override func viewDidAppear() {
+        // Update toolbar here, is it's not loaded yet in "viewDidLoad"
+        if api.isLoggedIn() {
+            ToolbarManager.didLogin()
+        } else {
+            ToolbarManager.didLogout()
+        }
+
         let control = ToolbarManager.segmentedControl
         control?.segmentCount = 4
         control?.setLabel("Latest", forSegment: 0)
@@ -168,6 +200,34 @@ extension HomeViewController: MangaProviderDelegate {
         guard let control = sender as? NSSegmentedControl else {
             return
         }
+        let type = MangaProvider.ProviderType(rawValue: control.selectedSegment)
+        switch type {
+        case .latest:
+            collectionView.reloadData()
+        default:
+            break
+        }
+    }
+
+    func didStartLoading(provider: MangaProvider) {
+        print("Provider \(provider) did start loading")
+    }
+    func didStartLoadingMore(provider: MangaProvider) {
+        print("Provider \(provider) did start loading more")
+    }
+
+    func didFinishLoading(provider: MangaProvider) {
+        print("Provider \(provider) did finish loading")
+        guard provider == currentProvider else {
+            return
+        }
+        DispatchQueue.main.sync {
+            collectionView.reloadData()
+        }
+    }
+
+    func didFailLoading(provider: MangaProvider, error: Error) {
+        print("Provider \(provider) did fail:", error)
     }
 
 }

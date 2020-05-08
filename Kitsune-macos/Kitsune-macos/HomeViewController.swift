@@ -39,6 +39,17 @@ class HomeViewController: NSViewController {
         }
     }
 
+    override func viewDidAppear() {
+        let control = ToolbarManager.segmentedControl
+        control?.segmentCount = 4
+        control?.setLabel("Latest", forSegment: 0)
+        control?.setLabel("Featured", forSegment: 1)
+        control?.setLabel("Browse", forSegment: 2)
+        control?.setLabel("Updates", forSegment: 3)
+        control?.selectSegment(withTag: 0)
+        control?.action = #selector(segmentSelected(_:))
+    }
+
     func configureCollectionView() {
         let flowLayout = NSCollectionViewFlowLayout()
         flowLayout.itemSize = defaultItemSize
@@ -146,6 +157,17 @@ extension HomeViewController: NSCollectionViewDataSource {
         }
         collectionViewItem.manga = mangas[indexPath.item]
         return collectionViewItem
+    }
+
+}
+
+extension HomeViewController: MangaProviderDelegate {
+
+    @objc
+    func segmentSelected(_ sender: Any) {
+        guard let control = sender as? NSSegmentedControl else {
+            return
+        }
     }
 
 }

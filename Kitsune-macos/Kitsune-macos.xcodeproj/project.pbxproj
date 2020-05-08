@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		332C4250246549BF00413940 /* ToolbarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332C424F246549BF00413940 /* ToolbarManager.swift */; };
 		335D84EB2460717300637344 /* MangaDexLib in Frameworks */ = {isa = PBXBuildFile; productRef = 335D84EA2460717300637344 /* MangaDexLib */; };
 		337638972460882D00A1B042 /* MangaCVItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337638952460882D00A1B042 /* MangaCVItem.swift */; };
 		337638982460882D00A1B042 /* MangaCVItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337638962460882D00A1B042 /* MangaCVItem.xib */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		332C424F246549BF00413940 /* ToolbarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarManager.swift; sourceTree = "<group>"; };
 		337638952460882D00A1B042 /* MangaCVItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaCVItem.swift; sourceTree = "<group>"; };
 		337638962460882D00A1B042 /* MangaCVItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MangaCVItem.xib; sourceTree = "<group>"; };
 		33A7E2BB24606E3C00BB1103 /* Kitsune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kitsune.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				33A7E2BE24606E3C00BB1103 /* AppDelegate.swift */,
+				332C424F246549BF00413940 /* ToolbarManager.swift */,
 				33A7E2C024606E3C00BB1103 /* HomeViewController.swift */,
 				33A7E2C224606E4200BB1103 /* Assets.xcassets */,
 				33A7E2C424606E4200BB1103 /* Main.storyboard */,
@@ -180,6 +183,7 @@
 				337638972460882D00A1B042 /* MangaCVItem.swift in Sources */,
 				33FB14A92461DBF400F236FF /* MangaItem.swift in Sources */,
 				33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */,
+				332C4250246549BF00413940 /* ToolbarManager.swift in Sources */,
 				33A7E2BF24606E3C00BB1103 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

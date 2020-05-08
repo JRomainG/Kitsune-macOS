@@ -423,11 +423,76 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Kitsune" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="658" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+                        <toolbar key="toolbar" implicitIdentifier="969DFC67-70BE-42CD-9434-117768C54A79" centeredItem="u8F-NG-y3y" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="Oxq-RJ-uSy">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="cT5-XN-zDC"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="qC5-6r-Bki"/>
+                                <toolbarItem implicitItemIdentifier="E23C42E5-B4B3-4FE8-9F1B-E74D5E7B9575" label="Account" paletteLabel="Account" tag="1" image="NSTouchBarUserAddTemplate" sizingBehavior="auto" id="cN1-5j-wKm">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" tag="1" imageHugsTitle="YES" id="YZ5-HA-ZSV">
+                                        <rect key="frame" x="0.0" y="14" width="142" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSTouchBarUserAddTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bwT-jx-ScJ">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="59C09A38-FBE3-406F-A5BB-F5996CD6ECF5" label="Sort" paletteLabel="Sort" tag="2" image="Sort" sizingBehavior="auto" id="ZW5-Cy-kC6">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" tag="2" imageHugsTitle="YES" id="XTi-A3-8F0">
+                                        <rect key="frame" x="0.0" y="14" width="142" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Sort" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XSR-Tm-SC9">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="4E50AABF-9EC2-46F2-8252-78FD7859695A" label="List" paletteLabel="List" tag="3" sizingBehavior="auto" id="u8F-NG-y3y">
+                                    <nil key="toolTip"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" tag="3" id="qIe-vc-UMy">
+                                        <rect key="frame" x="0.0" y="14" width="90" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="V94-xZ-dBY">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment/>
+                                                <segment tag="1"/>
+                                                <segment/>
+                                                <segment/>
+                                                <segment/>
+                                            </segments>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="C38F24E4-ADAD-4357-8D36-217CEDA0A40E" label="Search" paletteLabel="Search" tag="4" sizingBehavior="auto" selectable="YES" id="7nS-pV-ZFs">
+                                    <nil key="toolTip"/>
+                                    <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" tag="4" textCompletion="NO" id="KqN-K8-dcW">
+                                        <rect key="frame" x="0.0" y="14" width="96" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="DhR-TM-Wxj">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </searchFieldCell>
+                                    </searchField>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="cN1-5j-wKm"/>
+                                <toolbarItem reference="ZW5-Cy-kC6"/>
+                                <toolbarItem reference="qC5-6r-Bki"/>
+                                <toolbarItem reference="u8F-NG-y3y"/>
+                                <toolbarItem reference="qC5-6r-Bki"/>
+                                <toolbarItem reference="7nS-pV-ZFs"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -438,7 +503,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="164" y="250"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -492,7 +557,11 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="164" y="691"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSTouchBarUserAddTemplate" width="23" height="30"/>
+        <image name="Sort" width="16" height="16"/>
+    </resources>
 </document>

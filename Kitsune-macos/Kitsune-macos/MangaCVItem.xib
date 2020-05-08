@@ -21,14 +21,14 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="4pZ-Uj-lvF">
-                    <rect key="frame" x="46" y="122" width="100" height="28"/>
+                    <rect key="frame" x="46" y="118" width="100" height="36"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="lAN-pN-LNb">
-                            <rect key="frame" x="4" y="24" width="92" height="0.0"/>
+                            <rect key="frame" x="8" y="28" width="84" height="0.0"/>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="5te-gv-dJ9"/>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="LeG-r1-r0V">
-                            <rect key="frame" x="2" y="4" width="96" height="16"/>
+                            <rect key="frame" x="6" y="8" width="88" height="16"/>
                             <textFieldCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="center" title="Title" id="O1V-5b-FNm">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -37,13 +37,13 @@
                         </textField>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="lAN-pN-LNb" firstAttribute="top" secondItem="4pZ-Uj-lvF" secondAttribute="top" constant="4" id="DDK-MK-Zhj"/>
-                        <constraint firstAttribute="bottom" secondItem="LeG-r1-r0V" secondAttribute="bottom" constant="4" id="Ebp-Jj-Vfp"/>
+                        <constraint firstItem="lAN-pN-LNb" firstAttribute="top" secondItem="4pZ-Uj-lvF" secondAttribute="top" constant="8" id="DDK-MK-Zhj"/>
+                        <constraint firstAttribute="bottom" secondItem="LeG-r1-r0V" secondAttribute="bottom" constant="8" id="Ebp-Jj-Vfp"/>
                         <constraint firstItem="LeG-r1-r0V" firstAttribute="top" secondItem="lAN-pN-LNb" secondAttribute="bottom" constant="4" id="IKM-Ec-zGR"/>
-                        <constraint firstItem="LeG-r1-r0V" firstAttribute="leading" secondItem="4pZ-Uj-lvF" secondAttribute="leading" constant="4" id="Nlb-Xn-DLB"/>
-                        <constraint firstAttribute="trailing" secondItem="LeG-r1-r0V" secondAttribute="trailing" constant="4" id="XX1-cZ-Vhb"/>
-                        <constraint firstAttribute="trailing" secondItem="lAN-pN-LNb" secondAttribute="trailing" constant="4" id="gPc-mw-JRL"/>
-                        <constraint firstItem="lAN-pN-LNb" firstAttribute="leading" secondItem="4pZ-Uj-lvF" secondAttribute="leading" constant="4" id="u7V-8p-e2c"/>
+                        <constraint firstItem="LeG-r1-r0V" firstAttribute="leading" secondItem="4pZ-Uj-lvF" secondAttribute="leading" constant="8" id="Nlb-Xn-DLB"/>
+                        <constraint firstAttribute="trailing" secondItem="LeG-r1-r0V" secondAttribute="trailing" constant="8" id="XX1-cZ-Vhb"/>
+                        <constraint firstAttribute="trailing" secondItem="lAN-pN-LNb" secondAttribute="trailing" constant="8" id="gPc-mw-JRL"/>
+                        <constraint firstItem="lAN-pN-LNb" firstAttribute="leading" secondItem="4pZ-Uj-lvF" secondAttribute="leading" constant="8" id="u7V-8p-e2c"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="vAF-pQ-EWs"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="yo1-KK-pWd"/>
                     </constraints>

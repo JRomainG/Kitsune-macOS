@@ -10,46 +10,46 @@ import Cocoa
 
 class ToolbarManager {
 
-    static var toolbar: NSToolbar? {
-        return NSApplication.shared.mainWindow?.toolbar
+    static func toolbar(in view: NSView) -> NSToolbar? {
+        return view.window?.toolbar
     }
 
-    static var accountButton: NSButton? {
-        return itemWithTag(1)?.view as? NSButton
+    static func accountButton(in view: NSView) -> NSButton? {
+        return itemWithTag(1, in: view)?.view as? NSButton
     }
 
-    static var filterButton: NSButton? {
-        return itemWithTag(2)?.view as? NSButton
+    static func filterButton(in view: NSView) -> NSButton? {
+        return itemWithTag(2, in: view)?.view as? NSButton
     }
 
-    static var segmentedControl: NSSegmentedControl? {
-        return itemWithTag(3)?.view as? NSSegmentedControl
+    static func segmentedControl(in view: NSView) -> NSSegmentedControl? {
+        return itemWithTag(3, in: view)?.view as? NSSegmentedControl
     }
 
-    static var searchBar: NSSearchField? {
-        return itemWithTag(4)?.view as? NSSearchField
+    static func searchBar(in view: NSView) -> NSSearchField? {
+        return itemWithTag(4, in: view)?.view as? NSSearchField
     }
 
-    private static func itemWithTag(_ tag: Int) -> NSToolbarItem? {
-        return toolbar?.items.first(where: { (item) -> Bool in
+    private static func itemWithTag(_ tag: Int, in view: NSView) -> NSToolbarItem? {
+        return toolbar(in: view)?.items.first(where: { (item) -> Bool in
             return item.tag == tag
         })
     }
 
-    static func didLogin() {
-        accountButton?.image = NSImage(named: "Account")
+    static func didLogin(from view: NSView) {
+        accountButton(in: view)?.image = NSImage(named: "Account")
     }
 
-    static func didLogout() {
-        accountButton?.image = NSImage(imageLiteralResourceName: "NSTouchBarUserAddTemplate")
+    static func didLogout(from view: NSView) {
+        accountButton(in: view)?.image = NSImage(imageLiteralResourceName: "NSTouchBarUserAddTemplate")
     }
 
-    static func hide() {
-        toolbar?.isVisible = false
+    static func hide(from view: NSView) {
+        toolbar(in: view)?.isVisible = false
     }
 
-    static func show() {
-        toolbar?.isVisible = false
+    static func show(from view: NSView) {
+        toolbar(in: view)?.isVisible = false
     }
 
 }

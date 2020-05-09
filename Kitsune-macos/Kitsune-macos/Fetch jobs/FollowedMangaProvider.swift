@@ -1,5 +1,5 @@
 //
-//  LatestMangaProvider.swift
+//  FollowedMangaProvider.swift
 //  Kitsune
 //
 //  Created by Jean-Romain on 08/05/2020.
@@ -9,17 +9,17 @@
 import Foundation
 import MangaDexLib
 
-class LatestMangaProvider: MangaProvider {
+class FollowedMangaProvider: MangaProvider {
 
     override init(api: MDApi) {
         super.init(api: api)
-        type = .latest
+        type = .followed
     }
 
     override func load(append: Bool = false) {
         super.load(append: append)
 
-        api.getLatestMangas(page: page) { (response) in
+        api.getLatestFollowedMangas(page: page, status: .all) { (response) in
             self.finishLoading(with: response, append: append, pagingEnabled: true)
         }
     }

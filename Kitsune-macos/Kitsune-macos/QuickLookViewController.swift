@@ -53,8 +53,7 @@ class QuickLookViewController: NSViewController {
         operationQueue.cancelAllOperations()
     }
 
-    @objc
-    private func updateContent(cancelPending: Bool = false) {
+    @objc private func updateContent(cancelPending: Bool = false) {
         // If them displayed manga changed, stop loading
         if cancelPending {
             operationQueue.cancelAllOperations()

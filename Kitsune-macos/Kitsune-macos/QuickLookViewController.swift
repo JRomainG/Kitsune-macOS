@@ -14,8 +14,7 @@ class QuickLookViewController: NSViewController {
 
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var titleLabel: NSTextField!
-    @IBOutlet var subtitleLabel: NSTextField!
-    @IBOutlet var tagsLabel: NSTextField!
+    @IBOutlet var linkButton: NSButton!
     @IBOutlet var descriptionTextView: NSTextView!
     @IBOutlet var loadingIndicator: NSProgressIndicator!
 
@@ -32,13 +31,24 @@ class QuickLookViewController: NSViewController {
 
     var manga: MDManga? {
         didSet {
-            updateContent(cancelPending: true)
+            DispatchQueue.main.async {
+                self.linkButton?.isEnabled = (self.manga != nil)
+                self.updateContent(cancelPending: true)
+            }
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+    }
+
+    @IBAction func openInBrowser(_ sender: NSButton) {
+        guard let mangaId = manga?.mangaId else {
+            return
+        }
+        let url = MDPath.mangaDetails(mangaId: mangaId, mangaTitle: manga?.title)
+        NSWorkspace.shared.open(url)
     }
 
     func open(in viewController: NSViewController, from view: NSView) {
@@ -93,8 +103,6 @@ class QuickLookViewController: NSViewController {
         }
 
         titleLabel.stringValue = manga?.title ?? "-"
-        subtitleLabel.stringValue = manga?.author ?? "-"
-        tagsLabel.stringValue = manga?.tags?.map(String.init).joined(separator: ", ") ?? "-"
         descriptionTextView.string = manga?.description ?? "-"
 
         let placeholder = NSImage(named: "CoverPlaceholder")

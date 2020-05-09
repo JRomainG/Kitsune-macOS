@@ -117,7 +117,6 @@ class MangaProvider: NSObject {
         }
 
         let newMangas = response.mangas ?? []
-        print("response:", response.rawValue)
         self.mangaSemaphore.wait()
         if append {
             mangas.append(contentsOf: newMangas)

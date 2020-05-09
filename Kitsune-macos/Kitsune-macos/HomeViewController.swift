@@ -148,12 +148,16 @@ class HomeViewController: NSViewController {
 
         switch event.keyCode {
         case 0x24, 0x4C:
-            // Return key
+            // Return / Enter
             print("return at", indexPath)
             return true
         case 0x31:
-            // Space key
+            // Space
             togglePreviewPanel()
+            return true
+        case 0x35:
+            // Escape
+            quickLookVC?.close()
             return true
         case 0x7B:
             // Left arrow

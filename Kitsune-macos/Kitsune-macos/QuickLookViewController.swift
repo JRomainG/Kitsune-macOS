@@ -88,7 +88,7 @@ class QuickLookViewController: NSViewController {
         let placeholder = NSImage(named: "CoverPlaceholder")
         imageView.image = placeholder
 
-        if let url = URL(string: manga?.coverUrl ?? "") {
+        if let url = manga?.getCoverUrl() {
             imageView.sd_setImage(with: url,
                                   placeholderImage: placeholder,
                                   options: .scaleDownLargeImages,

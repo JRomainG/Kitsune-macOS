@@ -82,8 +82,7 @@ class MangaCVItem: NSCollectionViewItem {
         let placeholder = NSImage(named: "CoverPlaceholder")
         imageView?.image = placeholder
 
-        guard let coverUrl = manga?.coverUrl,
-            let url = URL(string: coverUrl) else {
+        guard let url = manga?.getCoverUrl() else {
             return
         }
 

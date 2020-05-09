@@ -150,8 +150,7 @@ class MangaProvider: NSObject {
         }
     }
 
-    private func merged(first: MDManga, second: MDManga) -> MDManga {
-        print("Merge \(first) with \(second)")
+    static func merged(first: MDManga, second: MDManga) -> MDManga {
         var newManga = first
         newManga.mangaId = first.mangaId ?? second.mangaId
         newManga.title = first.title ?? second.title
@@ -159,7 +158,6 @@ class MangaProvider: NSObject {
         newManga.artist = first.artist ?? second.artist
         newManga.description = first.description ?? second.description
         newManga.chapters = first.chapters ?? second.chapters
-        newManga.coverUrl = first.coverUrl ?? second.coverUrl
         newManga.publicationStatus = first.publicationStatus ?? second.publicationStatus
         newManga.readingStatus = first.readingStatus ?? second.readingStatus
         newManga.currentVolume = first.currentVolume ?? second.currentVolume

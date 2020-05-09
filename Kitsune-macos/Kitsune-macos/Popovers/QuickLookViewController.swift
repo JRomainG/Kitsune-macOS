@@ -61,7 +61,7 @@ class QuickLookViewController: NSViewController {
     func close() {
         popover.close()
         isBeingPresented = false
-        loadingIndicator.stopAnimation(nil)
+        loadingIndicator?.stopAnimation(nil)
         operationQueue.cancelAllOperations()
     }
 
@@ -103,7 +103,7 @@ class QuickLookViewController: NSViewController {
         }
 
         titleLabel.stringValue = manga?.title ?? "-"
-        descriptionTextView.string = manga?.description ?? "-"
+        descriptionTextView.string = manga?.description ?? ""
 
         let placeholder = NSImage(named: "CoverPlaceholder")
         imageView.image = placeholder

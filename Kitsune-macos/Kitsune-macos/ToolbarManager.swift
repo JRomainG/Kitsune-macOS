@@ -18,7 +18,7 @@ class ToolbarManager {
         return itemWithTag(1, in: view)?.view as? NSButton
     }
 
-    static func filterButton(in view: NSView) -> NSButton? {
+    static func sortButton(in view: NSView) -> NSButton? {
         return itemWithTag(2, in: view)?.view as? NSButton
     }
 

@@ -130,6 +130,15 @@ class MangaProvider: NSObject {
         delegate?.didFinishLoading(provider: self)
     }
 
+    func cancelRequests() {
+        api.requestHandler.session.getAllTasks { (tasks) in
+            for task in tasks {
+                task.cancel()
+            }
+        }
+        state = .idle
+    }
+
     func getDetails(for manga: MDManga, completion: @escaping (MDManga?) -> Void) {
         guard let mangaId = manga.mangaId else {
             completion(nil)

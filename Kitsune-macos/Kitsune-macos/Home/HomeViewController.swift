@@ -16,6 +16,7 @@ class HomeViewController: NSViewController {
     @IBOutlet var loadingView: LoadingView!
     @IBOutlet var errorLabel: NSTextField!
     var quickLookVC: QuickLookViewController?
+    var sortOrderVC: SortOptionsViewController?
 
     let itemIdentifier = NSUserInterfaceItemIdentifier(rawValue: "mangaCVItem")
     let defaultItemSize = NSSize(width: 248, height: 320)
@@ -54,8 +55,13 @@ class HomeViewController: NSViewController {
 
         // Init a QuickLookViewController for manga previews
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateController(withIdentifier: "quickLookViewController")
+        var controller = storyboard.instantiateController(withIdentifier: "quickLookViewController")
         quickLookVC = controller as? QuickLookViewController
+
+        // Init the toolbar popup controllers
+        controller = storyboard.instantiateController(withIdentifier: "sortOptionsViewController")
+        sortOrderVC = controller as? SortOptionsViewController
+        sortOrderVC?.delegate = self
 
         // Create providers used to download manga info
         mangaProviders = [
@@ -123,23 +129,6 @@ class HomeViewController: NSViewController {
         collectionView.register(nib, forItemWithIdentifier: itemIdentifier)
     }
 
-    func configureToolbar() {
-        if api.isLoggedIn() {
-            ToolbarManager.didLogin(from: view)
-        } else {
-            ToolbarManager.didLogout(from: view)
-        }
-
-        let control = ToolbarManager.segmentedControl(in: view)
-        control?.segmentCount = 4
-        control?.setLabel("Latest", forSegment: 0)
-        control?.setLabel("Featured", forSegment: 1)
-        control?.setLabel("Browse", forSegment: 2)
-        control?.setLabel("Followed", forSegment: 3)
-        control?.selectSegment(withTag: 0)
-        control?.action = #selector(segmentSelected(_:))
-    }
-
     func handleKeyDown(with event: NSEvent) -> Bool {
         // Make sure an item is selected, otherwise don't handle the event
         guard let indexPath = collectionView.selectionIndexPaths.first else {
@@ -150,6 +139,7 @@ class HomeViewController: NSViewController {
         case 0x24, 0x4C:
             // Return / Enter
             print("return at", indexPath)
+            closePopovers()
             return true
         case 0x31:
             // Space
@@ -157,7 +147,7 @@ class HomeViewController: NSViewController {
             return true
         case 0x35:
             // Escape
-            quickLookVC?.close()
+            collectionView.deselectAll(nil)
             return true
         case 0x7B:
             // Left arrow
@@ -215,18 +205,6 @@ class HomeViewController: NSViewController {
         quickLookVC?.manga = mangas[newItem]
     }
 
-    /// Toggles the quick look view
-    func togglePreviewPanel() {
-        guard let popup = quickLookVC else {
-            return
-        }
-        if popup.isBeingPresented {
-            popup.close()
-        } else {
-            popup.open(in: self, from: view)
-        }
-    }
-
     /// Show or hide the loading view if necessary
     func toggleLoadingView() {
         if currentProvider.state == .waiting || currentProvider.state == .initialLoad {
@@ -249,118 +227,15 @@ class HomeViewController: NSViewController {
         }
     }
 
-}
-
-extension HomeViewController: NSCollectionViewDataSource {
-
-    func numberOfSections(in collectionView: NSCollectionView) -> Int {
-        return 1
-    }
-
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mangas.count
-    }
-
-    func collectionView(_ collectionView: NSCollectionView,
-                        itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        let item = collectionView.makeItem(withIdentifier: itemIdentifier, for: indexPath)
-        guard let collectionViewItem = item as? MangaCVItem else {
-            return item
-        }
-        collectionViewItem.manga = mangas[indexPath.item]
-        return collectionViewItem
-    }
-
-}
-
-extension HomeViewController: NSCollectionViewDelegate {
-
-    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-        guard let index = indexPaths.first?.item else {
+    /// Toggles the quick look view
+    func togglePreviewPanel() {
+        guard let popup = quickLookVC else {
             return
         }
-        quickLookVC?.manga = mangas[index]
-    }
-
-    func collectionView(_ collectionView: NSCollectionView, didDeselectItemsAt indexPaths: Set<IndexPath>) {
-        quickLookVC?.close()
-    }
-
-    @objc func collectionViewDidScroll(notification: NSNotification?) {
-        guard currentProvider.hasMorePages,
-            currentProvider.state == .idle,
-            let contentView = collectionView.enclosingScrollView?.contentView else {
-            return
-        }
-
-        let offset = contentView.bounds.origin.y + contentView.bounds.height
-        let size = collectionView.bounds.size.height
-
-        // Start loading more 2 rows before the end
-        if offset >= size - 2 * (defaultItemSize.height + defaultLineSpacing) {
-            print("Try to start loading more:", offset, size)
-            currentProvider.loadMore()
-        }
-    }
-
-}
-
-extension HomeViewController: MangaProviderDelegate {
-
-    @objc func segmentSelected(_ sender: Any) {
-        guard let control = sender as? NSSegmentedControl else {
-            return
-        }
-        // Save the offset
-        let contentView = collectionView.enclosingScrollView?.contentView
-        savedOffsets[currentProviderIndex] = contentView?.bounds.origin ?? .zero
-
-        currentProviderIndex = control.selectedSegment
-
-        if currentProvider.mangas.count == 0 {
-            currentProvider.startLoading()
-        }
-
-        // Update the content
-        collectionView.reloadData()
-        quickLookVC?.close()
-
-        // Restore the offset
-        collectionView.scroll(savedOffsets[currentProviderIndex])
-    }
-
-    func didStartInitialLoad(provider: MangaProvider) {
-        print("Provider \(provider) did start initial load")
-        DispatchQueue.main.async {
-            self.toggleLoadingView()
-        }
-    }
-
-    func didStartLoadingMore(provider: MangaProvider) {
-        print("Provider \(provider) did start loading more")
-    }
-
-    func didFinishLoading(provider: MangaProvider) {
-        print("Provider \(provider) did finish loading")
-        guard provider == currentProvider else {
-            return
-        }
-
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-            self.toggleLoadingView()
-        }
-    }
-
-    func didFailLoading(provider: MangaProvider, error: Error) {
-        print("Provider \(provider) did fail:", error)
-        guard provider == currentProvider else {
-            return
-        }
-
-        DispatchQueue.main.async {
-            self.toggleLoadingView()
-            self.toggleErrorLabel()
+        if popup.isBeingPresented {
+            popup.close()
+        } else {
+            popup.open(in: self, from: view)
         }
     }
 

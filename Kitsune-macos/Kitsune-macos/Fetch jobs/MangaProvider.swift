@@ -117,6 +117,7 @@ class MangaProvider: NSObject {
         }
 
         let newMangas = response.mangas ?? []
+        print("response:", response.rawValue)
         self.mangaSemaphore.wait()
         if append {
             mangas.append(contentsOf: newMangas)
@@ -143,7 +144,7 @@ class MangaProvider: NSObject {
                 return manga.mangaId == mangaId
             }
             if index != nil, let manga = response.manga {
-                self.mangas[index!] = self.merged(first: self.mangas[index!], second: manga)
+                self.mangas[index!] = MangaProvider.merged(first: self.mangas[index!], second: manga)
             }
             self.mangaSemaphore.signal()
             completion(response.manga)

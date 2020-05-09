@@ -17,6 +17,7 @@ class QuickLookViewController: NSViewController {
     @IBOutlet var subtitleLabel: NSTextField!
     @IBOutlet var tagsLabel: NSTextField!
     @IBOutlet var descriptionTextView: NSTextView!
+    @IBOutlet var loadingIndicator: NSProgressIndicator!
 
     var mangaProvider: MangaProvider?
 
@@ -50,6 +51,7 @@ class QuickLookViewController: NSViewController {
     func close() {
         popover.close()
         isBeingPresented = false
+        loadingIndicator.stopAnimation(nil)
         operationQueue.cancelAllOperations()
     }
 
@@ -66,18 +68,28 @@ class QuickLookViewController: NSViewController {
 
         if manga?.description == nil {
             // Details haven't been downloaded
+            loadingIndicator?.startAnimation(nil)
+            loadingIndicator?.isHidden = false
+
             let operation = MangaDetailDownload()
             operation.manga = manga
             operation.provider = mangaProvider
             operation.completionBlock = {
-                guard !operation.isCancelled else {
+                guard !operation.isCancelled, let manga = operation.manga else {
                     return
                 }
                 DispatchQueue.main.async {
-                    self.manga = operation.manga ?? self.manga
+                    if self.manga == nil {
+                        self.manga = manga
+                    } else {
+                        self.manga = MangaProvider.merged(first: self.manga!, second: manga)
+                    }
                 }
             }
             operationQueue.addOperation(operation)
+        } else {
+            loadingIndicator.isHidden = true
+            loadingIndicator.stopAnimation(nil)
         }
 
         titleLabel.stringValue = manga?.title ?? "-"

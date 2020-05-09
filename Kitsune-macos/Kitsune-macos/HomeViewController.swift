@@ -18,7 +18,7 @@ class HomeViewController: NSViewController {
     var quickLookVC: QuickLookViewController?
 
     let itemIdentifier = NSUserInterfaceItemIdentifier(rawValue: "mangaCVItem")
-    let defaultItemSize = NSSize(width: 248, height: 420)
+    let defaultItemSize = NSSize(width: 248, height: 320)
     let defaultItemSpacing: CGFloat = 20
     let defaultLineSpacing: CGFloat = 20
 

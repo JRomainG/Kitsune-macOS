@@ -19,6 +19,8 @@
 		3350C1562467155900B1B1E3 /* HomeViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3350C1542467155900B1B1E3 /* HomeViewController+CollectionView.swift */; };
 		3350C15A2467159900B1B1E3 /* HomeViewController+MangaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3350C1592467159900B1B1E3 /* HomeViewController+MangaProvider.swift */; };
 		3350C15C246715B500B1B1E3 /* HomeViewController+Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3350C15B246715B500B1B1E3 /* HomeViewController+Toolbar.swift */; };
+		3350C15F24671C9900B1B1E3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3350C15E24671C9900B1B1E3 /* LoginViewController.swift */; };
+		3350C16124672DEF00B1B1E3 /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3350C16024672DEF00B1B1E3 /* LogoutViewController.swift */; };
 		335D84EB2460717300637344 /* MangaDexLib in Frameworks */ = {isa = PBXBuildFile; productRef = 335D84EA2460717300637344 /* MangaDexLib */; };
 		337638972460882D00A1B042 /* MangaCVItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337638952460882D00A1B042 /* MangaCVItem.swift */; };
 		337638982460882D00A1B042 /* MangaCVItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 337638962460882D00A1B042 /* MangaCVItem.xib */; };
@@ -42,6 +44,8 @@
 		3350C1542467155900B1B1E3 /* HomeViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		3350C1592467159900B1B1E3 /* HomeViewController+MangaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+MangaProvider.swift"; sourceTree = "<group>"; };
 		3350C15B246715B500B1B1E3 /* HomeViewController+Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Toolbar.swift"; sourceTree = "<group>"; };
+		3350C15E24671C9900B1B1E3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3350C16024672DEF00B1B1E3 /* LogoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
 		337638952460882D00A1B042 /* MangaCVItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaCVItem.swift; sourceTree = "<group>"; };
 		337638962460882D00A1B042 /* MangaCVItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MangaCVItem.xib; sourceTree = "<group>"; };
 		33A7E2BB24606E3C00BB1103 /* Kitsune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kitsune.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,7 +70,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		332C4255246558B300413940 /* Fetch jobs */ = {
+		332C4255246558B300413940 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
 				332C42532465575100413940 /* MangaProvider.swift */,
@@ -75,7 +79,7 @@
 				33500E812465C9A500A19B5C /* ListedMangaProvider.swift */,
 				33500E832465D1F500A19B5C /* FollowedMangaProvider.swift */,
 			);
-			path = "Fetch jobs";
+			path = Providers;
 			sourceTree = "<group>";
 		};
 		3350C1582467157900B1B1E3 /* Home */ = {
@@ -97,8 +101,17 @@
 			children = (
 				332C425824657CBD00413940 /* QuickLookViewController.swift */,
 				3350C1522466FEFF00B1B1E3 /* SortOptionsViewController.swift */,
+				3350C15E24671C9900B1B1E3 /* LoginViewController.swift */,
+				3350C16024672DEF00B1B1E3 /* LogoutViewController.swift */,
 			);
 			path = Popovers;
+			sourceTree = "<group>";
+		};
+		3350C1622467F52C00B1B1E3 /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Reader;
 			sourceTree = "<group>";
 		};
 		33A7E2B224606E3B00BB1103 = {
@@ -123,8 +136,9 @@
 				33A7E2BE24606E3C00BB1103 /* AppDelegate.swift */,
 				332C424F246549BF00413940 /* ToolbarManager.swift */,
 				3350C1582467157900B1B1E3 /* Home */,
+				3350C1622467F52C00B1B1E3 /* Reader */,
 				3350C15D2467178400B1B1E3 /* Popovers */,
-				332C4255246558B300413940 /* Fetch jobs */,
+				332C4255246558B300413940 /* Providers */,
 				33A7E2C224606E4200BB1103 /* Assets.xcassets */,
 				33A7E2C424606E4200BB1103 /* Main.storyboard */,
 				33A7E2C724606E4200BB1103 /* Info.plist */,
@@ -239,6 +253,7 @@
 				3350C1532466FEFF00B1B1E3 /* SortOptionsViewController.swift in Sources */,
 				33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */,
 				33500E822465C9A500A19B5C /* ListedMangaProvider.swift in Sources */,
+				3350C16124672DEF00B1B1E3 /* LogoutViewController.swift in Sources */,
 				33500E862465D7EF00A19B5C /* LoadingView.swift in Sources */,
 				332C42542465575100413940 /* MangaProvider.swift in Sources */,
 				332C425924657CBD00413940 /* QuickLookViewController.swift in Sources */,
@@ -246,6 +261,7 @@
 				33500E802465C96900A19B5C /* FeaturedMangaProvider.swift in Sources */,
 				33A7E2BF24606E3C00BB1103 /* AppDelegate.swift in Sources */,
 				3350C1562467155900B1B1E3 /* HomeViewController+CollectionView.swift in Sources */,
+				3350C15F24671C9900B1B1E3 /* LoginViewController.swift in Sources */,
 				3350C15A2467159900B1B1E3 /* HomeViewController+MangaProvider.swift in Sources */,
 				332C4257246558CB00413940 /* LatestMangaProvider.swift in Sources */,
 				33500E842465D1F500A19B5C /* FollowedMangaProvider.swift in Sources */,
@@ -453,7 +469,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JRomainG/MangaDexLib";
 			requirement = {
-				branch = master;
+				branch = dev;
 				kind = branch;
 			};
 		};

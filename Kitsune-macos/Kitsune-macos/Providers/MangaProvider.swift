@@ -61,6 +61,16 @@ class MangaProvider: NSObject {
     var state: ProviderState = .waiting
     var error: Error?
 
+    /// Sort order, if relevant
+    var sortOrder: MDSortOrder = .bestRating {
+        didSet {
+            if state == .idle || state == .errored {
+                state = .idle
+                startLoading()
+            }
+        }
+    }
+
     private let mangaSemaphore = DispatchSemaphore(value: 1)
 
     var page = 1

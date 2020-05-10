@@ -43,19 +43,19 @@ class SortOptionsViewController: NSViewController {
         .leastFollows: "Follows (-)",
         .mostComments: "Comments (+)",
         .leastComments: "Comments (-)",
-        .oldestUpdated: "Last update",
-        .recentlyUpdated: "Oldest update",
+        .oldestUpdated: "Oldest update",
+        .recentlyUpdated: "Recent update",
         .alphabetical: "Alphabetical",
         .reverseAlphabetical: "Reverse alphabetical"
     ]
 
-    var delegate: SortOptionsDelegate?
+    weak var delegate: SortOptionsDelegate?
     private var popover = NSPopover()
     private(set) var isBeingPresented = false
 
     var selectedOrder: MDSortOrder = .bestRating {
         didSet {
-            delegate?.didUpdateSortOrder(controller: self, order: selectedOrder)
+            tableView?.reloadData()
         }
     }
 
@@ -124,8 +124,8 @@ extension SortOptionsViewController: NSTableViewDelegate {
         }
         let order = sortOrders[tableView.selectedRow]
         selectedOrder = order
-        tableView.deselectAll(nil)
-        tableView.reloadData()
+        delegate?.didUpdateSortOrder(controller: self, order: selectedOrder)
+        tableView?.deselectAll(nil)
         close()
     }
 

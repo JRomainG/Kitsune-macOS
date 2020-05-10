@@ -27,6 +27,11 @@ extension HomeViewController {
         control?.selectSegment(withTag: 0)
         control?.action = #selector(segmentSelected(_:))
 
+        if let accountButton = ToolbarManager.accountButton(in: view) {
+            accountButton.target = self
+            accountButton.action = #selector(toggleAccountPanel)
+        }
+
         if let sortButton = ToolbarManager.sortButton(in: view) {
             sortButton.target = self
             sortButton.action = #selector(toggleSortPanel)
@@ -40,7 +45,7 @@ extension HomeViewController {
             return
         }
         switch currentProvider.type {
-        case .listed, .search:
+        case .listed, .search, .followed:
             sortButton.isEnabled = true
         default:
             sortButton.isEnabled = false
@@ -50,6 +55,40 @@ extension HomeViewController {
     /// Toggles the sort options view
     @objc func toggleSortPanel() {
         guard let popup = sortOrderVC else {
+            return
+        }
+        if popup.isBeingPresented {
+            popup.close()
+        } else {
+            popup.selectedOrder = currentProvider.sortOrder
+            popup.open(in: self, from: view)
+        }
+    }
+
+    /// Toggles the login or logout view
+    @objc func toggleAccountPanel() {
+        if api.isLoggedIn() {
+            toggleLogoutPanel()
+        } else {
+            toggleLoginPanel()
+        }
+    }
+
+    /// Toggles the login view
+    func toggleLoginPanel() {
+        guard let popup = loginVC else {
+            return
+        }
+        if popup.isBeingPresented {
+            popup.close()
+        } else {
+            popup.open(in: self, from: view)
+        }
+    }
+
+    /// Toggles the logout view
+    func toggleLogoutPanel() {
+        guard let popup = logoutVC else {
             return
         }
         if popup.isBeingPresented {
@@ -68,6 +107,7 @@ extension HomeViewController {
     /// Close all the popovers coming from the toolbar
     func closeToolbarPopovers() {
         sortOrderVC?.close()
+        loginVC?.close()
     }
 
 }
@@ -75,14 +115,24 @@ extension HomeViewController {
 extension HomeViewController: SortOptionsDelegate {
 
     func didUpdateSortOrder(controller: SortOptionsViewController, order: MDSortOrder) {
-        if let listedProvider = currentProvider as? ListedMangaProvider {
-            listedProvider.cancelRequests()
-            listedProvider.sortOrder = order
-            collectionView.reloadData()
-            collectionView.scroll(.zero)
-            quickLookVC?.close()
-            toggleLoadingView()
-        }
+        currentProvider.cancelRequests()
+        currentProvider.sortOrder = order
+        collectionView.reloadData()
+        collectionView.scroll(.zero)
+        quickLookVC?.close()
+        toggleLoadingView()
+    }
+
+}
+
+extension HomeViewController: LoginDelegate {
+
+    func didLogin() {
+        ToolbarManager.didLogin(from: view)
+    }
+
+    func didLogout() {
+        ToolbarManager.didLogout(from: view)
     }
 
 }

@@ -17,6 +17,8 @@ class HomeViewController: NSViewController {
     @IBOutlet var errorLabel: NSTextField!
     var quickLookVC: QuickLookViewController?
     var sortOrderVC: SortOptionsViewController?
+    var loginVC: LoginViewController?
+    var logoutVC: LogoutViewController?
 
     let itemIdentifier = NSUserInterfaceItemIdentifier(rawValue: "mangaCVItem")
     let defaultItemSize = NSSize(width: 248, height: 320)
@@ -62,6 +64,16 @@ class HomeViewController: NSViewController {
         controller = storyboard.instantiateController(withIdentifier: "sortOptionsViewController")
         sortOrderVC = controller as? SortOptionsViewController
         sortOrderVC?.delegate = self
+
+        controller = storyboard.instantiateController(withIdentifier: "loginViewController")
+        loginVC = controller as? LoginViewController
+        loginVC?.delegate = self
+        loginVC?.api = api
+
+        controller = storyboard.instantiateController(withIdentifier: "logoutViewController")
+        logoutVC = controller as? LogoutViewController
+        logoutVC?.delegate = self
+        logoutVC?.api = api
 
         // Create providers used to download manga info
         mangaProviders = [
@@ -139,7 +151,6 @@ class HomeViewController: NSViewController {
         case 0x24, 0x4C:
             // Return / Enter
             print("return at", indexPath)
-            closePopovers()
             return true
         case 0x31:
             // Space
@@ -148,6 +159,7 @@ class HomeViewController: NSViewController {
         case 0x35:
             // Escape
             collectionView.deselectAll(nil)
+            closePopovers()
             return true
         case 0x7B:
             // Left arrow

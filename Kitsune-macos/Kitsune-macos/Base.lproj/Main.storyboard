@@ -1120,22 +1120,28 @@ DQ
                                         </constraints>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="CoverPlaceholder" id="8Yu-4U-QOi"/>
                                     </imageView>
-                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ge0-hQ-8AQ">
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="dK1-43-R4N">
                                         <rect key="frame" x="158" y="223" width="14" height="25"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Bookmark" id="vpE-4F-2i8"/>
-                                    </imageView>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Bookmark" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="LFP-I5-KVt">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="bookmark:" target="bf3-cv-RKf" id="8f5-Uj-iDL"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Zwb-aB-6q5" firstAttribute="centerY" secondItem="pb8-p9-C9O" secondAttribute="centerY" id="AzZ-mN-n08"/>
                                     <constraint firstItem="Zwb-aB-6q5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pb8-p9-C9O" secondAttribute="leading" id="MAP-qv-H2K"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Zwb-aB-6q5" secondAttribute="trailing" id="Qji-tC-LNA"/>
                                     <constraint firstItem="Zwb-aB-6q5" firstAttribute="centerX" secondItem="pb8-p9-C9O" secondAttribute="centerX" id="TeI-JG-Nxk"/>
-                                    <constraint firstItem="ge0-hQ-8AQ" firstAttribute="trailing" secondItem="Zwb-aB-6q5" secondAttribute="trailing" constant="-8" id="VDX-zU-af9"/>
+                                    <constraint firstItem="dK1-43-R4N" firstAttribute="top" secondItem="Zwb-aB-6q5" secondAttribute="top" id="Tja-rh-FhF"/>
                                     <constraint firstAttribute="width" constant="210" id="Wkj-4i-mzx"/>
-                                    <constraint firstItem="ge0-hQ-8AQ" firstAttribute="top" secondItem="Zwb-aB-6q5" secondAttribute="top" id="YVb-w3-r1Y"/>
                                     <constraint firstAttribute="height" constant="260" id="aad-nM-uSJ"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Zwb-aB-6q5" secondAttribute="bottom" id="b3g-ce-pMq"/>
                                     <constraint firstItem="Zwb-aB-6q5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="pb8-p9-C9O" secondAttribute="top" id="in1-JM-bMk"/>
+                                    <constraint firstItem="dK1-43-R4N" firstAttribute="trailing" secondItem="Zwb-aB-6q5" secondAttribute="trailing" constant="-8" id="znN-yy-hRT"/>
                                 </constraints>
                             </customView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oOZ-a8-ksH">
@@ -1240,7 +1246,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="hHt-4p-Ni2">
-                                    <rect key="frame" x="376" y="0.0" width="16" height="116"/>
+                                    <rect key="frame" x="376" y="0.0" width="16" height="97"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -1365,7 +1371,7 @@ DQ
                     </view>
                     <connections>
                         <outlet property="authorLabel" destination="7kb-Pd-iNu" id="tyB-rX-07A"/>
-                        <outlet property="bookmarkImageView" destination="ge0-hQ-8AQ" id="Gd0-zP-714"/>
+                        <outlet property="bookmarkButton" destination="dK1-43-R4N" id="FQV-sk-bhY"/>
                         <outlet property="chaptersLoadingIndicator" destination="DHL-yX-MXh" id="jXX-on-5cP"/>
                         <outlet property="contentLabel" destination="Gie-7u-Ba6" id="aUF-1G-6SO"/>
                         <outlet property="descriptionTextView" destination="0Xy-cr-Ed6" id="dUU-vf-1p9"/>

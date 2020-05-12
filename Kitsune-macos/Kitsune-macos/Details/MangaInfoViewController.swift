@@ -12,7 +12,7 @@ import MangaDexLib
 class MangaInfoViewController: PageContentViewController {
 
     @IBOutlet var imageView: NSImageView!
-    @IBOutlet var bookmarkImageView: NSImageView!
+    @IBOutlet var bookmarkButton: NSButton!
     @IBOutlet var titleLabel: NSTextField!
     @IBOutlet var authorLabel: NSTextField!
     @IBOutlet var formatLabel: NSTextField!
@@ -31,11 +31,10 @@ class MangaInfoViewController: PageContentViewController {
     var manga: MDManga? {
         didSet {
             DispatchQueue.main.async {
-                self.linkButton?.isEnabled = (self.manga != nil)
-                let bookmarked = self.manga?.readingStatus != .unfollowed && self.manga?.readingStatus != nil
-                self.bookmarkImageView?.isHidden = !bookmarked
                 self.updateContent()
                 self.updateChapterList()
+                self.toggleBookmarkButton()
+                self.linkButton?.isEnabled = (self.manga != nil)
             }
         }
     }
@@ -141,6 +140,16 @@ class MangaInfoViewController: PageContentViewController {
         }
     }
 
+    func toggleBookmarkButton() {
+        switch manga?.readingStatus {
+        case .unfollowed, .all, .none:
+            bookmarkButton.image = NSImage(named: "BookmarkEmpty")
+        default:
+            bookmarkButton.image = NSImage(named: "Bookmark")
+        }
+        bookmarkButton?.isHidden = (self.manga?.readingStatus == nil)
+    }
+
     func shouldDownloadDetails() -> Bool {
         guard mangaProvider?.api.isLoggedIn() == true else {
             return false
@@ -239,12 +248,37 @@ class MangaInfoViewController: PageContentViewController {
         var resetManga = manga
         resetManga?.description = nil
         resetManga?.chapters = nil
+        resetManga?.readingStatus = nil
+        resetManga?.publicationStatus = nil
+        resetManga?.lastChapter = nil
         resetManga?.currentVolume = nil
         resetManga?.currentChapter = nil
         resetManga?.artist = nil
         resetManga?.author = nil
         manga = resetManga
         tableView.reloadData()
+    }
+
+    @IBAction func bookmark(_ sender: Any) {
+        guard let readingStatus = manga?.readingStatus,
+            let mangaId = manga?.mangaId else {
+            return
+        }
+        switch readingStatus {
+        case .unfollowed:
+            mangaProvider?.api.setReadingStatus(mangaId: mangaId, status: .reading, completion: { (response) in
+                DispatchQueue.main.async {
+                    self.refresh()
+                }
+            })
+        default:
+            mangaProvider?.api.setReadingStatus(mangaId: mangaId, status: .unfollowed, completion: { (response) in
+                DispatchQueue.main.async {
+                    self.refresh()
+                }
+            })
+        }
+
     }
 
 }

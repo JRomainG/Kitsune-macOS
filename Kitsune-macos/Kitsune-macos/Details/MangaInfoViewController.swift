@@ -28,8 +28,11 @@ class MangaInfoViewController: PageContentViewController {
         didSet {
             DispatchQueue.main.async {
                 self.linkButton?.isEnabled = (self.manga != nil)
-                self.mangaInfo = nil
                 self.updateContent()
+
+                if self.manga?.mangaId != self.mangaInfo?.mangaId {
+                    self.mangaInfo = nil
+                }
             }
         }
     }
@@ -59,6 +62,7 @@ class MangaInfoViewController: PageContentViewController {
         chaptersLoadingIndicator.isHidden = true
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.doubleAction = #selector(goNext)
     }
 
     @IBAction func openInBrowser(_ sender: NSButton) {
@@ -205,6 +209,20 @@ class MangaInfoViewController: PageContentViewController {
         configureToolbar()
     }
 
+    override func canNavigateForward() -> Bool {
+        return tableView.selectedRow != -1
+    }
+
+    override func pageControllerWillTransition(to controller: PageContentViewController) {
+        guard tableView.selectedRow != -1,
+            let readerViewController = controller as? ChapterReaderViewController else {
+            return
+        }
+        let chapter = chapters[tableView.selectedRow]
+        readerViewController.chapter = chapter
+        readerViewController.mangaInfo = mangaInfo
+    }
+
     func configureToolbar() {
         ToolbarManager.accountButton(in: view)?.isHidden = true
         ToolbarManager.sortButton(in: view)?.isHidden = true
@@ -221,6 +239,10 @@ class MangaInfoViewController: PageContentViewController {
 
     @objc func goBack() {
         pageController?.navigateBack(nil)
+    }
+
+    @objc func goNext() {
+        pageController?.navigateForward(nil)
     }
 
 }

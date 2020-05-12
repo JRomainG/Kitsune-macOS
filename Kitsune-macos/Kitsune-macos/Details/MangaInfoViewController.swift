@@ -15,7 +15,10 @@ class MangaInfoViewController: PageContentViewController {
     @IBOutlet var bookmarkImageView: NSImageView!
     @IBOutlet var titleLabel: NSTextField!
     @IBOutlet var authorLabel: NSTextField!
+    @IBOutlet var formatLabel: NSTextField!
+    @IBOutlet var contentLabel: NSTextField!
     @IBOutlet var genreLabel: NSTextField!
+    @IBOutlet var themeLabel: NSTextField!
     @IBOutlet var statusLabel: NSTextField!
     @IBOutlet var descriptionTextView: NSTextView!
     @IBOutlet var linkButton: NSButton!
@@ -73,8 +76,10 @@ class MangaInfoViewController: PageContentViewController {
         descriptionTextView.string = manga?.description ?? ""
         authorLabel.stringValue = manga?.displayAuthor ?? "-"
         statusLabel.stringValue = "Pub. status: \(manga?.displayStatus ?? "-")"
-        let tags = manga?.displayTags ?? "-"
-        genreLabel.stringValue = "Tags: \(tags)"
+        contentLabel.stringValue = "Content: \(manga?.displayContents ?? "-")"
+        formatLabel.stringValue = "Format: \(manga?.displayFormats ?? "-")"
+        genreLabel.stringValue = "Genre: \(manga?.displayGenres ?? "-")"
+        themeLabel.stringValue = "Theme: \(manga?.displayThemes ?? "-")"
 
         let placeholder = NSImage(named: "CoverPlaceholder")
         imageView.image = placeholder

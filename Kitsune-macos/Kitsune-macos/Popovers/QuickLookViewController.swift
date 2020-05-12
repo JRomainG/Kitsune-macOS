@@ -113,8 +113,8 @@ class QuickLookViewController: NSViewController {
         descriptionTextView.string = manga?.description ?? ""
         authorLabel.stringValue = manga?.displayAuthor ?? "-"
         statusLabel.stringValue = "Pub. status: \(manga?.displayStatus ?? "-")"
-        let tags = manga?.displayTags ?? "-"
-        genreLabel.stringValue = "Tags: \(tags)"
+        let tags = manga?.displayGenres ?? "-"
+        genreLabel.stringValue = "Genre: \(tags)"
 
         let placeholder = NSImage(named: "CoverPlaceholder")
         imageView.image = placeholder

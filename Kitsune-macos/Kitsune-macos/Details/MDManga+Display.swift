@@ -20,18 +20,44 @@ extension MDManga {
         return author ?? artist ?? "-"
     }
 
-    var displayTags: String {
+    var displayContents: String {
         var formattedTags: [String] = []
         for tag in tags ?? [] {
             if let content = MDContent(rawValue: tag) {
                 formattedTags.append(String(describing: content))
-            } else if let genre = MDGenre(rawValue: tag) {
-                formattedTags.append(String(describing: genre))
-            } else if let theme = MDTheme(rawValue: tag) {
-               formattedTags.append(String(describing: theme))
-           }
+            }
         }
-        return formattedTags.joined(separator: ", ")
+        return formattedTags.isEmpty ? "-" : formattedTags.joined(separator: ", ")
+    }
+
+    var displayFormats: String {
+        var formattedTags: [String] = []
+        for tag in tags ?? [] {
+            if let format = MDFormat(rawValue: tag) {
+                formattedTags.append(String(describing: format))
+            }
+        }
+        return formattedTags.isEmpty ? "-" : formattedTags.joined(separator: ", ")
+    }
+
+    var displayGenres: String {
+        var formattedTags: [String] = []
+        for tag in tags ?? [] {
+            if let genre = MDGenre(rawValue: tag) {
+                formattedTags.append(String(describing: genre))
+            }
+        }
+        return formattedTags.isEmpty ? "-" : formattedTags.joined(separator: ", ")
+    }
+
+    var displayThemes: String {
+        var formattedTags: [String] = []
+        for tag in tags ?? [] {
+            if let theme = MDTheme(rawValue: tag) {
+                formattedTags.append(String(describing: theme))
+            }
+        }
+        return formattedTags.isEmpty ? "-" : formattedTags.joined(separator: ", ")
     }
 
     var displayStatus: String {

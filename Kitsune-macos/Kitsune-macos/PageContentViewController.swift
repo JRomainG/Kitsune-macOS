@@ -19,6 +19,19 @@ class PageContentViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        view.wantsLayer = true
+        updateBackgroundColor()
+    }
+
+    override func viewDidLayout() {
+        super.viewDidLayout()
+        NSAppearance.current = view.effectiveAppearance
+        updateBackgroundColor()
+    }
+
+    private func updateBackgroundColor() {
+        // Views need a background, or the animation is ugly
+        view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
     }
 
     func canNavigateForward() -> Bool {

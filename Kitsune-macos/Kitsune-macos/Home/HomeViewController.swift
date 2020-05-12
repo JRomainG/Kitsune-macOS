@@ -194,6 +194,10 @@ class HomeViewController: PageContentViewController {
         pageController?.navigateForward(nil)
     }
 
+    override func canNavigateForward() -> Bool {
+        return collectionView.selectionIndexPaths.first != nil
+    }
+
     override func pageControllerWillTransition(to controller: PageContentViewController) {
         guard let indexPath = collectionView.selectionIndexPaths.first,
             let infoViewController = controller as? MangaInfoViewController else {

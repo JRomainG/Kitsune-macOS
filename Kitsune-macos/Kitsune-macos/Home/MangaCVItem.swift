@@ -64,6 +64,7 @@ class MangaCVItem: NSCollectionViewItem {
     }
 
     override func viewDidLayout() {
+        super.viewDidLayout()
         // When the computer's theme (e.g. dark mode) is changed, NSAppearance.current is not updated
         // Thus, the values read from NSColor are still the ones for the old theme, so we manually change it
         NSAppearance.current = view.effectiveAppearance

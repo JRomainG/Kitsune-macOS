@@ -41,6 +41,7 @@ class QuickLookViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        descriptionTextView.textColor = .textColor
     }
 
     @IBAction func openInBrowser(_ sender: NSButton) {

@@ -95,7 +95,7 @@ class MangaInfoViewController: PageContentViewController {
         }
         authorLabel.stringValue = authorContent
 
-        let tags = mangaInfo?.tags?.map({ String(describing: $0) }).joined(separator: ", ") ?? "-"
+        let tags = mangaInfo?.displayTags ?? "-"
         genreLabel.stringValue = "Tags: \(tags)"
 
         let publicationStatus: String

@@ -33,6 +33,7 @@
 		33A7E2C324606E4200BB1103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C224606E4200BB1103 /* Assets.xcassets */; };
 		33A7E2C624606E4200BB1103 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C424606E4200BB1103 /* Main.storyboard */; };
 		33C1D651246AC037009F0FD4 /* ChapterReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */; };
+		33C1D654246AF2B8009F0FD4 /* MDManga+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */; };
 		33D367D7246800AF00858DB2 /* MangaInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D367D5246800AF00858DB2 /* MangaInfoViewController.swift */; };
 		33FB14AC2461F2B100F236FF /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 33FB14AB2461F2B100F236FF /* SDWebImage */; };
 /* End PBXBuildFile section */
@@ -66,6 +67,7 @@
 		33A7E2C724606E4200BB1103 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33A7E2C824606E4200BB1103 /* Kitsune_macos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kitsune_macos.entitlements; sourceTree = "<group>"; };
 		33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterReaderViewController.swift; sourceTree = "<group>"; };
+		33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDManga+Display.swift"; sourceTree = "<group>"; };
 		33D367D5246800AF00858DB2 /* MangaInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,6 +127,7 @@
 			children = (
 				33D367D5246800AF00858DB2 /* MangaInfoViewController.swift */,
 				338263752469AAEF00F537DA /* MDChapter+Display.swift */,
+				33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				338263782469BA2800F537DA /* PageController.swift in Sources */,
 				33826374246982F600F537DA /* MangaOperation.swift in Sources */,
 				332C4257246558CB00413940 /* LatestMangaProvider.swift in Sources */,
+				33C1D654246AF2B8009F0FD4 /* MDManga+Display.swift in Sources */,
 				33500E842465D1F500A19B5C /* FollowedMangaProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,14 +12,22 @@ class PageController: NSPageController {
 
     var contentViewControllers: [String: PageContentViewController] = [:]
     var currentController: PageContentViewController?
+    var currentIndex: Int = 0
+    let pageIdentifiers: [String] = [
+        "homeViewController",
+        "mangaInfoViewController",
+        "chapterReaderViewController"
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        self.delegate = self
-        self.arrangedObjects = ["homeViewController",
-                                "mangaInfoViewController",
-                                "chapterReaderViewController"]
+        delegate = self
+
+        // Only fill in the first view controller to prevent scrolling to next one if it doesn't exist yet
+        arrangedObjects = [
+            pageIdentifiers[0]
+        ]
         currentController = selectedViewController as? PageContentViewController
     }
 
@@ -27,15 +35,16 @@ class PageController: NSPageController {
         currentController?.didBecomeContentController()
     }
 
-    override func scrollWheel(with event: NSEvent) {
-        // Prevent scrolling to go to next or previous
-        return
-    }
-
     override func navigateForward(_ sender: Any?) {
         // Allow presented view controller to block transition
+        // This is not called when scrolling
         if !canNavigateForward() {
             return
+        }
+        // Add the identifier to the arranged objects list if necessary
+        if selectedIndex == arrangedObjects.count - 1 {
+            let identifier = pageIdentifiers[selectedIndex + 1]
+            arrangedObjects.append(identifier)
         }
         pagecontrollerWillTransition(to: selectedIndex + 1)
         super.navigateForward(sender)
@@ -43,6 +52,7 @@ class PageController: NSPageController {
 
     override func navigateBack(_ sender: Any?) {
         // Allow presented view controller to block transition
+        // This is not called when scrolling
         if !canNavigateBack() {
             return
         }
@@ -51,26 +61,22 @@ class PageController: NSPageController {
     }
 
     func canNavigateForward() -> Bool {
-        if selectedIndex == arrangedObjects.count - 1 {
+        guard selectedIndex < pageIdentifiers.count - 1 else {
             return false
         }
-
         if let viewController = selectedViewController as? PageContentViewController {
             return viewController.canNavigateForward()
         }
-
         return true
     }
 
     func canNavigateBack() -> Bool {
-        if selectedIndex == 0 {
+        guard selectedIndex > 0 else {
             return false
         }
-
         if let viewController = selectedViewController as? PageContentViewController {
             return viewController.canNavigateBack()
         }
-
         return true
     }
 
@@ -81,8 +87,8 @@ class PageController: NSPageController {
             ToolbarManager.willTransitionToDetailViewController(from: view)
         }
 
-        guard let nextObject = arrangedObjects[index] as? String,
-            let nextController = contentViewControllers[nextObject] else {
+        let nextIdentifier = pageIdentifiers[index]
+        guard let nextController = contentViewControllers[nextIdentifier] else {
             return
         }
         currentController?.pageControllerWillTransition(to: nextController)
@@ -126,6 +132,14 @@ extension PageController: NSPageControllerDelegate {
             return
         }
         currentController?.pageControllerdidTransition(to: controller)
+        if let newIndex = pageIdentifiers.firstIndex(of: identifier),
+            newIndex < currentIndex {
+            // Moving back from a page
+            if let popCount = currentController?.popOnUnload() {
+                arrangedObjects.removeLast(popCount)
+            }
+        }
+        currentIndex = selectedIndex
         currentController = controller
     }
 

@@ -34,6 +34,11 @@ class PageContentViewController: NSViewController {
         view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
     }
 
+    /// Number of controllers to remove from the history when this controller is unloaded
+    func popOnUnload() -> Int {
+        return 0
+    }
+
     func canNavigateForward() -> Bool {
         return true
     }

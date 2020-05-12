@@ -202,6 +202,14 @@ class MangaInfoViewController: PageContentViewController {
         configureToolbar()
     }
 
+    override func popOnUnload() -> Int {
+        // Prevent moving back to reader after leaving this view
+        guard let history = pageController?.arrangedObjects.count else {
+            return super.popOnUnload()
+        }
+        return max(0, history - 2)
+    }
+
     override func canNavigateForward() -> Bool {
         return tableView.selectedRow != -1
     }
@@ -264,21 +272,23 @@ class MangaInfoViewController: PageContentViewController {
             let mangaId = manga?.mangaId else {
             return
         }
+
+        let newState: MDReadingStatus
         switch readingStatus {
         case .unfollowed:
-            mangaProvider?.api.setReadingStatus(mangaId: mangaId, status: .reading, completion: { (response) in
-                DispatchQueue.main.async {
-                    self.refresh()
-                }
-            })
+            newState = .reading
         default:
-            mangaProvider?.api.setReadingStatus(mangaId: mangaId, status: .unfollowed, completion: { (response) in
-                DispatchQueue.main.async {
-                    self.refresh()
-                }
-            })
+            newState = .unfollowed
         }
 
+        mangaProvider?.api.setReadingStatus(mangaId: mangaId, status: newState, completion: { (response) in
+            guard response.error == nil else {
+                return
+            }
+            DispatchQueue.main.async {
+                self.refresh()
+            }
+        })
     }
 
 }

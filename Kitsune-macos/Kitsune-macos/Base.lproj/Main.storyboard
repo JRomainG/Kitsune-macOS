@@ -491,15 +491,27 @@
                                         </buttonCell>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="7AF2313C-1DE8-459B-86B1-BB073CD746B1" label="Refresh" paletteLabel="Refresh" tag="6" image="NSRefreshTemplate" sizingBehavior="auto" id="HWg-1R-lrJ">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" tag="6" id="XWV-je-0jI">
+                                        <rect key="frame" x="0.0" y="14" width="127" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aPY-NZ-ese">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="ABf-fV-CoI"/>
-                                <toolbarItem reference="cN1-5j-wKm"/>
+                                <toolbarItem reference="HWg-1R-lrJ"/>
                                 <toolbarItem reference="ZW5-Cy-kC6"/>
                                 <toolbarItem reference="qC5-6r-Bki"/>
                                 <toolbarItem reference="u8F-NG-y3y"/>
                                 <toolbarItem reference="qC5-6r-Bki"/>
                                 <toolbarItem reference="7nS-pV-ZFs"/>
+                                <toolbarItem reference="cN1-5j-wKm"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -1395,6 +1407,7 @@ DQ
         <image name="CoverPlaceholder" width="150" height="235"/>
         <image name="NSGoBackTemplate" width="9" height="12"/>
         <image name="NSMenuOnStateTemplate" width="12" height="12"/>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="NSTouchBarSkipToEndTemplate" width="12" height="30"/>
         <image name="NSTouchBarSkipToStartTemplate" width="12" height="30"/>
         <image name="NSTouchBarUserAddTemplate" width="23" height="30"/>

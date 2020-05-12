@@ -34,6 +34,10 @@ class ToolbarManager {
         return itemWithTag(5, in: view)?.view as? NSButton
     }
 
+    static func refreshButton(in view: NSView) -> NSButton? {
+        return itemWithTag(6, in: view)?.view as? NSButton
+    }
+
     private static func itemWithTag(_ tag: Int, in view: NSView) -> NSToolbarItem? {
         return toolbar(in: view)?.items.first(where: { (item) -> Bool in
             return item.tag == tag
@@ -59,6 +63,7 @@ class ToolbarManager {
     static func willTransitionToHomeViewController(from view: NSView) {
         accountButton(in: view)?.isHidden = false
         sortButton(in: view)?.isHidden = false
+        refreshButton(in: view)?.isHidden = false
         segmentedControl(in: view)?.isHidden = false
         searchBar(in: view)?.isHidden = false
         previousButton(in: view)?.isHidden = false
@@ -68,6 +73,7 @@ class ToolbarManager {
     static func willTransitionToDetailViewController(from view: NSView) {
         accountButton(in: view)?.isHidden = true
         sortButton(in: view)?.isHidden = true
+        refreshButton(in: view)?.isHidden = false
         segmentedControl(in: view)?.isHidden = true
         searchBar(in: view)?.isHidden = true
         previousButton(in: view)?.isHidden = false

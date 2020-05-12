@@ -44,6 +44,12 @@ extension HomeViewController {
         quickLookVC?.manga = mangas[newItem]
     }
 
+    @objc func refresh() {
+        collectionView.scroll(.zero)
+        currentProvider.refresh()
+        collectionView.reloadData()
+    }
+
 }
 
 extension HomeViewController: NSCollectionViewDataSource {

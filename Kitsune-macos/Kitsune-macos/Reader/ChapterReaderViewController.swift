@@ -33,6 +33,7 @@ class ChapterReaderViewController: PageContentViewController {
     func configureToolbar() {
         ToolbarManager.accountButton(in: view)?.isHidden = true
         ToolbarManager.sortButton(in: view)?.isHidden = true
+        ToolbarManager.refreshButton(in: view)?.isHidden = true
         ToolbarManager.segmentedControl(in: view)?.isHidden = true
         ToolbarManager.searchBar(in: view)?.isHidden = true
         ToolbarManager.previousButton(in: view)?.isHidden = false

@@ -223,6 +223,7 @@ class MangaInfoViewController: PageContentViewController {
     func configureToolbar() {
         ToolbarManager.accountButton(in: view)?.isHidden = true
         ToolbarManager.sortButton(in: view)?.isHidden = true
+        ToolbarManager.refreshButton(in: view)?.isHidden = false
         ToolbarManager.segmentedControl(in: view)?.isHidden = true
         ToolbarManager.searchBar(in: view)?.isHidden = true
         ToolbarManager.previousButton(in: view)?.isHidden = false
@@ -232,6 +233,10 @@ class MangaInfoViewController: PageContentViewController {
             previousButton.target = self
             previousButton.action = #selector(goBack)
         }
+        if let refreshButton = ToolbarManager.refreshButton(in: view) {
+            refreshButton.target = self
+            refreshButton.action = #selector(refresh)
+        }
     }
 
     @objc func goBack() {
@@ -240,6 +245,16 @@ class MangaInfoViewController: PageContentViewController {
 
     @objc func goNext() {
         pageController?.navigateForward(nil)
+    }
+
+    @objc func refresh() {
+        tableView.scroll(.zero)
+        mangaInfo = nil
+        var resetManga = manga
+        resetManga?.description = nil
+        resetManga?.chapters = nil
+        manga = resetManga
+        tableView.reloadData()
     }
 
 }

@@ -114,6 +114,11 @@ class MangaProvider: NSObject {
         delegate?.didStartLoadingMore(provider: self)
     }
 
+    func refresh() {
+        cancelRequests()
+        startLoading()
+    }
+
     func load(append: Bool = false) {
         // To override
     }

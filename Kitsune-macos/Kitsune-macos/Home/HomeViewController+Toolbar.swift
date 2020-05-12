@@ -39,12 +39,17 @@ extension HomeViewController {
             sortButton.target = self
             sortButton.action = #selector(toggleSortPanel)
         }
+        if let refreshButton = ToolbarManager.refreshButton(in: view) {
+            refreshButton.target = self
+            refreshButton.action = #selector(refresh)
+        }
         toggleSortButton()
     }
 
     func showToolbarButtons() {
         ToolbarManager.accountButton(in: view)?.isHidden = false
         ToolbarManager.sortButton(in: view)?.isHidden = false
+        ToolbarManager.refreshButton(in: view)?.isHidden = false
         ToolbarManager.segmentedControl(in: view)?.isHidden = false
         ToolbarManager.searchBar(in: view)?.isHidden = false
         ToolbarManager.previousButton(in: view)?.isHidden = false

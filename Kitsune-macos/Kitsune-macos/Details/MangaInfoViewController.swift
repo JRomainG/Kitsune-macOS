@@ -123,25 +123,22 @@ class MangaInfoViewController: PageContentViewController {
             return chapter.getOriginalLang() == .english
         }.sorted { (first, second) -> Bool in
             // Sort by volume, chapter, and then default to release date
-            if let firstVolume = Int(first.volume ?? ""),
-                let secondVolume = Int(second.volume ?? ""),
+            if let firstVolume = Float(first.volume ?? ""),
+                let secondVolume = Float(second.volume ?? ""),
                 firstVolume != secondVolume {
                 return firstVolume > secondVolume
             }
-
-            if let firstChapter = Int(first.chapter ?? ""),
-                let secondChapter = Int(second.chapter ?? ""),
+            if let firstChapter = Float(first.chapter ?? ""),
+                let secondChapter = Float(second.chapter ?? ""),
                 firstChapter != secondChapter {
                 return firstChapter > secondChapter
             }
-
             guard let firstReleaseDate = first.timestamp else {
                 return false
             }
             guard let secondReleaseDate = second.timestamp else {
                 return true
             }
-
             return firstReleaseDate > secondReleaseDate
         }
         self.tableView.deselectAll(nil)

@@ -12,6 +12,7 @@ import MangaDexLib
 class MangaInfoViewController: PageContentViewController {
 
     @IBOutlet var imageView: NSImageView!
+    @IBOutlet var bookmarkImageView: NSImageView!
     @IBOutlet var titleLabel: NSTextField!
     @IBOutlet var authorLabel: NSTextField!
     @IBOutlet var genreLabel: NSTextField!
@@ -28,6 +29,8 @@ class MangaInfoViewController: PageContentViewController {
         didSet {
             DispatchQueue.main.async {
                 self.linkButton?.isEnabled = (self.manga != nil)
+                let bookmarked = self.manga?.readingStatus != .unfollowed && self.manga?.readingStatus != nil
+                self.bookmarkImageView?.isHidden = !bookmarked
                 self.updateContent()
 
                 if self.manga?.mangaId != self.mangaInfo?.mangaId {

@@ -1073,16 +1073,37 @@ DQ
                         <rect key="frame" x="0.0" y="0.0" width="658" height="532"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zwb-aB-6q5">
-                                <rect key="frame" x="20" y="277" width="210" height="235"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="pb8-p9-C9O">
+                                <rect key="frame" x="20" y="262" width="210" height="250"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zwb-aB-6q5">
+                                        <rect key="frame" x="30" y="8" width="150" height="235"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="16" id="Vd0-Ga-KVk"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="jhF-UR-imr"/>
+                                        </constraints>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="CoverPlaceholder" id="8Yu-4U-QOi"/>
+                                    </imageView>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ge0-hQ-8AQ">
+                                        <rect key="frame" x="158" y="218" width="14" height="25"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Bookmark" id="vpE-4F-2i8"/>
+                                    </imageView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="210" id="Vd0-Ga-KVk"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="jhF-UR-imr"/>
+                                    <constraint firstItem="Zwb-aB-6q5" firstAttribute="centerY" secondItem="pb8-p9-C9O" secondAttribute="centerY" id="AzZ-mN-n08"/>
+                                    <constraint firstItem="Zwb-aB-6q5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pb8-p9-C9O" secondAttribute="leading" id="MAP-qv-H2K"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Zwb-aB-6q5" secondAttribute="trailing" id="Qji-tC-LNA"/>
+                                    <constraint firstItem="Zwb-aB-6q5" firstAttribute="centerX" secondItem="pb8-p9-C9O" secondAttribute="centerX" id="TeI-JG-Nxk"/>
+                                    <constraint firstItem="ge0-hQ-8AQ" firstAttribute="trailing" secondItem="Zwb-aB-6q5" secondAttribute="trailing" constant="-8" id="VDX-zU-af9"/>
+                                    <constraint firstAttribute="width" constant="210" id="Wkj-4i-mzx"/>
+                                    <constraint firstItem="ge0-hQ-8AQ" firstAttribute="top" secondItem="Zwb-aB-6q5" secondAttribute="top" id="YVb-w3-r1Y"/>
+                                    <constraint firstAttribute="height" constant="250" id="aad-nM-uSJ"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Zwb-aB-6q5" secondAttribute="bottom" id="b3g-ce-pMq"/>
+                                    <constraint firstItem="Zwb-aB-6q5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="pb8-p9-C9O" secondAttribute="top" id="in1-JM-bMk"/>
                                 </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="CoverPlaceholder" id="8Yu-4U-QOi"/>
-                            </imageView>
+                            </customView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oOZ-a8-ksH">
-                                <rect key="frame" x="236" y="496" width="404" height="16"/>
+                                <rect key="frame" x="248" y="496" width="392" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Title" id="WEf-Bm-TOK">
                                     <font key="font" metaFont="systemMedium" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1090,7 +1111,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7kb-Pd-iNu">
-                                <rect key="frame" x="236" y="472" width="404" height="16"/>
+                                <rect key="frame" x="248" y="472" width="392" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Author, Artist" id="y7l-XM-LhK">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1098,7 +1119,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="amS-Pv-fMT">
-                                <rect key="frame" x="236" y="448" width="404" height="16"/>
+                                <rect key="frame" x="248" y="448" width="392" height="16"/>
                                 <textFieldCell key="cell" selectable="YES" title="Genre" id="5eZ-N2-aZc">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1106,7 +1127,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gHi-Dw-wXc">
-                                <rect key="frame" x="236" y="424" width="404" height="16"/>
+                                <rect key="frame" x="248" y="424" width="392" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Status" id="VkB-zd-gm9">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1114,7 +1135,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8EM-9G-E60">
-                                <rect key="frame" x="20" y="253" width="210" height="16"/>
+                                <rect key="frame" x="20" y="238" width="210" height="16"/>
                                 <buttonCell key="cell" type="bevel" title="Open in browser ›" bezelStyle="rounded" alignment="center" state="on" inset="2" id="i19-Wv-kHo">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1125,17 +1146,17 @@ DQ
                                 </connections>
                             </button>
                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="YnZ-3H-1MF">
-                                <rect key="frame" x="234" y="253" width="404" height="163"/>
+                                <rect key="frame" x="246" y="238" width="392" height="178"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Cgg-SF-WkU">
-                                    <rect key="frame" x="0.0" y="0.0" width="404" height="163"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="392" height="178"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="0Xy-cr-Ed6">
-                                            <rect key="frame" x="0.0" y="0.0" width="404" height="163"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="392" height="178"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <size key="minSize" width="404" height="163"/>
+                                            <size key="minSize" width="392" height="178"/>
                                             <size key="maxSize" width="404" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Description">
@@ -1159,21 +1180,21 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="hHt-4p-Ni2">
-                                    <rect key="frame" x="388" y="0.0" width="16" height="56"/>
+                                    <rect key="frame" x="84" y="0.0" width="16" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                             <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="BkC-6i-BhN">
-                                <rect key="frame" x="420" y="379" width="32" height="32"/>
+                                <rect key="frame" x="426" y="371" width="32" height="32"/>
                             </progressIndicator>
                             <scrollView focusRingType="none" borderType="line" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tvc-Q5-ehq">
-                                <rect key="frame" x="20" y="20" width="618" height="214"/>
+                                <rect key="frame" x="20" y="20" width="618" height="199"/>
                                 <clipView key="contentView" focusRingType="none" drawsBackground="NO" id="9e0-Am-mS3">
-                                    <rect key="frame" x="1" y="1" width="616" height="212"/>
+                                    <rect key="frame" x="1" y="1" width="616" height="197"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="fxt-tW-2cM" id="vBj-40-1pb">
-                                            <rect key="frame" x="0.0" y="0.0" width="616" height="187"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="616" height="172"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1238,43 +1259,44 @@ DQ
                                 </tableHeaderView>
                             </scrollView>
                             <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="DHL-yX-MXh">
-                                <rect key="frame" x="313" y="111" width="32" height="32"/>
+                                <rect key="frame" x="313" y="104" width="32" height="32"/>
                             </progressIndicator>
                         </subviews>
                         <constraints>
                             <constraint firstItem="oOZ-a8-ksH" firstAttribute="top" secondItem="VZn-Fd-vsa" secondAttribute="top" constant="20" id="1cE-j5-MaD"/>
                             <constraint firstAttribute="trailing" secondItem="tvc-Q5-ehq" secondAttribute="trailing" constant="20" id="1eb-rd-ADq"/>
-                            <constraint firstItem="8EM-9G-E60" firstAttribute="leading" secondItem="Zwb-aB-6q5" secondAttribute="leading" id="3en-VB-FTn"/>
-                            <constraint firstItem="8EM-9G-E60" firstAttribute="trailing" secondItem="Zwb-aB-6q5" secondAttribute="trailing" id="54I-7X-dns"/>
                             <constraint firstAttribute="trailing" secondItem="oOZ-a8-ksH" secondAttribute="trailing" constant="20" id="AaI-ZB-85k"/>
                             <constraint firstItem="gHi-Dw-wXc" firstAttribute="top" secondItem="amS-Pv-fMT" secondAttribute="bottom" constant="8" id="BhP-AB-qGx"/>
+                            <constraint firstItem="pb8-p9-C9O" firstAttribute="top" secondItem="VZn-Fd-vsa" secondAttribute="top" constant="20" id="E3X-dF-1lz"/>
                             <constraint firstItem="gHi-Dw-wXc" firstAttribute="leading" secondItem="oOZ-a8-ksH" secondAttribute="leading" id="HBi-Ob-TuQ"/>
                             <constraint firstItem="DHL-yX-MXh" firstAttribute="centerX" secondItem="tvc-Q5-ehq" secondAttribute="centerX" id="HiC-T5-NBJ"/>
                             <constraint firstItem="YnZ-3H-1MF" firstAttribute="bottom" secondItem="8EM-9G-E60" secondAttribute="bottom" id="Hnl-NN-tG4"/>
+                            <constraint firstItem="8EM-9G-E60" firstAttribute="leading" secondItem="pb8-p9-C9O" secondAttribute="leading" id="JPm-U0-ip7"/>
                             <constraint firstItem="amS-Pv-fMT" firstAttribute="top" secondItem="7kb-Pd-iNu" secondAttribute="bottom" constant="8" id="Kf1-sB-i5D"/>
-                            <constraint firstItem="BkC-6i-BhN" firstAttribute="centerY" secondItem="Zwb-aB-6q5" secondAttribute="centerY" id="M5S-9w-WPL"/>
-                            <constraint firstItem="8EM-9G-E60" firstAttribute="top" secondItem="Zwb-aB-6q5" secondAttribute="bottom" constant="8" id="N3v-Zd-Bec"/>
+                            <constraint firstItem="8EM-9G-E60" firstAttribute="trailing" secondItem="pb8-p9-C9O" secondAttribute="trailing" id="PzJ-Xw-77W"/>
                             <constraint firstItem="gHi-Dw-wXc" firstAttribute="trailing" secondItem="oOZ-a8-ksH" secondAttribute="trailing" id="Qoc-Vp-xsh"/>
                             <constraint firstItem="YnZ-3H-1MF" firstAttribute="trailing" secondItem="oOZ-a8-ksH" secondAttribute="trailing" id="RlY-hT-Yhp"/>
+                            <constraint firstItem="pb8-p9-C9O" firstAttribute="leading" secondItem="VZn-Fd-vsa" secondAttribute="leading" constant="20" id="U7T-vt-FX7"/>
                             <constraint firstItem="BkC-6i-BhN" firstAttribute="centerX" secondItem="YnZ-3H-1MF" secondAttribute="centerX" id="UWT-i3-xzM"/>
                             <constraint firstItem="7kb-Pd-iNu" firstAttribute="top" secondItem="oOZ-a8-ksH" secondAttribute="bottom" constant="8" id="WhY-Ce-Gio"/>
                             <constraint firstItem="YnZ-3H-1MF" firstAttribute="leading" secondItem="oOZ-a8-ksH" secondAttribute="leading" constant="-4" id="Yn1-b9-MyM"/>
-                            <constraint firstItem="Zwb-aB-6q5" firstAttribute="leading" secondItem="VZn-Fd-vsa" secondAttribute="leading" constant="20" id="eDu-yZ-Gi0"/>
                             <constraint firstItem="amS-Pv-fMT" firstAttribute="trailing" secondItem="oOZ-a8-ksH" secondAttribute="trailing" id="eQ3-vz-t1Z"/>
+                            <constraint firstItem="8EM-9G-E60" firstAttribute="top" secondItem="pb8-p9-C9O" secondAttribute="bottom" constant="8" id="fZ6-pJ-Upc"/>
+                            <constraint firstItem="oOZ-a8-ksH" firstAttribute="leading" secondItem="pb8-p9-C9O" secondAttribute="trailing" constant="20" id="g3t-JC-M4T"/>
                             <constraint firstItem="amS-Pv-fMT" firstAttribute="leading" secondItem="oOZ-a8-ksH" secondAttribute="leading" id="hDG-ON-cJh"/>
                             <constraint firstItem="DHL-yX-MXh" firstAttribute="centerY" secondItem="tvc-Q5-ehq" secondAttribute="centerY" id="jV7-Y8-nVt"/>
                             <constraint firstItem="7kb-Pd-iNu" firstAttribute="leading" secondItem="oOZ-a8-ksH" secondAttribute="leading" id="lU0-lY-qRK"/>
+                            <constraint firstItem="BkC-6i-BhN" firstAttribute="centerY" secondItem="pb8-p9-C9O" secondAttribute="centerY" id="lxs-Ew-ZR3"/>
                             <constraint firstItem="tvc-Q5-ehq" firstAttribute="leading" secondItem="VZn-Fd-vsa" secondAttribute="leading" constant="20" id="mHD-Wj-d8m"/>
-                            <constraint firstItem="Zwb-aB-6q5" firstAttribute="top" secondItem="VZn-Fd-vsa" secondAttribute="top" constant="20" id="n75-dj-6HO"/>
                             <constraint firstItem="tvc-Q5-ehq" firstAttribute="top" secondItem="YnZ-3H-1MF" secondAttribute="bottom" constant="19" id="peb-KP-qnK"/>
                             <constraint firstAttribute="bottom" secondItem="tvc-Q5-ehq" secondAttribute="bottom" constant="20" id="rJA-R2-MJY"/>
-                            <constraint firstItem="oOZ-a8-ksH" firstAttribute="leading" secondItem="Zwb-aB-6q5" secondAttribute="trailing" constant="8" id="tO2-61-jrc"/>
                             <constraint firstItem="YnZ-3H-1MF" firstAttribute="top" secondItem="gHi-Dw-wXc" secondAttribute="bottom" constant="8" id="vz9-fv-bgl"/>
                             <constraint firstItem="7kb-Pd-iNu" firstAttribute="trailing" secondItem="oOZ-a8-ksH" secondAttribute="trailing" id="wgK-G1-G5M"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="authorLabel" destination="7kb-Pd-iNu" id="tyB-rX-07A"/>
+                        <outlet property="bookmarkImageView" destination="ge0-hQ-8AQ" id="Gd0-zP-714"/>
                         <outlet property="chaptersLoadingIndicator" destination="DHL-yX-MXh" id="jXX-on-5cP"/>
                         <outlet property="descriptionTextView" destination="0Xy-cr-Ed6" id="dUU-vf-1p9"/>
                         <outlet property="detailLoadingIndicator" destination="BkC-6i-BhN" id="Bgw-hy-x5t"/>
@@ -1404,6 +1426,7 @@ DQ
         </scene>
     </scenes>
     <resources>
+        <image name="Bookmark" width="14" height="25"/>
         <image name="CoverPlaceholder" width="150" height="235"/>
         <image name="NSGoBackTemplate" width="9" height="12"/>
         <image name="NSMenuOnStateTemplate" width="12" height="12"/>

@@ -28,6 +28,7 @@ class MangaInfoViewController: PageContentViewController {
         didSet {
             DispatchQueue.main.async {
                 self.linkButton?.isEnabled = (self.manga != nil)
+                self.mangaInfo = nil
                 self.updateContent()
             }
         }
@@ -139,6 +140,7 @@ class MangaInfoViewController: PageContentViewController {
 
             return firstReleaseDate > secondReleaseDate
         }
+        self.tableView.deselectAll(nil)
         self.tableView.reloadData()
     }
 

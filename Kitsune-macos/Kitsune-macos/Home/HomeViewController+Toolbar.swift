@@ -12,7 +12,7 @@ import MangaDexLib
 extension HomeViewController {
 
     func configureToolbar() {
-        //showToolbarButtons()
+        showToolbarButtons()
 
         if api.isLoggedIn() {
             ToolbarManager.didLogin(from: view)

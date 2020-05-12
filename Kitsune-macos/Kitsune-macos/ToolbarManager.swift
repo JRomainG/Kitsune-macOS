@@ -71,7 +71,7 @@ class ToolbarManager {
         segmentedControl(in: view)?.isHidden = true
         searchBar(in: view)?.isHidden = true
         previousButton(in: view)?.isHidden = false
-        previousButton(in: view)?.isEnabled = false // Disable during transition
+        previousButton(in: view)?.isEnabled = true
     }
 
 }

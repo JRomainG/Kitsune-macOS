@@ -59,4 +59,18 @@ extension MDChapter {
         return dateFormatter.string(from: date)
     }
 
+    func isRead(for manga: MDManga?) -> Bool {
+        if let readVolume = Float(manga?.currentVolume ?? ""),
+            let chapterVolume = Float(volume ?? ""),
+            readVolume > chapterVolume {
+            return true
+        }
+        if let readChapter = Float(manga?.currentChapter ?? ""),
+            let chapter = Float(chapter ?? ""),
+            readChapter >= chapter {
+            return true
+        }
+        return false
+    }
+
 }

@@ -260,7 +260,18 @@ extension MangaInfoViewController: NSTableViewDataSource {
         default:
             return chapter.groupName ?? "-"
         }
+    }
 
+    func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
+        guard let textCell = cell as? NSTextFieldCell else {
+            return
+        }
+        let chapter = chapters[row]
+        if chapter.isRead(for: manga) {
+            textCell.textColor = .placeholderTextColor
+        } else {
+            textCell.textColor = .textColor
+        }
     }
 
 }

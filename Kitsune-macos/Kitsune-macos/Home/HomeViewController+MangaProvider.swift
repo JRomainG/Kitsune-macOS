@@ -66,7 +66,7 @@ extension HomeViewController: MangaProviderDelegate {
 
         DispatchQueue.main.async {
             self.toggleLoadingView()
-            self.toggleErrorLabel()
+            self.toggleErrorView()
         }
     }
 

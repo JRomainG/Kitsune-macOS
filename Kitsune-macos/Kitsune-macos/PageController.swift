@@ -19,7 +19,8 @@ class PageController: NSPageController {
 
         self.delegate = self
         self.arrangedObjects = ["homeViewController",
-                                "mangaInfoViewController"]
+                                "mangaInfoViewController",
+                                "chapterReaderViewController"]
         currentController = selectedViewController as? PageContentViewController
         currentController?.didBecomeContentController()
     }

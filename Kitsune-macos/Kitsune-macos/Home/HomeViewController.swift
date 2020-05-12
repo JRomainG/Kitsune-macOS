@@ -14,6 +14,7 @@ class HomeViewController: PageContentViewController {
 
     @IBOutlet var collectionView: NSCollectionView!
     @IBOutlet var loadingView: LoadingView!
+    @IBOutlet var errorView: LoadingView!
     @IBOutlet var errorLabel: NSTextField!
     var quickLookVC: QuickLookViewController?
     var sortOrderVC: SortOptionsViewController?
@@ -32,7 +33,7 @@ class HomeViewController: PageContentViewController {
     var currentProviderIndex: Int = 0 {
         didSet {
             quickLookVC?.mangaProvider = currentProvider
-            toggleErrorLabel()
+            toggleErrorView()
             toggleLoadingView()
 
             // Call a "viewDidScroll" event to check if more should be loaded
@@ -106,8 +107,10 @@ class HomeViewController: PageContentViewController {
         }
     }
 
-    override func viewDidAppear() {
-        super.viewDidAppear()
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        toggleErrorView()
+        toggleLoadingView()
     }
 
     func configureCollectionView() {
@@ -224,13 +227,13 @@ class HomeViewController: PageContentViewController {
     }
 
     /// Show or hide the error label if necessary
-    func toggleErrorLabel() {
+    func toggleErrorView() {
         if let error = currentProvider.error {
             errorLabel.stringValue = String(describing: error)
-            errorLabel.isHidden = false
+            errorView.isHidden = false
         } else {
             errorLabel.stringValue = ""
-            errorLabel.isHidden = true
+            errorView.isHidden = true
         }
     }
 
@@ -244,6 +247,11 @@ class HomeViewController: PageContentViewController {
         } else {
             popup.open(in: self, from: view)
         }
+    }
+
+    @IBAction func openWebsite(_ sender: Any) {
+        let url = URL(string: MDApi.baseURL)!
+        NSWorkspace.shared.open(url)
     }
 
 }

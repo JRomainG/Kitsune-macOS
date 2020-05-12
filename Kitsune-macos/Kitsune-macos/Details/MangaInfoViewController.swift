@@ -115,6 +115,8 @@ class MangaInfoViewController: PageContentViewController {
                                   options: .decodeFirstFrameOnly,
                                   completed: nil)
         }
+
+        self.tableView.reloadData()
     }
 
     func updateChapterList() {
@@ -155,7 +157,8 @@ class MangaInfoViewController: PageContentViewController {
             detailLoadingIndicator.stopAnimation(nil)
         }
 
-        if mangaInfo == nil {
+        if mangaInfo == nil || manga?.description == nil {
+            // We need manga details to know which chapters are read
             chaptersLoadingIndicator?.startAnimation(nil)
             chaptersLoadingIndicator?.isHidden = false
         } else {
@@ -253,6 +256,10 @@ class MangaInfoViewController: PageContentViewController {
         var resetManga = manga
         resetManga?.description = nil
         resetManga?.chapters = nil
+        resetManga?.currentVolume = nil
+        resetManga?.currentChapter = nil
+        resetManga?.artist = nil
+        resetManga?.author = nil
         manga = resetManga
         tableView.reloadData()
     }
@@ -262,6 +269,9 @@ class MangaInfoViewController: PageContentViewController {
 extension MangaInfoViewController: NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
+        guard manga?.description != nil else {
+            return 0
+        }
         return chapters.count
     }
 

@@ -10,7 +10,7 @@ import Cocoa
 import Quartz
 import MangaDexLib
 
-class HomeViewController: NSViewController {
+class HomeViewController: PageContentViewController {
 
     @IBOutlet var collectionView: NSCollectionView!
     @IBOutlet var loadingView: LoadingView!
@@ -108,9 +108,6 @@ class HomeViewController: NSViewController {
 
     override func viewDidAppear() {
         super.viewDidAppear()
-
-        // Update toolbar here, as it's not always loaded yet in "viewDidLoad"
-        configureToolbar()
     }
 
     func configureCollectionView() {
@@ -137,20 +134,27 @@ class HomeViewController: NSViewController {
                                                name: NSView.boundsDidChangeNotification,
                                                object: clipView)
 
+        // Receive double click events to show manga info
+        let gesture = NSClickGestureRecognizer(target: self, action: #selector(showMangaInfo(notification:)))
+        gesture.numberOfClicksRequired = 2
+        gesture.delaysPrimaryMouseButtonEvents = false
+        collectionView.addGestureRecognizer(gesture)
+
         let nib = NSNib(nibNamed: "MangaCVItem", bundle: nil)
         collectionView.register(nib, forItemWithIdentifier: itemIdentifier)
     }
 
     func handleKeyDown(with event: NSEvent) -> Bool {
         // Make sure an item is selected, otherwise don't handle the event
-        guard let indexPath = collectionView.selectionIndexPaths.first else {
+        guard collectionView.selectionIndexPaths.first != nil,
+            isDisplayedViewController else {
             return false
         }
 
         switch event.keyCode {
         case 0x24, 0x4C:
             // Return / Enter
-            print("return at", indexPath)
+            showMangaInfo(notification: nil)
             return true
         case 0x31:
             // Space
@@ -183,38 +187,25 @@ class HomeViewController: NSViewController {
         return false
     }
 
-    /// Returns how many items fit in the current collection view's width
-    func numberOfColumns() -> Int {
-        guard let layout = collectionView.collectionViewLayout as? NSCollectionViewFlowLayout else {
-            return 1
-        }
-
-        let inset = layout.sectionInset.left + layout.sectionInset.right
-        let availableWidth = collectionView.frame.size.width + layout.minimumInteritemSpacing - inset
-        return Int(availableWidth / (layout.itemSize.width + layout.minimumInteritemSpacing))
-    }
-
-    /// Moves the selected index path by the given number of items
-    func moveSelection(by nItems: Int) {
-        guard let indexPath = collectionView.selectionIndexPaths.first else {
+    @objc func showMangaInfo(notification: NSNotification?) {
+        guard collectionView.selectionIndexPaths.first != nil, isDisplayedViewController else {
             return
         }
+        pageController?.navigateForward(nil)
+    }
 
-        // Find out the index of the new selected element
-        var newItem = indexPath.item + nItems
-        newItem = max(0, min(mangas.count - 1, newItem))
-        let newIndexPath = IndexPath(item: newItem, section: indexPath.section)
-
-        // Force-stop scroll
-        for recognizer in collectionView.gestureRecognizers {
-            recognizer.isEnabled = false
-            recognizer.isEnabled = true
+    override func pageControllerWillTransition(to controller: PageContentViewController) {
+        guard let indexPath = collectionView.selectionIndexPaths.first,
+            let infoViewController = controller as? MangaInfoViewController else {
+            return
         }
+        let manga = mangas[indexPath.item]
+        infoViewController.manga = manga
+        infoViewController.mangaProvider = currentProvider
+    }
 
-        // Update the selection
-        collectionView.deselectItems(at: [indexPath])
-        collectionView.selectItems(at: [newIndexPath], scrollPosition: .top)
-        quickLookVC?.manga = mangas[newItem]
+    override func didBecomeContentController() {
+        configureToolbar()
     }
 
     /// Show or hide the loading view if necessary

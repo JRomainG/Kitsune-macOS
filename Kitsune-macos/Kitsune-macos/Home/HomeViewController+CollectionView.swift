@@ -8,6 +8,44 @@
 
 import Cocoa
 
+extension HomeViewController {
+
+    /// Returns how many items fit in the current collection view's width
+    func numberOfColumns() -> Int {
+        guard let layout = collectionView.collectionViewLayout as? NSCollectionViewFlowLayout else {
+            return 1
+        }
+
+        let inset = layout.sectionInset.left + layout.sectionInset.right
+        let availableWidth = collectionView.frame.size.width + layout.minimumInteritemSpacing - inset
+        return Int(availableWidth / (layout.itemSize.width + layout.minimumInteritemSpacing))
+    }
+
+    /// Moves the selected index path by the given number of items
+    func moveSelection(by nItems: Int) {
+        guard let indexPath = collectionView.selectionIndexPaths.first else {
+            return
+        }
+
+        // Find out the index of the new selected element
+        var newItem = indexPath.item + nItems
+        newItem = max(0, min(mangas.count - 1, newItem))
+        let newIndexPath = IndexPath(item: newItem, section: indexPath.section)
+
+        // Force-stop scroll
+        for recognizer in collectionView.gestureRecognizers {
+            recognizer.isEnabled = false
+            recognizer.isEnabled = true
+        }
+
+        // Update the selection
+        collectionView.deselectItems(at: [indexPath])
+        collectionView.selectItems(at: [newIndexPath], scrollPosition: .top)
+        quickLookVC?.manga = mangas[newItem]
+    }
+
+}
+
 extension HomeViewController: NSCollectionViewDataSource {
 
     func numberOfSections(in collectionView: NSCollectionView) -> Int {
@@ -55,7 +93,6 @@ extension HomeViewController: NSCollectionViewDelegate {
 
         // Start loading more 2 rows before the end
         if offset >= size - 2 * (defaultItemSize.height + defaultLineSpacing) {
-            print("Try to start loading more:", offset, size)
             currentProvider.loadMore()
         }
     }

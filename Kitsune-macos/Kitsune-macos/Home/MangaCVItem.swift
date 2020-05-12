@@ -82,13 +82,13 @@ class MangaCVItem: NSCollectionViewItem {
         let placeholder = NSImage(named: "CoverPlaceholder")
         imageView?.image = placeholder
 
-        guard let url = manga?.getCoverUrl() else {
+        guard let url = manga?.getCoverUrl(size: .large) else {
             return
         }
 
         imageView?.sd_setImage(with: url,
                                placeholderImage: placeholder,
-                               options: .scaleDownLargeImages,
+                               options: .decodeFirstFrameOnly,
                                completed: nil)
     }
 

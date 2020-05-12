@@ -140,6 +140,19 @@ class MangaProvider: NSObject {
         delegate?.didFinishLoading(provider: self)
     }
 
+    func updateManga(with mangaId: Int, response: MDResponse, completion: @escaping (MDManga?) -> Void) {
+        // Update the array so the info is kept for later
+        self.mangaSemaphore.wait()
+        let index = self.mangas.firstIndex { (manga) -> Bool in
+            return manga.mangaId == mangaId
+        }
+        if index != nil, let manga = response.manga {
+            self.mangas[index!] = MangaProvider.merged(first: self.mangas[index!], second: manga)
+        }
+        self.mangaSemaphore.signal()
+        completion(response.manga)
+    }
+
     func cancelRequests() {
         api.requestHandler.session.getAllTasks { (tasks) in
             for task in tasks {
@@ -157,15 +170,29 @@ class MangaProvider: NSObject {
 
         api.getMangaDetails(mangaId: mangaId, title: manga.title) { (response) in
             // Update the array so the info is kept for later
-            self.mangaSemaphore.wait()
-            let index = self.mangas.firstIndex { (manga) -> Bool in
-                return manga.mangaId == mangaId
-            }
-            if index != nil, let manga = response.manga {
-                self.mangas[index!] = MangaProvider.merged(first: self.mangas[index!], second: manga)
-            }
-            self.mangaSemaphore.signal()
-            completion(response.manga)
+            self.updateManga(with: mangaId, response: response, completion: completion)
+        }
+    }
+
+    func getInfo(for manga: MDManga, completion: @escaping (MDManga?) -> Void) {
+        guard let mangaId = manga.mangaId else {
+            completion(nil)
+            return
+        }
+
+        api.getMangaInfo(mangaId: mangaId) { (response) in
+            self.updateManga(with: mangaId, response: response, completion: completion)
+        }
+    }
+
+    func getChapters(for manga: MDManga, page: Int, completion: @escaping (MDManga?) -> Void) {
+        guard let mangaId = manga.mangaId else {
+            completion(nil)
+            return
+        }
+
+        api.getMangaChapters(mangaId: mangaId, title: manga.title, page: page) { (response) in
+            self.updateManga(with: mangaId, response: response, completion: completion)
         }
     }
 

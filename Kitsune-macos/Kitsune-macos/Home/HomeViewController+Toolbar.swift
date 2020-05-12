@@ -12,6 +12,8 @@ import MangaDexLib
 extension HomeViewController {
 
     func configureToolbar() {
+        //showToolbarButtons()
+
         if api.isLoggedIn() {
             ToolbarManager.didLogin(from: view)
         } else {
@@ -24,7 +26,8 @@ extension HomeViewController {
         control?.setLabel("Featured", forSegment: 1)
         control?.setLabel("Browse", forSegment: 2)
         control?.setLabel("Followed", forSegment: 3)
-        control?.selectSegment(withTag: 0)
+        control?.selectSegment(withTag: currentProviderIndex)
+        control?.target = self
         control?.action = #selector(segmentSelected(_:))
 
         if let accountButton = ToolbarManager.accountButton(in: view) {
@@ -37,6 +40,15 @@ extension HomeViewController {
             sortButton.action = #selector(toggleSortPanel)
         }
         toggleSortButton()
+    }
+
+    func showToolbarButtons() {
+        ToolbarManager.accountButton(in: view)?.isHidden = false
+        ToolbarManager.sortButton(in: view)?.isHidden = false
+        ToolbarManager.segmentedControl(in: view)?.isHidden = false
+        ToolbarManager.searchBar(in: view)?.isHidden = false
+        ToolbarManager.previousButton(in: view)?.isHidden = false
+        ToolbarManager.previousButton(in: view)?.isEnabled = false
     }
 
     /// Enables or disables the sort button based on displayed content

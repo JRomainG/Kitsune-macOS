@@ -11,6 +11,15 @@ import MangaDexLib
 
 extension MDManga {
 
+    var displayAuthor: String {
+        if let author = self.author,
+            let artist = self.artist,
+            author != artist {
+            return "\(author), \(artist)"
+        }
+        return author ?? artist ?? "-"
+    }
+
     var displayTags: String {
         var formattedTags: [String] = []
         for tag in tags ?? [] {
@@ -23,6 +32,13 @@ extension MDManga {
            }
         }
         return formattedTags.joined(separator: ", ")
+    }
+
+    var displayStatus: String {
+        if let status = publicationStatus {
+            return String(describing: status)
+        }
+        return "-"
     }
 
 }

@@ -32,18 +32,6 @@ class MangaInfoViewController: PageContentViewController {
                 let bookmarked = self.manga?.readingStatus != .unfollowed && self.manga?.readingStatus != nil
                 self.bookmarkImageView?.isHidden = !bookmarked
                 self.updateContent()
-
-                if self.manga?.mangaId != self.mangaInfo?.mangaId {
-                    self.mangaInfo = nil
-                }
-            }
-        }
-    }
-
-    var mangaInfo: MDManga? {
-        didSet {
-            DispatchQueue.main.async {
-                self.updateContent()
                 self.updateChapterList()
             }
         }
@@ -83,31 +71,10 @@ class MangaInfoViewController: PageContentViewController {
 
         titleLabel.stringValue = manga?.title ?? "-"
         descriptionTextView.string = manga?.description ?? ""
-
-        let authorContent: String
-        if let author = mangaInfo?.author,
-            let artist = mangaInfo?.artist,
-            author != artist {
-            authorContent = "\(author), \(artist)"
-        } else if let author = mangaInfo?.author {
-            authorContent = author
-        } else if let artist = mangaInfo?.artist {
-           authorContent = artist
-        } else {
-            authorContent = "-"
-        }
-        authorLabel.stringValue = authorContent
-
-        let tags = mangaInfo?.displayTags ?? "-"
+        authorLabel.stringValue = manga?.displayAuthor ?? "-"
+        statusLabel.stringValue = "Pub. status: \(manga?.displayStatus ?? "-")"
+        let tags = manga?.displayTags ?? "-"
         genreLabel.stringValue = "Tags: \(tags)"
-
-        let publicationStatus: String
-        if let status = mangaInfo?.publicationStatus {
-            publicationStatus = String(describing: status)
-        } else {
-            publicationStatus = "-"
-        }
-        statusLabel.stringValue = "Pub. status: \(publicationStatus)"
 
         let placeholder = NSImage(named: "CoverPlaceholder")
         imageView.image = placeholder
@@ -123,7 +90,7 @@ class MangaInfoViewController: PageContentViewController {
     }
 
     func updateChapterList() {
-        chapters = mangaInfo?.chapters ?? []
+        chapters = manga?.chapters ?? []
         chapters = chapters.filter { (chapter) -> Bool in
             return chapter.getOriginalLang() == .english
         }.sorted { (first, second) -> Bool in
@@ -151,8 +118,7 @@ class MangaInfoViewController: PageContentViewController {
     }
 
     func toggleLoadingIndicator() {
-        if manga?.description == nil {
-            // Some information is still loading
+        if shouldDownloadInfo() {
             detailLoadingIndicator?.startAnimation(nil)
             detailLoadingIndicator?.isHidden = false
         } else {
@@ -160,7 +126,7 @@ class MangaInfoViewController: PageContentViewController {
             detailLoadingIndicator.stopAnimation(nil)
         }
 
-        if mangaInfo == nil || manga?.description == nil {
+        if shouldDownloadDetails() {
             // We need manga details to know which chapters are read
             chaptersLoadingIndicator?.startAnimation(nil)
             chaptersLoadingIndicator?.isHidden = false
@@ -170,29 +136,37 @@ class MangaInfoViewController: PageContentViewController {
         }
     }
 
+    func shouldDownloadDetails() -> Bool {
+        guard mangaProvider?.api.isLoggedIn() == true else {
+            return false
+        }
+        return manga?.readingStatus == nil
+    }
+
+    func shouldDownloadInfo() -> Bool {
+        return manga?.description == nil
+    }
+
     func downloadDetails() {
-        guard manga?.description == nil else {
+        guard shouldDownloadDetails() else {
             return
         }
-
         let operation = MangaDetailOperation()
         operation.manga = manga
         operation.provider = mangaProvider
         operation.completionBlock = {
-            guard !operation.isCancelled, let manga = operation.manga else {
+            guard !operation.isCancelled,
+                let manga = operation.manga,
+                let currentManga = self.manga else {
                 return
             }
-            if self.manga == nil {
-                self.manga = manga
-            } else {
-                self.manga = MangaProvider.merged(first: self.manga!, second: manga)
-            }
+            self.manga = MangaProvider.merged(first: currentManga, second: manga)
         }
         operationQueue.addOperation(operation)
     }
 
     func downloadInfo() {
-        guard mangaInfo == nil else {
+        guard shouldDownloadInfo() else {
             return
         }
 
@@ -200,10 +174,12 @@ class MangaInfoViewController: PageContentViewController {
         operation.manga = manga
         operation.provider = mangaProvider
         operation.completionBlock = {
-            guard !operation.isCancelled else {
+            guard !operation.isCancelled,
+                let manga = operation.manga,
+                let currentManga = self.manga else {
                 return
             }
-            self.mangaInfo = operation.manga
+            self.manga = MangaProvider.merged(first: currentManga, second: manga)
         }
         operationQueue.addOperation(operation)
     }
@@ -223,7 +199,7 @@ class MangaInfoViewController: PageContentViewController {
         }
         let chapter = chapters[tableView.selectedRow]
         readerViewController.chapter = chapter
-        readerViewController.mangaInfo = mangaInfo
+        readerViewController.manga = manga
     }
 
     func configureToolbar() {
@@ -255,7 +231,6 @@ class MangaInfoViewController: PageContentViewController {
 
     @objc func refresh() {
         tableView.scroll(.zero)
-        mangaInfo = nil
         var resetManga = manga
         resetManga?.description = nil
         resetManga?.chapters = nil
@@ -272,7 +247,7 @@ class MangaInfoViewController: PageContentViewController {
 extension MangaInfoViewController: NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
-        guard manga?.description != nil else {
+        guard !shouldDownloadDetails() else {
             return 0
         }
         return chapters.count
@@ -299,11 +274,7 @@ extension MangaInfoViewController: NSTableViewDelegate {
             return
         }
         let chapter = chapters[row]
-        if chapter.isRead(for: manga) {
-            textCell.textColor = .disabledControlTextColor
-        } else {
-            textCell.textColor = .textColor
-        }
+        textCell.isEnabled = !chapter.isRead(for: manga)
     }
 
 }

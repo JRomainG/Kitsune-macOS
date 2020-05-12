@@ -18,7 +18,7 @@ class ChapterReaderViewController: PageContentViewController {
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var imageView: NSImageView!
 
-    var mangaInfo: MDManga?
+    var manga: MDManga?
     var chapter: MDChapter?
 
     override func viewDidLoad() {

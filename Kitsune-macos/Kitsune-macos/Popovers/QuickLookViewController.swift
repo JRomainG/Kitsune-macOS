@@ -14,6 +14,9 @@ class QuickLookViewController: NSViewController {
 
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var titleLabel: NSTextField!
+    @IBOutlet var authorLabel: NSTextField!
+    @IBOutlet var genreLabel: NSTextField!
+    @IBOutlet var statusLabel: NSTextField!
     @IBOutlet var linkButton: NSButton!
     @IBOutlet var descriptionTextView: NSTextView!
     @IBOutlet var loadingIndicator: NSProgressIndicator!
@@ -24,7 +27,7 @@ class QuickLookViewController: NSViewController {
     private(set) var isBeingPresented = false
     lazy var operationQueue: OperationQueue = {
         let queue = OperationQueue()
-        queue.name = "Manga details download queue"
+        queue.name = "Manga info download queue"
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
@@ -85,7 +88,7 @@ class QuickLookViewController: NSViewController {
             loadingIndicator?.startAnimation(nil)
             loadingIndicator?.isHidden = false
 
-            let operation = MangaDetailOperation()
+            let operation = MangaInfoOperation()
             operation.manga = manga
             operation.provider = mangaProvider
             operation.delay = 0.25
@@ -94,11 +97,10 @@ class QuickLookViewController: NSViewController {
                     return
                 }
                 DispatchQueue.main.async {
-                    if self.manga == nil {
-                        self.manga = manga
-                    } else {
-                        self.manga = MangaProvider.merged(first: self.manga!, second: manga)
+                    guard let currentManga = self.manga else {
+                        return
                     }
+                    self.manga = MangaProvider.merged(first: currentManga, second: manga)
                 }
             }
             operationQueue.addOperation(operation)
@@ -109,6 +111,10 @@ class QuickLookViewController: NSViewController {
 
         titleLabel.stringValue = manga?.title ?? "-"
         descriptionTextView.string = manga?.description ?? ""
+        authorLabel.stringValue = manga?.displayAuthor ?? "-"
+        statusLabel.stringValue = "Pub. status: \(manga?.displayStatus ?? "-")"
+        let tags = manga?.displayTags ?? "-"
+        genreLabel.stringValue = "Tags: \(tags)"
 
         let placeholder = NSImage(named: "CoverPlaceholder")
         imageView.image = placeholder

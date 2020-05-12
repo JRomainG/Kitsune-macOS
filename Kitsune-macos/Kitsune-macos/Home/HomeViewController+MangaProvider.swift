@@ -36,7 +36,6 @@ extension HomeViewController: MangaProviderDelegate {
     }
 
     func didStartInitialLoad(provider: MangaProvider) {
-        print("Provider \(provider) did start initial load")
         DispatchQueue.main.async {
             self.toggleLoadingView()
         }
@@ -47,7 +46,6 @@ extension HomeViewController: MangaProviderDelegate {
     }
 
     func didFinishLoading(provider: MangaProvider) {
-        print("Provider \(provider) did finish loading")
         guard provider == currentProvider else {
             return
         }
@@ -59,7 +57,6 @@ extension HomeViewController: MangaProviderDelegate {
     }
 
     func didFailLoading(provider: MangaProvider, error: Error) {
-        print("Provider \(provider) did fail:", error)
         guard provider == currentProvider else {
             return
         }

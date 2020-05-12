@@ -16,13 +16,11 @@ class PageController: NSPageController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-
         self.delegate = self
         self.arrangedObjects = ["homeViewController",
                                 "mangaInfoViewController",
                                 "chapterReaderViewController"]
         currentController = selectedViewController as? PageContentViewController
-        currentController?.didBecomeContentController()
     }
 
     override func viewDidAppear() {
@@ -110,6 +108,7 @@ extension PageController: NSPageControllerDelegate {
         if let viewController = controller as? PageContentViewController {
             viewController.pageController = self
             contentViewControllers[identifier] = viewController
+            currentController?.pageControllerWillTransition(to: viewController)
             return viewController
         }
 

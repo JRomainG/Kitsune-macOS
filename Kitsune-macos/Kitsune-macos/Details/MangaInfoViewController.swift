@@ -287,27 +287,20 @@ extension MangaInfoViewController: NSTableViewDataSource {
         }
     }
 
+}
+
+extension MangaInfoViewController: NSTableViewDelegate {
+
     func tableView(_ tableView: NSTableView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
         guard let textCell = cell as? NSTextFieldCell else {
             return
         }
         let chapter = chapters[row]
         if chapter.isRead(for: manga) {
-            textCell.textColor = .placeholderTextColor
+            textCell.textColor = .disabledControlTextColor
         } else {
             textCell.textColor = .textColor
         }
-    }
-
-}
-
-extension MangaInfoViewController: NSTableViewDelegate {
-
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        guard tableView.selectedRow > -1 else {
-            return
-        }
-        print("tableViewSelectionDidChange")
     }
 
 }

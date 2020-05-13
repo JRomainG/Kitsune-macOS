@@ -1395,8 +1395,29 @@ DQ
                 <viewController storyboardIdentifier="chapterReaderViewController" id="li0-3m-yP2" customClass="ChapterReaderViewController" customModule="Kitsune" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="meP-Wu-tpt">
                         <rect key="frame" x="0.0" y="0.0" width="656" height="532"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" minMagnification="1" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnU-FI-0Sw">
+                                <rect key="frame" x="0.0" y="32" width="656" height="500"/>
+                                <clipView key="contentView" id="h81-6t-dbo">
+                                    <rect key="frame" x="1" y="1" width="654" height="498"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view id="nCB-Ht-8Bq">
+                                            <rect key="frame" x="0.0" y="0.0" width="654" height="500"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Q0l-KG-Fra">
+                                    <rect key="frame" x="1" y="483" width="654" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Mfk-kt-NYK">
+                                    <rect key="frame" x="639" y="1" width="16" height="498"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="MKa-YK-YtF">
                                 <rect key="frame" x="0.0" y="0.0" width="656" height="32"/>
                                 <subviews>
@@ -1456,45 +1477,22 @@ DQ
                                     <constraint firstItem="Eie-dj-sNY" firstAttribute="leading" secondItem="AeI-dl-fE2" secondAttribute="trailing" constant="8" id="x7V-WY-POj"/>
                                 </constraints>
                             </customView>
-                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0OG-mA-q1Y">
-                                <rect key="frame" x="0.0" y="32" width="656" height="500"/>
-                                <clipView key="contentView" id="Qkx-D7-kL7">
-                                    <rect key="frame" x="1" y="1" width="654" height="498"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lw1-pA-WqA">
-                                            <rect key="frame" x="0.0" y="-2" width="656" height="500"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="CoverPlaceholder" id="gG3-OZ-Wnm"/>
-                                        </imageView>
-                                    </subviews>
-                                </clipView>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="ReS-7n-W4F">
-                                    <rect key="frame" x="1" y="483" width="654" height="16"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="GEo-gO-SkN">
-                                    <rect key="frame" x="639" y="1" width="16" height="498"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="YnU-FI-0Sw" firstAttribute="leading" secondItem="meP-Wu-tpt" secondAttribute="leading" id="2Ug-Jh-i7P"/>
                             <constraint firstItem="MKa-YK-YtF" firstAttribute="leading" secondItem="meP-Wu-tpt" secondAttribute="leading" id="42k-l3-xXf"/>
+                            <constraint firstItem="YnU-FI-0Sw" firstAttribute="top" secondItem="meP-Wu-tpt" secondAttribute="top" id="DVm-EG-tC5"/>
                             <constraint firstAttribute="bottom" secondItem="MKa-YK-YtF" secondAttribute="bottom" id="DxD-u5-G5i"/>
-                            <constraint firstItem="0OG-mA-q1Y" firstAttribute="leading" secondItem="meP-Wu-tpt" secondAttribute="leading" id="Paw-wb-rLk"/>
-                            <constraint firstItem="0OG-mA-q1Y" firstAttribute="top" secondItem="meP-Wu-tpt" secondAttribute="top" id="fou-5U-HIG"/>
-                            <constraint firstAttribute="trailing" secondItem="0OG-mA-q1Y" secondAttribute="trailing" id="j3F-tA-vaw"/>
+                            <constraint firstItem="MKa-YK-YtF" firstAttribute="top" secondItem="YnU-FI-0Sw" secondAttribute="bottom" id="Qoe-it-oQQ"/>
+                            <constraint firstAttribute="trailing" secondItem="YnU-FI-0Sw" secondAttribute="trailing" id="jna-P9-lPz"/>
                             <constraint firstAttribute="trailing" secondItem="MKa-YK-YtF" secondAttribute="trailing" id="tOC-I4-6fh"/>
-                            <constraint firstItem="MKa-YK-YtF" firstAttribute="top" secondItem="0OG-mA-q1Y" secondAttribute="bottom" id="yAE-LE-gOC"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="lw1-pA-WqA" id="CMV-5f-8eX"/>
                         <outlet property="nextButton" destination="Eie-dj-sNY" id="O83-qN-dPz"/>
                         <outlet property="pagePopupButton" destination="TLP-5D-fXb" id="wNU-7j-Zkl"/>
-                        <outlet property="previewButton" destination="AeI-dl-fE2" id="LRr-SD-VSQ"/>
-                        <outlet property="scrollView" destination="0OG-mA-q1Y" id="Vr9-Xc-0zN"/>
+                        <outlet property="previousButton" destination="AeI-dl-fE2" id="3Jz-68-weM"/>
+                        <outlet property="scrollView" destination="YnU-FI-0Sw" id="VIU-aa-OGw"/>
                         <outlet property="titleLabel" destination="FgU-ii-iPm" id="c9L-jb-DMo"/>
                     </connections>
                 </viewController>

@@ -190,6 +190,21 @@ class MangaProvider: NSObject {
         }
     }
 
+    func getChapterInfo(for chapter: MDChapter, completion: @escaping (MDChapter?) -> Void) {
+        guard let chapterId = chapter.chapterId else {
+            completion(nil)
+            return
+        }
+
+        api.getChapterInfo(chapterId: chapterId) { (response) in
+            var chapterInfo = response.chapter
+            if chapterInfo != nil {
+                chapterInfo = MangaProvider.merged(first: chapterInfo!, second: chapter)
+            }
+            completion(chapterInfo)
+        }
+    }
+
     func getChapters(for manga: MDManga, page: Int, completion: @escaping (MDManga?) -> Void) {
         guard let mangaId = manga.mangaId else {
             completion(nil)
@@ -208,7 +223,6 @@ class MangaProvider: NSObject {
         newManga.author = first.author ?? second.author
         newManga.artist = first.artist ?? second.artist
         newManga.description = first.description ?? second.description
-        newManga.chapters = first.chapters ?? second.chapters
         newManga.publicationStatus = first.publicationStatus ?? second.publicationStatus
         newManga.readingStatus = first.readingStatus ?? second.readingStatus
         newManga.currentVolume = first.currentVolume ?? second.currentVolume
@@ -219,7 +233,51 @@ class MangaProvider: NSObject {
         newManga.originalLangCode = first.originalLangCode ?? second.originalLangCode
         newManga.rated = first.rated ?? second.rated
         newManga.status = first.status ?? second.status
+
+        if let firstChapters = first.chapters,
+            let secondChapters = second.chapters {
+            newManga.chapters = []
+            let count = max(firstChapters.count, secondChapters.count)
+            for index in 0..<count {
+                if index >= firstChapters.count {
+                    newManga.chapters?.append(secondChapters[index])
+                } else if index >= secondChapters.count {
+                    newManga.chapters?.append(firstChapters[index])
+                } else {
+                    let first = firstChapters[index]
+                    let second = secondChapters[index]
+                    newManga.chapters?.append(merged(first: first, second: second))
+                }
+            }
+        } else {
+            newManga.chapters = first.chapters ?? second.chapters
+        }
+
         return newManga
+    }
+
+    static func merged(first: MDChapter, second: MDChapter) -> MDChapter {
+        var newChapter = first
+        newChapter.chapterId = first.chapterId ?? second.chapterId
+        newChapter.title = first.title ?? second.title
+        newChapter.chapter = first.chapter ?? second.chapter
+        newChapter.volume = first.volume ?? second.volume
+        newChapter.pages = first.pages ?? second.pages
+        newChapter.hash = first.hash ?? second.hash
+        newChapter.server = first.server ?? second.server
+        newChapter.status = first.status ?? second.status
+        newChapter.timestamp = first.timestamp ?? second.timestamp
+        newChapter.originalLangCode = first.originalLangCode ?? second.originalLangCode
+        newChapter.originalLangName = first.originalLangName ?? second.originalLangName
+        newChapter.groupId = first.groupId ?? second.groupId
+        newChapter.groupId2 = first.groupId2 ?? second.groupId2
+        newChapter.groupId3 = first.groupId3 ?? second.groupId3
+        newChapter.groupName = first.groupName ?? second.groupName
+        newChapter.groupName2 = first.groupName2 ?? second.groupName2
+        newChapter.groupName3 = first.groupName3 ?? second.groupName3
+        newChapter.groupWebsite = first.groupWebsite ?? second.groupWebsite
+        newChapter.longStrip = first.longStrip ?? second.longStrip
+        return newChapter
     }
 
 }

@@ -77,12 +77,12 @@ class MangaInfoOperation: MangaOperation {
 
 }
 
-class MangaChaptersOperation: MangaOperation {
+class ChapterInfoOperation: MangaOperation {
 
-    var page: Int?
+    var chapter: MDChapter?
 
     override func main() {
-        guard let manga = self.manga, let page = self.page else {
+        guard let chapter = self.chapter else {
             return
         }
 
@@ -97,8 +97,8 @@ class MangaChaptersOperation: MangaOperation {
             return
         }
 
-        provider?.getChapters(for: manga, page: page, completion: { (manga) in
-            self.manga = manga
+        provider?.getChapterInfo(for: chapter, completion: { (chapter) in
+            self.chapter = chapter
             self.semaphore.signal()
         })
 

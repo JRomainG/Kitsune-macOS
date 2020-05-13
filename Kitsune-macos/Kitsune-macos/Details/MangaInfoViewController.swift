@@ -220,6 +220,7 @@ class MangaInfoViewController: PageContentViewController {
             return
         }
         let chapter = chapters[tableView.selectedRow]
+        readerViewController.mangaProvider = mangaProvider
         readerViewController.chapter = chapter
         readerViewController.manga = manga
     }

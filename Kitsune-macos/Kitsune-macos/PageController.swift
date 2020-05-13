@@ -35,6 +35,13 @@ class PageController: NSPageController {
         currentController?.didBecomeContentController()
     }
 
+    override func scrollWheel(with event: NSEvent) {
+        // Prevent scrolling if necessary
+        if currentController?.canScrollToNavigate() == true {
+            super.scrollWheel(with: event)
+        }
+    }
+
     override func navigateForward(_ sender: Any?) {
         // Allow presented view controller to block transition
         // This is not called when scrolling

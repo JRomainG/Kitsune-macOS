@@ -39,6 +39,10 @@ class PageContentViewController: NSViewController {
         return 0
     }
 
+    func canScrollToNavigate() -> Bool {
+        return true
+    }
+
     func canNavigateForward() -> Bool {
         return true
     }

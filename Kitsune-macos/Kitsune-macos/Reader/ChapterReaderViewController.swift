@@ -209,6 +209,22 @@ class ChapterReaderViewController: PageContentViewController {
         } else {
             titleLabel.stringValue = "-"
         }
+
+        pagePopupButton.removeAllItems()
+        let pageCount = chapter?.pages?.count ?? 0
+        for index in 0..<(pageCount) {
+            pagePopupButton.addItem(withTitle: "\(index + 1) / \(pageCount)")
+        }
+        pagePopupButton.isHidden = !paginationEnabled
+        updatePagePopupButtonItem()
+    }
+
+    func updatePagePopupButtonItem() {
+        pagePopupButton.selectItem(at: currentPage)
+    }
+
+    @IBAction func selectPage(_ sender: Any) {
+        scroll(to: pagePopupButton.indexOfSelectedItem)
     }
 
     func setupPages() {

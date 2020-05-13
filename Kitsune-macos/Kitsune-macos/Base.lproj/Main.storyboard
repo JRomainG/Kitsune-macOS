@@ -1480,6 +1480,9 @@ DQ
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
+                                        <connections>
+                                            <action selector="selectPage:" target="li0-3m-yP2" id="vqF-xB-kqc"/>
+                                        </connections>
                                     </popUpButton>
                                 </subviews>
                                 <constraints>

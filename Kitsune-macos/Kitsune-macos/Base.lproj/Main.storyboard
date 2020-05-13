@@ -1309,7 +1309,7 @@ DQ
                                     <nil key="backgroundColor"/>
                                 </clipView>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="ktc-Z3-65K"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="ktc-Z3-65K"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="ClM-eR-Uq7">
                                     <rect key="frame" x="1" y="191" width="616" height="16"/>
@@ -1409,6 +1409,9 @@ DQ
                                         </view>
                                     </subviews>
                                 </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="QIA-Oc-eKP"/>
+                                </constraints>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Q0l-KG-Fra">
                                     <rect key="frame" x="1" y="483" width="654" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>

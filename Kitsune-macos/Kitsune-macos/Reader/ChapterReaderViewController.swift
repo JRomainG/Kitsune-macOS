@@ -16,7 +16,9 @@ class ChapterReaderViewController: PageContentViewController {
     @IBOutlet var titleLabel: NSTextField!
     @IBOutlet var pagePopupButton: NSPopUpButton!
     @IBOutlet var scrollView: NSScrollView!
-
+    @IBOutlet var loadingIndicator: NSProgressIndicator!
+    @IBOutlet var errorLabel: NSTextField!
+    
     var paginationEnabled = false {
         didSet {
             configureFooter()
@@ -57,6 +59,10 @@ class ChapterReaderViewController: PageContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        loadingIndicator.isDisplayedWhenStopped = false
+        loadingIndicator.stopAnimation(nil)
+        errorLabel.isHidden = true
+
         scrollView.borderType = .noBorder
         scrollView.allowsMagnification = true
         scrollView.minMagnification = 1
@@ -237,11 +243,20 @@ class ChapterReaderViewController: PageContentViewController {
         }
 
         if shouldDownloadInfo() {
-            chapterProvider.getChapterInfo { (chapter) in
+            loadingIndicator.startAnimation(nil)
+            errorLabel.isHidden = true
+            chapterProvider.getChapterInfo { (chapter, error) in
                 guard let newChapter = chapter else {
                     return
                 }
-                self.chapter = newChapter
+                DispatchQueue.main.async {
+                    if let displayError = error {
+                        self.errorLabel.isHidden = false
+                        self.errorLabel.stringValue = String(describing: displayError)
+                    }
+                    self.loadingIndicator.stopAnimation(nil)
+                    self.chapter = newChapter
+                }
             }
         }
 

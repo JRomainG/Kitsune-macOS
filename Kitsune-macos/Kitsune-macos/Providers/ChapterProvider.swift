@@ -93,7 +93,7 @@ class ChapterProvider: NSObject {
         return nextChapter
     }
 
-    func getChapterInfo(completion: @escaping (MDChapter?) -> Void) {
+    func getChapterInfo(completion: @escaping (MDChapter?, Error?) -> Void) {
         let operation = ChapterInfoOperation()
         operation.manga = manga
         operation.provider = mangaProvider
@@ -101,10 +101,10 @@ class ChapterProvider: NSObject {
         operation.completionBlock = {
             guard !operation.isCancelled,
                 let chapter = operation.chapter else {
-                    completion(nil)
+                    completion(nil, operation.error)
                     return
             }
-            completion(chapter)
+            completion(chapter, operation.error)
         }
         operationQueue.addOperation(operation)
     }

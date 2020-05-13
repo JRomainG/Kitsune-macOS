@@ -30,7 +30,6 @@ class ChapterPageView: NSImageView {
         setContentHuggingPriority(.defaultHigh, for: .vertical)
         setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        image = NSImage(named: "PagePlaceholder")
 
         loadingIndicator.autoresizingMask = [.maxXMargin, .maxYMargin, .minXMargin, .minYMargin]
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false

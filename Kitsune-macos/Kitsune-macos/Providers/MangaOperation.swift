@@ -14,6 +14,7 @@ class MangaOperation: Operation {
     var manga: MDManga?
     var provider: MangaProvider?
     var delay: Double = 0
+    var error: Error?
 
     let semaphore = DispatchSemaphore(value: 0)
 
@@ -37,8 +38,9 @@ class MangaDetailOperation: MangaOperation {
             return
         }
 
-        provider?.getDetails(for: manga, completion: { (manga) in
+        provider?.getDetails(for: manga, completion: { (manga, error) in
             self.manga = manga
+            self.error = error
             self.semaphore.signal()
         })
 
@@ -66,8 +68,9 @@ class MangaInfoOperation: MangaOperation {
             return
         }
 
-        provider?.getInfo(for: manga, completion: { (manga) in
+        provider?.getInfo(for: manga, completion: { (manga, error) in
             self.manga = manga
+            self.error = error
             self.semaphore.signal()
         })
 
@@ -97,8 +100,9 @@ class ChapterInfoOperation: MangaOperation {
             return
         }
 
-        provider?.getChapterInfo(for: chapter, completion: { (chapter) in
+        provider?.getChapterInfo(for: chapter, completion: { (chapter, error) in
             self.chapter = chapter
+            self.error = error
             self.semaphore.signal()
         })
 

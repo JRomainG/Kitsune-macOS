@@ -145,7 +145,7 @@ class MangaProvider: NSObject {
         delegate?.didFinishLoading(provider: self)
     }
 
-    func updateManga(with mangaId: Int, response: MDResponse, completion: @escaping (MDManga?) -> Void) {
+    func updateManga(with mangaId: Int, response: MDResponse, completion: @escaping (MDManga?, Error?) -> Void) {
         // Update the array so the info is kept for later
         self.mangaSemaphore.wait()
         let index = self.mangas.firstIndex { (manga) -> Bool in
@@ -155,7 +155,7 @@ class MangaProvider: NSObject {
             self.mangas[index!] = MangaProvider.merged(first: self.mangas[index!], second: manga)
         }
         self.mangaSemaphore.signal()
-        completion(response.manga)
+        completion(response.manga, response.error)
     }
 
     func cancelRequests() {
@@ -167,9 +167,9 @@ class MangaProvider: NSObject {
         state = .idle
     }
 
-    func getDetails(for manga: MDManga, completion: @escaping (MDManga?) -> Void) {
+    func getDetails(for manga: MDManga, completion: @escaping (MDManga?, Error?) -> Void) {
         guard let mangaId = manga.mangaId else {
-            completion(nil)
+            completion(nil, nil)
             return
         }
 
@@ -179,9 +179,9 @@ class MangaProvider: NSObject {
         }
     }
 
-    func getInfo(for manga: MDManga, completion: @escaping (MDManga?) -> Void) {
+    func getInfo(for manga: MDManga, completion: @escaping (MDManga?, Error?) -> Void) {
         guard let mangaId = manga.mangaId else {
-            completion(nil)
+            completion(nil, nil)
             return
         }
 
@@ -190,9 +190,9 @@ class MangaProvider: NSObject {
         }
     }
 
-    func getChapterInfo(for chapter: MDChapter, completion: @escaping (MDChapter?) -> Void) {
+    func getChapterInfo(for chapter: MDChapter, completion: @escaping (MDChapter?, Error?) -> Void) {
         guard let chapterId = chapter.chapterId else {
-            completion(nil)
+            completion(nil, nil)
             return
         }
 
@@ -201,13 +201,13 @@ class MangaProvider: NSObject {
             if chapterInfo != nil {
                 chapterInfo = MangaProvider.merged(first: chapterInfo!, second: chapter)
             }
-            completion(chapterInfo)
+            completion(chapterInfo, response.error)
         }
     }
 
-    func getChapters(for manga: MDManga, page: Int, completion: @escaping (MDManga?) -> Void) {
+    func getChapters(for manga: MDManga, page: Int, completion: @escaping (MDManga?, Error?) -> Void) {
         guard let mangaId = manga.mangaId else {
-            completion(nil)
+            completion(nil, nil)
             return
         }
 

@@ -1421,6 +1421,17 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yxT-j2-cvD">
+                                <rect key="frame" x="303" y="272" width="51" height="21"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" enabled="NO" alignment="center" title="Error" id="2sX-SW-BD7">
+                                    <font key="font" metaFont="systemSemibold" size="18"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="YCO-hP-dCy">
+                                <rect key="frame" x="312" y="266" width="32" height="32"/>
+                            </progressIndicator>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="MKa-YK-YtF">
                                 <rect key="frame" x="0.0" y="0.0" width="656" height="32"/>
                                 <subviews>
@@ -1486,12 +1497,20 @@ DQ
                             <constraint firstItem="MKa-YK-YtF" firstAttribute="leading" secondItem="meP-Wu-tpt" secondAttribute="leading" id="42k-l3-xXf"/>
                             <constraint firstItem="YnU-FI-0Sw" firstAttribute="top" secondItem="meP-Wu-tpt" secondAttribute="top" id="DVm-EG-tC5"/>
                             <constraint firstAttribute="bottom" secondItem="MKa-YK-YtF" secondAttribute="bottom" id="DxD-u5-G5i"/>
+                            <constraint firstItem="yxT-j2-cvD" firstAttribute="width" relation="lessThanOrEqual" secondItem="YnU-FI-0Sw" secondAttribute="width" id="Hao-8K-F0k"/>
                             <constraint firstItem="MKa-YK-YtF" firstAttribute="top" secondItem="YnU-FI-0Sw" secondAttribute="bottom" id="Qoe-it-oQQ"/>
+                            <constraint firstItem="YCO-hP-dCy" firstAttribute="centerX" secondItem="YnU-FI-0Sw" secondAttribute="centerX" id="Zgm-Wp-WaM"/>
+                            <constraint firstItem="YCO-hP-dCy" firstAttribute="centerY" secondItem="YnU-FI-0Sw" secondAttribute="centerY" id="etP-FG-0FE"/>
+                            <constraint firstItem="yxT-j2-cvD" firstAttribute="centerY" secondItem="YnU-FI-0Sw" secondAttribute="centerY" id="ezA-Zx-gvs"/>
+                            <constraint firstItem="yxT-j2-cvD" firstAttribute="height" relation="lessThanOrEqual" secondItem="YnU-FI-0Sw" secondAttribute="height" id="gpG-9z-qdv"/>
                             <constraint firstAttribute="trailing" secondItem="YnU-FI-0Sw" secondAttribute="trailing" id="jna-P9-lPz"/>
+                            <constraint firstItem="yxT-j2-cvD" firstAttribute="centerX" secondItem="YnU-FI-0Sw" secondAttribute="centerX" id="lYu-q9-xcf"/>
                             <constraint firstAttribute="trailing" secondItem="MKa-YK-YtF" secondAttribute="trailing" id="tOC-I4-6fh"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="errorLabel" destination="yxT-j2-cvD" id="XKQ-aB-Thk"/>
+                        <outlet property="loadingIndicator" destination="YCO-hP-dCy" id="bTE-PH-PLc"/>
                         <outlet property="nextButton" destination="Eie-dj-sNY" id="O83-qN-dPz"/>
                         <outlet property="pagePopupButton" destination="TLP-5D-fXb" id="wNU-7j-Zkl"/>
                         <outlet property="previousButton" destination="AeI-dl-fE2" id="3Jz-68-weM"/>

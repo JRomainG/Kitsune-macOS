@@ -21,7 +21,7 @@ class ChapterReaderViewController: PageContentViewController {
     var currentPage: Int = 0
     private var documentViewConstraint: NSLayoutConstraint?
 
-    var imageViews: [NSImageView] = []
+    var imageViews: [ChapterPageView] = []
 
     var mangaProvider: MangaProvider? {
         didSet {
@@ -184,17 +184,14 @@ class ChapterReaderViewController: PageContentViewController {
         }
 
         for url in chapter?.getPageUrls() ?? [] {
-            let imageView: NSImageView
+            let imageView: ChapterPageView
             if paginationEnabled {
                 imageView = newHorizontalContentImageView()
             } else {
                 imageView = newVerticalContentImageView()
             }
             imageViews.append(imageView)
-            imageView.sd_setImage(with: url,
-                                  placeholderImage: nil,
-                                  options: .decodeFirstFrameOnly,
-                                  completed: nil)
+            imageView.setImage(with: url)
         }
     }
 
@@ -273,10 +270,8 @@ extension ChapterReaderViewController {
         scrollView.pageScroll = view.frame.size.height * scrollView.magnification
     }
 
-    func newHorizontalContentImageView() -> NSImageView {
+    func newHorizontalContentImageView() -> ChapterPageView {
         let imageView = newImageView()
-        imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
         if let previous = imageViews.last {
             // The view should be right after the previous page
@@ -311,7 +306,7 @@ extension ChapterReaderViewController {
         return imageView
     }
 
-    func newVerticalContentImageView() -> NSImageView {
+    func newVerticalContentImageView() -> ChapterPageView {
         let imageView = newImageView()
 
         if let previous = imageViews.last {
@@ -346,11 +341,8 @@ extension ChapterReaderViewController {
         return imageView
     }
 
-    func newImageView() -> NSImageView {
-        let imageView = NSImageView(frame: scrollView.bounds)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.autoresizingMask = [.height, .width]
-        imageView.imageScaling = .scaleProportionallyDown
+    func newImageView() -> ChapterPageView {
+        let imageView = ChapterPageView(frame: scrollView.bounds)
         scrollView.documentView?.addSubview(imageView)
         return imageView
     }

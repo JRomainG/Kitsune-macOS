@@ -35,6 +35,7 @@
 		33C1D651246AC037009F0FD4 /* ChapterReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */; };
 		33C1D654246AF2B8009F0FD4 /* MDManga+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */; };
 		33C8BDEF246C593400AE15E3 /* ChapterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C8BDEE246C593400AE15E3 /* ChapterProvider.swift */; };
+		33C8BDF3246C5FCA00AE15E3 /* ChapterPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C8BDF2246C5FCA00AE15E3 /* ChapterPageView.swift */; };
 		33D367D7246800AF00858DB2 /* MangaInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D367D5246800AF00858DB2 /* MangaInfoViewController.swift */; };
 		33FB14AC2461F2B100F236FF /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 33FB14AB2461F2B100F236FF /* SDWebImage */; };
 /* End PBXBuildFile section */
@@ -70,6 +71,7 @@
 		33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterReaderViewController.swift; sourceTree = "<group>"; };
 		33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDManga+Display.swift"; sourceTree = "<group>"; };
 		33C8BDEE246C593400AE15E3 /* ChapterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterProvider.swift; sourceTree = "<group>"; };
+		33C8BDF2246C5FCA00AE15E3 /* ChapterPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterPageView.swift; sourceTree = "<group>"; };
 		33D367D5246800AF00858DB2 /* MangaInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */,
+				33C8BDF2246C5FCA00AE15E3 /* ChapterPageView.swift */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				3350C15C246715B500B1B1E3 /* HomeViewController+Toolbar.swift in Sources */,
 				3350C1532466FEFF00B1B1E3 /* SortOptionsViewController.swift in Sources */,
 				33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */,
+				33C8BDF3246C5FCA00AE15E3 /* ChapterPageView.swift in Sources */,
 				33500E822465C9A500A19B5C /* ListedMangaProvider.swift in Sources */,
 				3382637A2469BC3500F537DA /* PageContentViewController.swift in Sources */,
 				3350C16124672DEF00B1B1E3 /* LogoutViewController.swift in Sources */,

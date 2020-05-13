@@ -34,6 +34,7 @@
 		33A7E2C624606E4200BB1103 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C424606E4200BB1103 /* Main.storyboard */; };
 		33C1D651246AC037009F0FD4 /* ChapterReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */; };
 		33C1D654246AF2B8009F0FD4 /* MDManga+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */; };
+		33C8BDEF246C593400AE15E3 /* ChapterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C8BDEE246C593400AE15E3 /* ChapterProvider.swift */; };
 		33D367D7246800AF00858DB2 /* MangaInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D367D5246800AF00858DB2 /* MangaInfoViewController.swift */; };
 		33FB14AC2461F2B100F236FF /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 33FB14AB2461F2B100F236FF /* SDWebImage */; };
 /* End PBXBuildFile section */
@@ -68,6 +69,7 @@
 		33A7E2C824606E4200BB1103 /* Kitsune_macos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kitsune_macos.entitlements; sourceTree = "<group>"; };
 		33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterReaderViewController.swift; sourceTree = "<group>"; };
 		33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDManga+Display.swift"; sourceTree = "<group>"; };
+		33C8BDEE246C593400AE15E3 /* ChapterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterProvider.swift; sourceTree = "<group>"; };
 		33D367D5246800AF00858DB2 /* MangaInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +89,7 @@
 		332C4255246558B300413940 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				33C8BDEE246C593400AE15E3 /* ChapterProvider.swift */,
 				332C42532465575100413940 /* MangaProvider.swift */,
 				332C4256246558CB00413940 /* LatestMangaProvider.swift */,
 				33500E7F2465C96900A19B5C /* FeaturedMangaProvider.swift */,
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				337638972460882D00A1B042 /* MangaCVItem.swift in Sources */,
+				33C8BDEF246C593400AE15E3 /* ChapterProvider.swift in Sources */,
 				3350C15C246715B500B1B1E3 /* HomeViewController+Toolbar.swift in Sources */,
 				3350C1532466FEFF00B1B1E3 /* SortOptionsViewController.swift in Sources */,
 				33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */,

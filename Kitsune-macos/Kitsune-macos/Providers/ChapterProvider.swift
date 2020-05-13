@@ -22,6 +22,11 @@ class ChapterProvider: NSObject {
         return queue
     }()
 
+    func cancelRequests() {
+        mangaProvider?.cancelRequests()
+        operationQueue.cancelAllOperations()
+    }
+
     func getChapters() -> [MDChapter]? {
         guard var chapters = manga?.chapters, let currentChapter = chapter else {
             return nil

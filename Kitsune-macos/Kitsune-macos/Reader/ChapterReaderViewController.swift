@@ -162,12 +162,8 @@ class ChapterReaderViewController: PageContentViewController {
     }
 
     func setupPages() {
-        scrollView.contentView.scroll(.zero)
-        currentPage = 0
-        for imageView in imageViews {
-            imageView.removeFromSuperview()
-        }
-        imageViews.removeAll()
+        removeImageViews()
+        chapterProvider.cancelRequests()
 
         paginationEnabled = (chapter?.longStrip != 1)
         if paginationEnabled {
@@ -211,29 +207,30 @@ class ChapterReaderViewController: PageContentViewController {
 extension ChapterReaderViewController {
 
     func scroll(to page: Int, animated: Bool = true) {
-        guard paginationEnabled else {
-            return
-        }
-        let currentOffset = scrollView.documentVisibleRect
-
-        // We only want to trigger a scroll if necessary:
-        // when zoomed-in, it's sometimes unnecessary to scroll the view
-        let overflow = scrollView.documentVisibleRect.origin.x / scrollView.frame.width - CGFloat(page)
+        let currentRect = scrollView.documentVisibleRect
         let pageOffset: NSPoint
-        if overflow > 1 - 1 / scrollView.magnification {
-            // The user scrolled a bit outside this page, but not enough to change,
-            // so scroll back to the end of the previous page
-            let inpageOffset = scrollView.frame.width * (1 - 1 / scrollView.magnification)
-            pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page) + inpageOffset,
-                                 y: currentOffset.origin.y)
-        } else if overflow < 0 {
-            // The user either scrolled enough to go to the next page, or not enough to
-            // go to the previous page, so just scroll to the begining of the page
-            pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page),
-                                 y: currentOffset.origin.y)
+        if paginationEnabled {
+            // We only want to trigger a scroll if necessary:
+            // when zoomed-in, it's sometimes unnecessary to scroll the view
+            let overflow = scrollView.documentVisibleRect.origin.x / scrollView.frame.width - CGFloat(page)
+            if overflow > 1 - 1 / scrollView.magnification {
+                // The user scrolled a bit outside this page, but not enough to change,
+                // so scroll back to the end of the previous page
+                let inpageOffset = scrollView.frame.width * (1 - 1 / scrollView.magnification)
+                pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page) + inpageOffset,
+                                     y: currentRect.origin.y)
+            } else if overflow < 0 {
+                // The user either scrolled enough to go to the next page, or not enough to
+                // go to the previous page, so just scroll to the begining of the page
+                pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page),
+                                     y: currentRect.origin.y)
+            } else {
+                // Don't scroll
+                pageOffset = currentRect.origin
+            }
         } else {
-            // Don't scroll
-            pageOffset = scrollView.documentVisibleRect.origin
+            pageOffset = NSPoint(x: currentRect.origin.x,
+                                 y: scrollView.frame.height * CGFloat(page))
         }
 
         let context = NSAnimationContext.current
@@ -259,12 +256,18 @@ extension ChapterReaderViewController {
     }
 
     @objc func scrollViewDidFinishZooming(notification: NSNotification?) {
+        guard paginationEnabled else {
+            return
+        }
+        scroll(to: currentPage)
         scrollView.horizontalPageScroll = view.frame.size.width * scrollView.magnification
         scrollView.pageScroll = view.frame.size.height * scrollView.magnification
-        scroll(to: currentPage)
     }
 
     @objc func scrollViewDidResize(notification: NSNotification?) {
+        guard paginationEnabled else {
+            return
+        }
         scroll(to: currentPage, animated: false)
         scrollView.horizontalPageScroll = view.frame.size.width * scrollView.magnification
         scrollView.pageScroll = view.frame.size.height * scrollView.magnification
@@ -350,6 +353,20 @@ extension ChapterReaderViewController {
         imageView.imageScaling = .scaleProportionallyDown
         scrollView.documentView?.addSubview(imageView)
         return imageView
+    }
+
+    func removeImageViews() {
+        if let constraints = scrollView.documentView?.constraints {
+            scrollView.documentView?.removeConstraints(constraints)
+        }
+        for imageView in imageViews {
+            imageView.removeFromSuperview()
+        }
+        scrollView.documentView?.frame = .zero
+        imageViews.removeAll()
+
+        scrollView.setMagnification(1, centeredAt: .zero)
+        scroll(to: 0, animated: false)
     }
 
 }

@@ -17,6 +17,8 @@ class ChapterReaderViewController: PageContentViewController {
     @IBOutlet var pagePopupButton: NSPopUpButton!
     @IBOutlet var scrollView: NSScrollView!
 
+    var paginationEnabled = false
+    var currentPage: Int = 0
     private var documentViewConstraint: NSLayoutConstraint?
 
     var imageViews: [NSImageView] = []
@@ -41,8 +43,6 @@ class ChapterReaderViewController: PageContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        scrollView.wantsLayer = true
-        scrollView.layer?.backgroundColor = NSColor.systemPink.cgColor
         scrollView.borderType = .noBorder
         scrollView.allowsMagnification = true
         scrollView.minMagnification = 1
@@ -50,6 +50,23 @@ class ChapterReaderViewController: PageContentViewController {
         scrollView.contentView.autoresizingMask = [.height, .width]
         scrollView.documentView?.autoresizingMask = [.height, .width]
         scrollView.documentView?.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.postsFrameChangedNotifications = true
+        scrollView.postsBoundsChangedNotifications = false
+
+        NotificationCenter.default.addObserver(self,
+                                       selector: #selector(scrollViewDidEndScrolling(notification:)),
+                                       name: NSScrollView.didEndLiveScrollNotification,
+                                       object: scrollView)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(scrollViewDidFinishZooming(notification:)),
+                                               name: NSScrollView.didEndLiveMagnifyNotification,
+                                               object: scrollView)
+
+        NotificationCenter.default.addObserver(self,
+                                       selector: #selector(scrollViewDidResize(notification:)),
+                                       name: NSView.frameDidChangeNotification,
+                                       object: scrollView)
     }
 
     override func didBecomeContentController() {
@@ -91,21 +108,22 @@ class ChapterReaderViewController: PageContentViewController {
         }
         imageViews.removeAll()
 
-        if chapter?.longStrip == 1 {
-            scrollView.horizontalScrollElasticity = .none
-            scrollView.verticalScrollElasticity = .automatic
-        } else {
+        paginationEnabled = (chapter?.longStrip != 1)
+        if paginationEnabled {
             scrollView.horizontalScrollElasticity = .automatic
             scrollView.verticalScrollElasticity = .none
+        } else {
+            scrollView.horizontalScrollElasticity = .none
+            scrollView.verticalScrollElasticity = .automatic
         }
 
         downloadInfo()
         for url in chapter?.getPageUrls() ?? [] {
             let imageView: NSImageView
-            if chapter?.longStrip == 1 {
-                imageView = newVerticalContentImageView()
-            } else {
+            if paginationEnabled {
                 imageView = newHorizontalContentImageView()
+            } else {
+                imageView = newVerticalContentImageView()
             }
             imageViews.append(imageView)
             imageView.sd_setImage(with: url,
@@ -142,6 +160,66 @@ class ChapterReaderViewController: PageContentViewController {
 
 extension ChapterReaderViewController {
 
+    func scroll(to page: Int, animated: Bool = true) {
+        guard paginationEnabled else {
+            return
+        }
+        let currentOffset = scrollView.documentVisibleRect
+
+        // We only want to trigger a scroll if necessary:
+        // when zoomed-in, it's sometimes unnecessary to scroll the view
+        let overflow = scrollView.documentVisibleRect.origin.x / scrollView.frame.width - CGFloat(page)
+        let pageOffset: NSPoint
+        if overflow > 1 - 1 / scrollView.magnification {
+            // The user scrolled a bit outside this page, but not enough to change,
+            // so scroll back to the end of the previous page
+            let inpageOffset = scrollView.frame.width * (1 - 1 / scrollView.magnification)
+            pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page) + inpageOffset,
+                                 y: currentOffset.origin.y)
+        } else if overflow < 0 {
+            // The user either scrolled enough to go to the next page, or not enough to
+            // go to the previous page, so just scroll to the begining of the page
+            pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page),
+                                 y: currentOffset.origin.y)
+        } else {
+            // Don't scroll
+            pageOffset = scrollView.documentVisibleRect.origin
+        }
+
+        let context = NSAnimationContext.current
+        context.duration = animated ? 0.25 : 0
+        context.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        context.allowsImplicitAnimation = true
+        scrollView.contentView.scroll(pageOffset)
+        currentPage = page
+    }
+
+    @objc func scrollViewDidEndScrolling(notification: NSNotification?) {
+        guard paginationEnabled else {
+            return
+        }
+        let relativeOffset = scrollView.documentVisibleRect.origin.x / scrollView.frame.width
+        var page = trunc(relativeOffset)
+        let pageOffset = relativeOffset - page
+        if pageOffset > 1 - 1 / (2 * scrollView.magnification) {
+            // The user scrolled enough in the next page to consider that they wanted to change
+            page += 1
+        }
+        scroll(to: Int(page))
+    }
+
+    @objc func scrollViewDidFinishZooming(notification: NSNotification?) {
+        scrollView.horizontalPageScroll = view.frame.size.width * scrollView.magnification
+        scrollView.pageScroll = view.frame.size.height * scrollView.magnification
+        scroll(to: currentPage)
+    }
+
+    @objc func scrollViewDidResize(notification: NSNotification?) {
+        scroll(to: currentPage, animated: false)
+        scrollView.horizontalPageScroll = view.frame.size.width * scrollView.magnification
+        scrollView.pageScroll = view.frame.size.height * scrollView.magnification
+    }
+
     func newHorizontalContentImageView() -> NSImageView {
         let imageView = newImageView()
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -156,6 +234,8 @@ extension ChapterReaderViewController {
         } else {
             imageView.trailingAnchor.constraint(equalTo: scrollView.contentView.trailingAnchor).isActive = true
             scrollView.documentView?.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
+            scrollView.documentView?.topAnchor.constraint(equalTo: imageView.topAnchor).isActive = true
+            scrollView.documentView?.bottomAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
         }
 
         // The view should take the whole frame

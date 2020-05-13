@@ -17,10 +17,17 @@ class ChapterReaderViewController: PageContentViewController {
     @IBOutlet var pagePopupButton: NSPopUpButton!
     @IBOutlet var scrollView: NSScrollView!
 
-    var paginationEnabled = false
-    var currentPage: Int = 0
-    private var documentViewConstraint: NSLayoutConstraint?
-
+    var paginationEnabled = false {
+        didSet {
+            configureFooter()
+        }
+    }
+    var currentPage: Int = 0 {
+        didSet {
+            configureFooter()
+        }
+    }
+    var documentViewConstraint: NSLayoutConstraint?
     var imageViews: [ChapterPageView] = []
 
     var mangaProvider: MangaProvider? {
@@ -74,6 +81,14 @@ class ChapterReaderViewController: PageContentViewController {
                                        selector: #selector(scrollViewDidResize(notification:)),
                                        name: NSView.frameDidChangeNotification,
                                        object: scrollView)
+
+        // Catch key events to skip pages
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
+            if self.handleKeyDown(with: event) {
+                return nil
+            }
+            return event
+        }
     }
 
     override func didBecomeContentController() {
@@ -96,6 +111,53 @@ class ChapterReaderViewController: PageContentViewController {
     }
 
     override func canScrollToNavigate() -> Bool {
+        return false
+    }
+
+    func handleKeyDown(with event: NSEvent) -> Bool {
+        if paginationEnabled {
+            switch event.keyCode {
+            case 0x7B:
+                // Left arrow
+                pageDown(nil)
+                return true
+            case 0x7C:
+                // Right arrow
+                pageUp(nil)
+                return true
+            case 0x7D:
+                // Down arrow
+                contentMoveDown()
+                return true
+            case 0x7E:
+                // Up arrow
+                contentMoveUp()
+                return true
+            default:
+                break
+            }
+        } else {
+            switch event.keyCode {
+            case 0x7B:
+                // Left arrow
+                contentMoveUp()
+                return true
+            case 0x7C:
+                // Right arrow
+                contentMoveDown()
+                return true
+            case 0x7D:
+                // Down arrow
+                pageUp(nil)
+                return true
+            case 0x7E:
+                // Up arrow
+                pageDown(nil)
+                return true
+            default:
+                break
+            }
+        }
         return false
     }
 
@@ -197,168 +259,6 @@ class ChapterReaderViewController: PageContentViewController {
 
     func shouldDownloadInfo() -> Bool {
         return chapter?.pages == nil
-    }
-
-}
-
-extension ChapterReaderViewController {
-
-    func scroll(to page: Int, animated: Bool = true) {
-        let currentRect = scrollView.documentVisibleRect
-        let pageOffset: NSPoint
-        if paginationEnabled {
-            // We only want to trigger a scroll if necessary:
-            // when zoomed-in, it's sometimes unnecessary to scroll the view
-            let overflow = scrollView.documentVisibleRect.origin.x / scrollView.frame.width - CGFloat(page)
-            if overflow > 1 - 1 / scrollView.magnification {
-                // The user scrolled a bit outside this page, but not enough to change,
-                // so scroll back to the end of the previous page
-                let inpageOffset = scrollView.frame.width * (1 - 1 / scrollView.magnification)
-                pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page) + inpageOffset,
-                                     y: currentRect.origin.y)
-            } else if overflow < 0 {
-                // The user either scrolled enough to go to the next page, or not enough to
-                // go to the previous page, so just scroll to the begining of the page
-                pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page),
-                                     y: currentRect.origin.y)
-            } else {
-                // Don't scroll
-                pageOffset = currentRect.origin
-            }
-        } else {
-            pageOffset = NSPoint(x: currentRect.origin.x,
-                                 y: scrollView.frame.height * CGFloat(page))
-        }
-
-        let context = NSAnimationContext.current
-        context.duration = animated ? 0.25 : 0
-        context.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        context.allowsImplicitAnimation = true
-        scrollView.contentView.scroll(pageOffset)
-        currentPage = page
-    }
-
-    @objc func scrollViewDidEndScrolling(notification: NSNotification?) {
-        guard paginationEnabled else {
-            return
-        }
-        let relativeOffset = scrollView.documentVisibleRect.origin.x / scrollView.frame.width
-        var page = trunc(relativeOffset)
-        let pageOffset = relativeOffset - page
-        if pageOffset > 1 - 1 / (2 * scrollView.magnification) {
-            // The user scrolled enough in the next page to consider that they wanted to change
-            page += 1
-        }
-        scroll(to: Int(page))
-    }
-
-    @objc func scrollViewDidFinishZooming(notification: NSNotification?) {
-        guard paginationEnabled else {
-            return
-        }
-        scroll(to: currentPage)
-        scrollView.horizontalPageScroll = view.frame.size.width * scrollView.magnification
-        scrollView.pageScroll = view.frame.size.height * scrollView.magnification
-    }
-
-    @objc func scrollViewDidResize(notification: NSNotification?) {
-        guard paginationEnabled else {
-            return
-        }
-        scroll(to: currentPage, animated: false)
-        scrollView.horizontalPageScroll = view.frame.size.width * scrollView.magnification
-        scrollView.pageScroll = view.frame.size.height * scrollView.magnification
-    }
-
-    func newHorizontalContentImageView() -> ChapterPageView {
-        let imageView = newImageView()
-
-        if let previous = imageViews.last {
-            // The view should be right after the previous page
-            var frame = previous.frame
-            frame.origin.x += previous.frame.size.width
-            imageView.frame = frame
-            imageView.leadingAnchor.constraint(equalTo: previous.trailingAnchor).isActive = true
-        } else {
-            imageView.trailingAnchor.constraint(equalTo: scrollView.contentView.trailingAnchor).isActive = true
-            scrollView.documentView?.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
-            scrollView.documentView?.topAnchor.constraint(equalTo: imageView.topAnchor).isActive = true
-            scrollView.documentView?.bottomAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
-        }
-
-        // The view should take the whole frame
-        imageView.widthAnchor.constraint(equalTo: scrollView.contentView.widthAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalTo: scrollView.contentView.heightAnchor).isActive = true
-
-        // The document view should resize to allow scrolling
-        let origin = scrollView.documentView?.frame.origin ?? scrollView.frame.origin
-        let size = NSSize(width: imageView.frame.origin.x + imageView.frame.size.width,
-                          height: imageView.frame.origin.y + imageView.frame.size.height)
-        scrollView.documentView?.frame = NSRect(origin: origin, size: size)
-
-        if documentViewConstraint != nil {
-            documentViewConstraint?.isActive = false
-            scrollView.documentView?.removeConstraint(documentViewConstraint!)
-        }
-        documentViewConstraint = scrollView.documentView?.trailingAnchor.constraint(equalTo: imageView.trailingAnchor)
-        documentViewConstraint?.isActive = true
-
-        return imageView
-    }
-
-    func newVerticalContentImageView() -> ChapterPageView {
-        let imageView = newImageView()
-
-        if let previous = imageViews.last {
-            // The view should be right under the previous page
-            var frame = previous.frame
-            frame.origin.y += previous.frame.size.height
-            imageView.frame = frame
-            imageView.topAnchor.constraint(equalTo: previous.bottomAnchor).isActive = true
-        } else {
-            imageView.topAnchor.constraint(equalTo: scrollView.contentView.topAnchor).isActive = true
-            scrollView.documentView?.topAnchor.constraint(equalTo: imageView.topAnchor).isActive = true
-            scrollView.documentView?.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
-            scrollView.documentView?.trailingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
-        }
-
-        // The view should take the whole width
-        imageView.widthAnchor.constraint(equalTo: scrollView.contentView.widthAnchor).isActive = true
-
-        // The document view should resize to allow scrolling
-        let origin = scrollView.documentView?.frame.origin ?? scrollView.frame.origin
-        let size = NSSize(width: imageView.frame.origin.x + imageView.frame.size.width,
-                          height: imageView.frame.origin.y + imageView.frame.size.height)
-        scrollView.documentView?.frame = NSRect(origin: origin, size: size)
-
-        if documentViewConstraint != nil {
-            documentViewConstraint?.isActive = false
-            scrollView.documentView?.removeConstraint(documentViewConstraint!)
-        }
-        documentViewConstraint = scrollView.documentView?.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)
-        documentViewConstraint?.isActive = true
-
-        return imageView
-    }
-
-    func newImageView() -> ChapterPageView {
-        let imageView = ChapterPageView(frame: scrollView.bounds)
-        scrollView.documentView?.addSubview(imageView)
-        return imageView
-    }
-
-    func removeImageViews() {
-        if let constraints = scrollView.documentView?.constraints {
-            scrollView.documentView?.removeConstraints(constraints)
-        }
-        for imageView in imageViews {
-            imageView.removeFromSuperview()
-        }
-        scrollView.documentView?.frame = .zero
-        imageViews.removeAll()
-
-        scrollView.setMagnification(1, centeredAt: .zero)
-        scroll(to: 0, animated: false)
     }
 
 }

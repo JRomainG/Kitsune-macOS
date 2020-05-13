@@ -32,6 +32,7 @@
 		33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7E2C024606E3C00BB1103 /* HomeViewController.swift */; };
 		33A7E2C324606E4200BB1103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C224606E4200BB1103 /* Assets.xcassets */; };
 		33A7E2C624606E4200BB1103 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33A7E2C424606E4200BB1103 /* Main.storyboard */; };
+		33A9C172246C7685004BEFFB /* ChapterReaderViewController+Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A9C171246C7685004BEFFB /* ChapterReaderViewController+Pagination.swift */; };
 		33C1D651246AC037009F0FD4 /* ChapterReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */; };
 		33C1D654246AF2B8009F0FD4 /* MDManga+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */; };
 		33C8BDEF246C593400AE15E3 /* ChapterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C8BDEE246C593400AE15E3 /* ChapterProvider.swift */; };
@@ -68,6 +69,7 @@
 		33A7E2C524606E4200BB1103 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		33A7E2C724606E4200BB1103 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33A7E2C824606E4200BB1103 /* Kitsune_macos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kitsune_macos.entitlements; sourceTree = "<group>"; };
+		33A9C171246C7685004BEFFB /* ChapterReaderViewController+Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChapterReaderViewController+Pagination.swift"; sourceTree = "<group>"; };
 		33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterReaderViewController.swift; sourceTree = "<group>"; };
 		33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDManga+Display.swift"; sourceTree = "<group>"; };
 		33C8BDEE246C593400AE15E3 /* ChapterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterProvider.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				33C1D64F246AC037009F0FD4 /* ChapterReaderViewController.swift */,
+				33A9C171246C7685004BEFFB /* ChapterReaderViewController+Pagination.swift */,
 				33C8BDF2246C5FCA00AE15E3 /* ChapterPageView.swift */,
 			);
 			path = Reader;
@@ -290,6 +293,7 @@
 				33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */,
 				33C8BDF3246C5FCA00AE15E3 /* ChapterPageView.swift in Sources */,
 				33500E822465C9A500A19B5C /* ListedMangaProvider.swift in Sources */,
+				33A9C172246C7685004BEFFB /* ChapterReaderViewController+Pagination.swift in Sources */,
 				3382637A2469BC3500F537DA /* PageContentViewController.swift in Sources */,
 				3350C16124672DEF00B1B1E3 /* LogoutViewController.swift in Sources */,
 				33500E862465D7EF00A19B5C /* LoadingView.swift in Sources */,

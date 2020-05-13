@@ -56,4 +56,14 @@ class ChapterPageView: NSImageView {
         }
     }
 
+    func getHorizontalMargin() -> CGFloat {
+        guard let image = self.image else {
+            return 0
+        }
+        let imageSize = image.size
+        var scale = min(frame.height / imageSize.height, frame.width / imageSize.width)
+        scale = min(scale, 1)
+        return frame.width - imageSize.width * scale
+    }
+
 }

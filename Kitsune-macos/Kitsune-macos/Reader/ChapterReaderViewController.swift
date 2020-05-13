@@ -31,10 +31,17 @@ class ChapterReaderViewController: PageContentViewController {
     }()
 
     var mangaProvider: MangaProvider?
-    var manga: MDManga?
+    var manga: MDManga? {
+        didSet {
+            DispatchQueue.main.async {
+                self.configureFooter()
+            }
+        }
+    }
     var chapter: MDChapter? {
         didSet {
             DispatchQueue.main.async {
+                self.configureFooter()
                 self.setupPages()
             }
         }
@@ -97,12 +104,131 @@ class ChapterReaderViewController: PageContentViewController {
     }
 
     @IBAction func previousChapter(_ sender: Any) {
+        guard let chapter = self.chapter, let previous = getPreviousChapter() else {
+            let alert = NSAlert()
+            alert.messageText = "First chapter"
+            alert.informativeText = "No previous chapter with the same language was found."
+            alert.runModal()
+            return
+        }
+        if chapter.follows(chapter: previous) == false && !ignoreGap(between: chapter, and: previous) {
+            return
+        }
+        self.chapter = previous
     }
 
     @IBAction func nextChapter(_ sender: Any) {
+        guard let chapter = self.chapter, let next = getNextChapter() else {
+            let alert = NSAlert()
+            alert.messageText = "Last chapter"
+            alert.informativeText = "No next chapter with the same language was found."
+            alert.runModal()
+            return
+        }
+        if next.follows(chapter: chapter) == false && !ignoreGap(between: chapter, and: next) {
+            return
+        }
+        self.chapter = next
+    }
+
+    func getChapters() -> [MDChapter]? {
+        guard var chapters = manga?.chapters, let currentChapter = chapter else {
+            return nil
+        }
+        chapters = chapters.filter({ (chapter) -> Bool in
+            return chapter.getOriginalLang() == currentChapter.getOriginalLang()
+        })
+        return chapters.sorted { (first, second) -> Bool in
+            return first.comesBefore(chapter: second)
+        }
+    }
+
+    func ignoreGap(between first: MDChapter, and second: MDChapter) -> Bool {
+        let alert = NSAlert()
+        alert.messageText = "Gap detected"
+        alert.informativeText = """
+        A gap between the two chapters was detected\n
+        Current chapter: \(first.displayTitle)\n
+        Next chapter: \(second.displayTitle)
+        """
+        alert.addButton(withTitle: "Cancel")
+        alert.addButton(withTitle: "Continue")
+        let result = alert.runModal()
+        switch result {
+        case .alertFirstButtonReturn:
+            // Cancel
+            return false
+        default:
+            return true
+        }
+    }
+
+    func getPreviousChapter() -> MDChapter? {
+        guard let currentChapter = chapter, let chapters = getChapters() else {
+            return nil
+        }
+
+        // Find the chapters that come before this one
+        let previousChapters = chapters.filter { (chapter) -> Bool in
+            return chapter.comesBefore(chapter: currentChapter)
+        }
+        let lastChapter = previousChapters.last
+
+        // Try to get the chapter with the same group
+        let lastGroupChapter = previousChapters.last(where: { (chapter) -> Bool in
+            return chapter.groupId == currentChapter.groupId
+        })
+
+        // If the group did release the chapter that is asked for, return that one
+        if lastGroupChapter != nil
+            && lastGroupChapter?.volume == lastChapter?.volume
+            && lastGroupChapter?.chapter == lastChapter?.chapter {
+            return lastGroupChapter
+        }
+
+        // Otherwise, return the one we found
+        return lastChapter
+    }
+
+    func getNextChapter() -> MDChapter? {
+        guard let currentChapter = chapter, let chapters = getChapters() else {
+            return nil
+        }
+
+        // Find the chapters that come after this one
+        let nextChapters = chapters.filter { (chapter) -> Bool in
+            return currentChapter.comesBefore(chapter: chapter)
+        }
+        let nextChapter = nextChapters.first
+
+        // Try to get the chapter with the same group
+        let nextGroupChapter = nextChapters.first(where: { (chapter) -> Bool in
+            return chapter.groupId == currentChapter.groupId
+        })
+
+        // If the group did release the chapter that is asked for, return that one
+        if nextGroupChapter != nil
+            && nextGroupChapter?.volume == nextChapter?.volume
+            && nextGroupChapter?.chapter == nextChapter?.chapter {
+            return nextGroupChapter
+        }
+
+        // Otherwise, return the one we found
+        return nextChapter
+    }
+
+    func configureFooter() {
+        if let mangaTitle = manga?.title, chapter?.title != nil {
+            titleLabel.stringValue = "\(mangaTitle) - \(chapter?.displayTitle ?? "")"
+        } else if chapter?.title != nil {
+            titleLabel.stringValue = chapter?.displayTitle ?? "-"
+        } else {
+            titleLabel.stringValue = "-"
+        }
     }
 
     func setupPages() {
+        scrollView.scroll(.zero)
         for imageView in imageViews {
             imageView.removeFromSuperview()
         }

@@ -26,7 +26,7 @@ class ChapterReaderViewController: PageContentViewController {
     }
     var currentPage: Int = 0 {
         didSet {
-            configureFooter()
+            updatePagePopupButtonItem()
         }
     }
     var documentViewConstraint: NSLayoutConstraint?
@@ -121,48 +121,30 @@ class ChapterReaderViewController: PageContentViewController {
     }
 
     func handleKeyDown(with event: NSEvent) -> Bool {
-        if paginationEnabled {
-            switch event.keyCode {
-            case 0x7B:
-                // Left arrow
-                pageDown(nil)
-                return true
-            case 0x7C:
-                // Right arrow
-                pageUp(nil)
-                return true
-            case 0x7D:
-                // Down arrow
-                contentMoveDown()
-                return true
-            case 0x7E:
-                // Up arrow
-                contentMoveUp()
-                return true
-            default:
-                break
-            }
-        } else {
-            switch event.keyCode {
-            case 0x7B:
-                // Left arrow
-                contentMoveUp()
-                return true
-            case 0x7C:
-                // Right arrow
-                contentMoveDown()
-                return true
-            case 0x7D:
-                // Down arrow
-                pageUp(nil)
-                return true
-            case 0x7E:
-                // Up arrow
-                pageDown(nil)
-                return true
-            default:
-                break
-            }
+        // Don't override shortcut to skip chapter
+        guard event.modifierFlags.intersection(.command) == NSEvent.ModifierFlags.init(rawValue: 0) else {
+            return false
+        }
+
+        switch event.keyCode {
+        case 0x7B:
+            // Left arrow
+            paginationEnabled ? pageDown(nil) : contentMoveUp()
+            return true
+        case 0x7C:
+            // Right arrow
+            paginationEnabled ? pageUp(nil) : contentMoveDown()
+            return true
+        case 0x7D:
+            // Down arrow
+            paginationEnabled ? contentMoveDown() : pageUp(nil)
+            return true
+        case 0x7E:
+            // Up arrow
+            paginationEnabled ? contentMoveUp() : pageDown(nil)
+            return true
+        default:
+            break
         }
         return false
     }

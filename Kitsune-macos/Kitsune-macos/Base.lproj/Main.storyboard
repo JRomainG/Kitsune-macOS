@@ -1440,6 +1440,8 @@ DQ
                                         <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSTouchBarSkipToStartTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uRZ-Ui-tZc">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="label" size="12"/>
+                                            <string key="keyEquivalent"></string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
                                             <action selector="previousChapter:" target="li0-3m-yP2" id="eHi-Kf-kRp"/>
@@ -1450,6 +1452,8 @@ DQ
                                         <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSTouchBarSkipToEndTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="S9z-0y-462">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="label" size="12"/>
+                                            <string key="keyEquivalent"></string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                         <connections>
                                             <action selector="nextChapter:" target="li0-3m-yP2" id="cap-mY-UNY"/>

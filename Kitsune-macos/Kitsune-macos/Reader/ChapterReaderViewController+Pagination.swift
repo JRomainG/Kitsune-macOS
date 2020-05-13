@@ -97,7 +97,7 @@ extension ChapterReaderViewController {
                 // so scroll back to the end of the previous page
                 let inpageOffset = scrollView.frame.width * (1 - 1 / scrollView.magnification)
                 pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page) + inpageOffset,
-                                     y: currentOffset.y)
+                                     y: scrollView.frame.height)
 
                 // Try to hide as much white as possible when moving back
                 if hugContent {
@@ -110,7 +110,7 @@ extension ChapterReaderViewController {
                 // The user either scrolled enough to go to the next page, or not enough to
                 // go to the previous page, so just scroll to the begining of the page
                 pageOffset = NSPoint(x: scrollView.frame.width * CGFloat(page),
-                                     y: currentOffset.y)
+                                     y: scrollView.frame.height)
 
                 // Try to hide as much white as possible when moving forward
                 if hugContent {

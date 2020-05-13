@@ -62,13 +62,12 @@ extension MDChapter {
     func isRead(for manga: MDManga?) -> Bool {
         if let readVolume = Float(manga?.currentVolume ?? ""),
             let chapterVolume = Float(volume ?? ""),
-            readVolume > chapterVolume {
-            return true
+            readVolume != chapterVolume {
+            return readVolume > chapterVolume
         }
         if let readChapter = Float(manga?.currentChapter ?? ""),
-            let chapter = Float(chapter ?? ""),
-            readChapter >= chapter {
-            return true
+            let chapter = Float(chapter ?? "") {
+            return readChapter >= chapter
         }
         return false
     }

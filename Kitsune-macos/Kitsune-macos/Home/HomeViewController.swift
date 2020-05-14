@@ -25,6 +25,7 @@ class HomeViewController: PageContentViewController {
     let defaultItemSize = NSSize(width: 248, height: 320)
     let defaultItemSpacing: CGFloat = 20
     let defaultLineSpacing: CGFloat = 20
+    var monitor: Any?
 
     let api = MDApi()
     var mangaProviders: [MangaProvider] = []
@@ -211,8 +212,22 @@ class HomeViewController: PageContentViewController {
         infoViewController.mangaProvider = currentProvider
     }
 
+    override func pageControllerdidTransition(to controller: PageContentViewController) {
+        if let eventMonitor = monitor {
+            NSEvent.removeMonitor(eventMonitor)
+        }
+    }
+
     override func didBecomeContentController() {
         configureToolbar()
+
+        // Catch key events to generated preview / open manga
+        monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
+            if self.handleKeyDown(with: event) {
+                return nil
+            }
+            return event
+        }
     }
 
     /// Show or hide the loading view if necessary

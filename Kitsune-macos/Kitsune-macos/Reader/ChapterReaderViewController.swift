@@ -18,6 +18,7 @@ class ChapterReaderViewController: PageContentViewController {
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var loadingIndicator: NSProgressIndicator!
     @IBOutlet var errorLabel: NSTextField!
+    private var monitor: Any?
 
     var paginationEnabled = false {
         didSet {
@@ -87,9 +88,13 @@ class ChapterReaderViewController: PageContentViewController {
                                        selector: #selector(scrollViewDidResize(notification:)),
                                        name: NSView.frameDidChangeNotification,
                                        object: scrollView)
+    }
+
+    override func didBecomeContentController() {
+        configureToolbar()
 
         // Catch key events to skip pages
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
+        monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
             if self.handleKeyDown(with: event) {
                 return nil
             }
@@ -97,14 +102,10 @@ class ChapterReaderViewController: PageContentViewController {
         }
     }
 
-    override func didBecomeContentController() {
-        configureToolbar()
-    }
-
     func configureToolbar() {
         ToolbarManager.accountButton(in: view)?.isHidden = true
         ToolbarManager.sortButton(in: view)?.isHidden = true
-        ToolbarManager.refreshButton(in: view)?.isHidden = true
+        ToolbarManager.refreshButton(in: view)?.isHidden = false
         ToolbarManager.segmentedControl(in: view)?.isHidden = true
         ToolbarManager.searchBar(in: view)?.isHidden = true
         ToolbarManager.previousButton(in: view)?.isHidden = false
@@ -151,6 +152,12 @@ class ChapterReaderViewController: PageContentViewController {
             break
         }
         return false
+    }
+
+    override func pageControllerdidTransition(to controller: PageContentViewController) {
+        if let eventMonitor = monitor {
+            NSEvent.removeMonitor(eventMonitor)
+        }
     }
 
     @objc func goBack() {

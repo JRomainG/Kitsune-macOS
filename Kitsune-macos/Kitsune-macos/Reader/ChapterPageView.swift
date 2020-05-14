@@ -28,8 +28,10 @@ class ChapterPageView: NSImageView {
 
     var loadingIndicator = NSProgressIndicator()
     var errorLabel = NSTextField()
+    var reloadButton = NSButton()
     weak var delegate: ChapterPageDelegate?
 
+    private(set) var url: URL?
     private(set) var isLoading = false {
         didSet {
             if isLoading {
@@ -44,10 +46,12 @@ class ChapterPageView: NSImageView {
             if error == nil {
                 errorLabel.stringValue = ""
                 errorLabel.isHidden = true
+                reloadButton.isHidden = true
             } else {
                 errorLabel.stringValue = String(describing: error)
                 errorLabel.sizeToFit()
                 errorLabel.isHidden = false
+                reloadButton.isHidden = false
             }
         }
     }
@@ -67,7 +71,7 @@ class ChapterPageView: NSImageView {
         autoresizingMask = [.height, .width]
         imageScaling = .scaleProportionallyDown
         setContentHuggingPriority(.defaultLow, for: .horizontal)
-        setContentHuggingPriority(.defaultHigh, for: .vertical)
+        setContentHuggingPriority(.defaultLow, for: .vertical)
         setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
@@ -90,19 +94,41 @@ class ChapterPageView: NSImageView {
         errorLabel.isBordered = false
         errorLabel.font = .boldSystemFont(ofSize: 18)
         errorLabel.textColor = .secondaryLabelColor
-        errorLabel.stringValue = "Error"
+        errorLabel.stringValue = ""
+        errorLabel.isHidden = true
         addSubview(errorLabel)
         errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         errorLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+
+        reloadButton.autoresizingMask = [.width, .height]
+        reloadButton.bezelStyle = .roundRect
+        reloadButton.isBordered = false
+        if #available(OSX 10.14, *) {
+            reloadButton.contentTintColor = .controlAccentColor
+        }
+        reloadButton.translatesAutoresizingMaskIntoConstraints = false
+        reloadButton.title = "Reload"
+        reloadButton.target = self
+        reloadButton.action = #selector(reload)
+        reloadButton.isHidden = true
+        addSubview(reloadButton)
+        reloadButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        reloadButton.topAnchor.constraint(equalTo: errorLabel.bottomAnchor).isActive = true
     }
 
     func cancelOperations() {
         sd_cancelCurrentImageLoad()
         errorLabel.stringValue = "Canceled"
         errorLabel.isHidden = false
+        reloadButton.isHidden = false
+    }
+
+    @objc func reload() {
+        setImage(with: url)
     }
 
     func setImage(with url: URL?) {
+        self.url = url
         isLoading = true
         error = nil
         delegate?.didStartLoading(view: self)

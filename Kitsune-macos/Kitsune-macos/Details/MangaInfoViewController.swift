@@ -66,6 +66,52 @@ class MangaInfoViewController: PageContentViewController {
         NSWorkspace.shared.open(url)
     }
 
+    override func handleKeyDown(with event: NSEvent) -> Bool {
+        // Make sure an item is selected, otherwise don't handle the event
+        guard tableView.selectedRow != -1 else {
+            return false
+        }
+
+        // Check if "option" is being pressed
+        let optionModifier: Bool
+        if event.modifierFlags.intersection(.option) == NSEvent.ModifierFlags.init(rawValue: 0) {
+            optionModifier = false
+        } else {
+            optionModifier = true
+        }
+
+        switch event.keyCode {
+        case 0x24, 0x4C:
+            // Return / Enter
+            guard !optionModifier else {
+                break
+            }
+            goNext()
+            return true
+        case 0x7D:
+            // Down arrow
+            let newRow = optionModifier ? chapters.count - 1 : tableView.selectedRow + 1
+            select(row: newRow)
+            return true
+        case 0x7E:
+            // Up arrow
+            let newRow = optionModifier ? 0 : tableView.selectedRow - 1
+            select(row: newRow)
+            return true
+        default:
+            break
+        }
+        return false
+    }
+
+    private func select(row: Int) {
+        guard row >= 0, row < chapters.count else {
+            return
+        }
+        tableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
+        tableView.scrollRowToVisible(row)
+    }
+
     @objc private func updateContent() {
         downloadDetails()
         downloadInfo()
@@ -199,6 +245,7 @@ class MangaInfoViewController: PageContentViewController {
     }
 
     override func didBecomeContentController() {
+        super.didBecomeContentController()
         configureToolbar()
     }
 
@@ -243,6 +290,10 @@ class MangaInfoViewController: PageContentViewController {
             refreshButton.action = #selector(refresh)
         }
     }
+
+}
+
+extension MangaInfoViewController {
 
     @objc func goBack() {
         pageController?.navigateBack(nil)

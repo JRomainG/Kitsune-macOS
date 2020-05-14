@@ -18,7 +18,6 @@ class ChapterReaderViewController: PageContentViewController {
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var loadingIndicator: NSProgressIndicator!
     @IBOutlet var errorLabel: NSTextField!
-    private var monitor: Any?
 
     var paginationEnabled = false {
         didSet {
@@ -91,15 +90,8 @@ class ChapterReaderViewController: PageContentViewController {
     }
 
     override func didBecomeContentController() {
+        super.didBecomeContentController()
         configureToolbar()
-
-        // Catch key events to skip pages
-        monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
-            if self.handleKeyDown(with: event) {
-                return nil
-            }
-            return event
-        }
     }
 
     func configureToolbar() {
@@ -125,7 +117,7 @@ class ChapterReaderViewController: PageContentViewController {
         return false
     }
 
-    func handleKeyDown(with event: NSEvent) -> Bool {
+    override func handleKeyDown(with event: NSEvent) -> Bool {
         // Don't override shortcut to skip chapter
         guard event.modifierFlags.intersection(.command) == NSEvent.ModifierFlags.init(rawValue: 0) else {
             return false
@@ -152,12 +144,6 @@ class ChapterReaderViewController: PageContentViewController {
             break
         }
         return false
-    }
-
-    override func pageControllerdidTransition(to controller: PageContentViewController) {
-        if let eventMonitor = monitor {
-            NSEvent.removeMonitor(eventMonitor)
-        }
     }
 
     @objc func goBack() {

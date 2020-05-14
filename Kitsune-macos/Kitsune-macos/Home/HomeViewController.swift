@@ -25,7 +25,6 @@ class HomeViewController: PageContentViewController {
     let defaultItemSize = NSSize(width: 248, height: 320)
     let defaultItemSpacing: CGFloat = 20
     let defaultLineSpacing: CGFloat = 20
-    var monitor: Any?
 
     let api = MDApi()
     var mangaProviders: [MangaProvider] = []
@@ -98,14 +97,6 @@ class HomeViewController: PageContentViewController {
             self.currentProvider.startLoading()
         }
         toggleLoadingView()
-
-        // Catch key events to generated preview / open manga
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
-            if self.handleKeyDown(with: event) {
-                return nil
-            }
-            return event
-        }
     }
 
     override func viewWillAppear() {
@@ -148,10 +139,9 @@ class HomeViewController: PageContentViewController {
         collectionView.register(nib, forItemWithIdentifier: itemIdentifier)
     }
 
-    func handleKeyDown(with event: NSEvent) -> Bool {
+    override func handleKeyDown(with event: NSEvent) -> Bool {
         // Make sure an item is selected, otherwise don't handle the event
-        guard collectionView.selectionIndexPaths.first != nil,
-            isDisplayedViewController else {
+        guard collectionView.selectionIndexPaths.first != nil else {
             return false
         }
 
@@ -212,22 +202,9 @@ class HomeViewController: PageContentViewController {
         infoViewController.mangaProvider = currentProvider
     }
 
-    override func pageControllerdidTransition(to controller: PageContentViewController) {
-        if let eventMonitor = monitor {
-            NSEvent.removeMonitor(eventMonitor)
-        }
-    }
-
     override func didBecomeContentController() {
+        super.didBecomeContentController()
         configureToolbar()
-
-        // Catch key events to generated preview / open manga
-        monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
-            if self.handleKeyDown(with: event) {
-                return nil
-            }
-            return event
-        }
     }
 
     /// Show or hide the loading view if necessary

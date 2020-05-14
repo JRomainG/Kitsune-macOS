@@ -11,6 +11,7 @@ import Cocoa
 class PageContentViewController: NSViewController {
 
     var pageController: PageController?
+    var monitor: Any?
 
     var isDisplayedViewController: Bool {
         return pageController?.currentController == self
@@ -34,6 +35,10 @@ class PageContentViewController: NSViewController {
         view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
     }
 
+    func handleKeyDown(with event: NSEvent) -> Bool {
+        return false
+    }
+
     /// Number of controllers to remove from the history when this controller is unloaded
     func popOnUnload() -> Int {
         return 0
@@ -55,9 +60,18 @@ class PageContentViewController: NSViewController {
     }
 
     func pageControllerdidTransition(to controller: PageContentViewController) {
+        if let eventMonitor = monitor {
+            NSEvent.removeMonitor(eventMonitor)
+        }
     }
 
     func didBecomeContentController() {
+        monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
+            if self.handleKeyDown(with: event) {
+                return nil
+            }
+            return event
+        }
     }
 
 }

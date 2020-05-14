@@ -12,10 +12,12 @@ class ErrorLabel: NSTextField {
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
+        commonInit()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        commonInit()
     }
 
     private func commonInit() {

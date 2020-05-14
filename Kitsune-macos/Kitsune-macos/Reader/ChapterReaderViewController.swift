@@ -18,7 +18,7 @@ class ChapterReaderViewController: PageContentViewController {
     @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var loadingIndicator: NSProgressIndicator!
     @IBOutlet var errorLabel: NSTextField!
-    
+
     var paginationEnabled = false {
         didSet {
             configureFooter()

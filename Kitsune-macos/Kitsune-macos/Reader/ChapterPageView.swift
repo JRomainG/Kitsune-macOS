@@ -8,9 +8,49 @@
 
 import Cocoa
 
+protocol ChapterPageDelegate: AnyObject {
+
+    func didStartLoading(view: ChapterPageView)
+    func didFinishLoading(view: ChapterPageView)
+    func didFailLoading(view: ChapterPageView, error: Error)
+
+}
+
+extension ChapterPageDelegate {
+
+    func didStartLoading(view: ChapterPageView) {}
+    func didFinishLoading(view: ChapterPageView) {}
+    func didFailLoading(view: ChapterPageView, error: Error) {}
+
+}
+
 class ChapterPageView: NSImageView {
 
     var loadingIndicator = NSProgressIndicator()
+    var errorLabel = NSTextField()
+    weak var delegate: ChapterPageDelegate?
+
+    private(set) var isLoading = false {
+        didSet {
+            if isLoading {
+                loadingIndicator.startAnimation(nil)
+            } else {
+                loadingIndicator.stopAnimation(nil)
+            }
+        }
+    }
+    private(set) var error: Error? {
+        didSet {
+            if error == nil {
+                errorLabel.stringValue = ""
+                errorLabel.isHidden = true
+            } else {
+                errorLabel.stringValue = String(describing: error)
+                errorLabel.sizeToFit()
+                errorLabel.isHidden = false
+            }
+        }
+    }
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -42,15 +82,41 @@ class ChapterPageView: NSImageView {
         addSubview(loadingIndicator)
         loadingIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         loadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+
+        errorLabel.autoresizingMask = [.width, .height]
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        errorLabel.isEditable = false
+        errorLabel.isSelectable = true
+        errorLabel.isBordered = false
+        errorLabel.font = .boldSystemFont(ofSize: 18)
+        errorLabel.textColor = .secondaryLabelColor
+        errorLabel.stringValue = "Error"
+        addSubview(errorLabel)
+        errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        errorLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+
+    func cancelOperations() {
+        sd_cancelCurrentImageLoad()
+        errorLabel.stringValue = "Canceled"
+        errorLabel.isHidden = false
     }
 
     func setImage(with url: URL?) {
-        loadingIndicator.startAnimation(nil)
+        isLoading = true
+        error = nil
+        delegate?.didStartLoading(view: self)
         sd_setImage(with: url,
                     placeholderImage: NSImage(named: "PagePlaceholder"),
-                    options: .decodeFirstFrameOnly) { (_, _, _, _) in
+                    options: .decodeFirstFrameOnly) { (_, error, _, _) in
                         DispatchQueue.main.async {
-                            self.loadingIndicator.stopAnimation(nil)
+                            if error != nil {
+                                self.error = error
+                                self.delegate?.didFailLoading(view: self, error: error!)
+                            } else {
+                                self.delegate?.didFinishLoading(view: self)
+                            }
+                            self.isLoading = false
                         }
         }
     }

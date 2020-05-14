@@ -251,6 +251,7 @@ extension ChapterReaderViewController {
 
     func newImageView() -> ChapterPageView {
         let imageView = ChapterPageView(frame: scrollView.bounds)
+        imageView.delegate = self
         scrollView.documentView?.addSubview(imageView)
         return imageView
     }
@@ -260,6 +261,7 @@ extension ChapterReaderViewController {
             scrollView.documentView?.removeConstraints(constraints)
         }
         for imageView in imageViews {
+            imageView.cancelOperations()
             imageView.removeFromSuperview()
         }
         scrollView.documentView?.frame = .zero
@@ -269,4 +271,7 @@ extension ChapterReaderViewController {
         scroll(to: 0, animated: false)
     }
 
+}
+
+extension ChapterReaderViewController: ChapterPageDelegate {
 }

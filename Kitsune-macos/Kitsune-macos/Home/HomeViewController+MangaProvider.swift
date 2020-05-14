@@ -25,6 +25,7 @@ extension HomeViewController: MangaProviderDelegate {
         }
 
         // Update the content
+        collectionView.deselectAll(nil)
         collectionView.reloadData()
         quickLookVC?.close()
 

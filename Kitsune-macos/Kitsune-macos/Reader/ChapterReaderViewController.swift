@@ -114,6 +114,10 @@ class ChapterReaderViewController: PageContentViewController {
             previousButton.target = self
             previousButton.action = #selector(goBack)
         }
+        if let refreshButton = ToolbarManager.refreshButton(in: view) {
+            refreshButton.target = self
+            refreshButton.action = #selector(refresh)
+        }
     }
 
     override func canScrollToNavigate() -> Bool {
@@ -151,6 +155,12 @@ class ChapterReaderViewController: PageContentViewController {
 
     @objc func goBack() {
         pageController?.navigateBack(nil)
+    }
+
+    @objc func refresh() {
+        var resetChapter = chapter
+        resetChapter?.pages = nil
+        chapter = resetChapter
     }
 
     @IBAction func previousChapter(_ sender: Any) {

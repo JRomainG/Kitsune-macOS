@@ -27,8 +27,8 @@ extension ChapterPageDelegate {
 class ChapterPageView: NSImageView {
 
     var loadingIndicator = NSProgressIndicator()
-    var errorLabel = NSTextField()
-    var reloadButton = NSButton()
+    var errorLabel = ErrorLabel()
+    var reloadButton = LinkButton()
     weak var delegate: ChapterPageDelegate?
 
     private(set) var url: URL?
@@ -87,26 +87,11 @@ class ChapterPageView: NSImageView {
         loadingIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         loadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
-        errorLabel.autoresizingMask = [.width, .height]
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        errorLabel.isEditable = false
-        errorLabel.isSelectable = true
-        errorLabel.isBordered = false
-        errorLabel.font = .boldSystemFont(ofSize: 18)
-        errorLabel.textColor = .secondaryLabelColor
-        errorLabel.stringValue = ""
         errorLabel.isHidden = true
         addSubview(errorLabel)
         errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         errorLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
-        reloadButton.autoresizingMask = [.width, .height]
-        reloadButton.bezelStyle = .roundRect
-        reloadButton.isBordered = false
-        if #available(OSX 10.14, *) {
-            reloadButton.contentTintColor = .controlAccentColor
-        }
-        reloadButton.translatesAutoresizingMaskIntoConstraints = false
         reloadButton.title = "Reload"
         reloadButton.target = self
         reloadButton.action = #selector(reload)

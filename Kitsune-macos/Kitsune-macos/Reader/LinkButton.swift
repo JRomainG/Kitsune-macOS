@@ -20,7 +20,7 @@ class LinkButton: NSButton {
         commonInit()
     }
 
-    private func commonInit() {
+    func commonInit() {
         autoresizingMask = [.width, .height]
         translatesAutoresizingMaskIntoConstraints = false
         bezelStyle = .roundRect

@@ -1327,6 +1327,21 @@ DQ
                             <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="DHL-yX-MXh">
                                 <rect key="frame" x="313" y="104" width="32" height="32"/>
                             </progressIndicator>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="dXg-Ho-mT2" customClass="DownloadButton" customModule="Kitsune" customModuleProvider="target">
+                                <rect key="frame" x="613" y="197" width="19" height="19"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19" id="8sh-am-1mr"/>
+                                    <constraint firstAttribute="width" constant="19" id="DBs-7Q-wit"/>
+                                </constraints>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Download" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="m78-S8-Q0K">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <color key="contentTintColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <action selector="download:" target="bf3-cv-RKf" id="aEa-b9-mk4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="oOZ-a8-ksH" firstAttribute="top" secondItem="VZn-Fd-vsa" secondAttribute="top" constant="20" id="1cE-j5-MaD"/>
@@ -1346,11 +1361,13 @@ DQ
                             <constraint firstItem="gHi-Dw-wXc" firstAttribute="trailing" secondItem="oOZ-a8-ksH" secondAttribute="trailing" id="Qoc-Vp-xsh"/>
                             <constraint firstItem="amS-Pv-fMT" firstAttribute="top" secondItem="Gie-7u-Ba6" secondAttribute="bottom" constant="8" id="RPB-Um-9XR"/>
                             <constraint firstItem="YnZ-3H-1MF" firstAttribute="trailing" secondItem="oOZ-a8-ksH" secondAttribute="trailing" id="RlY-hT-Yhp"/>
+                            <constraint firstItem="dXg-Ho-mT2" firstAttribute="leading" secondItem="tvc-Q5-ehq" secondAttribute="trailing" constant="-25" id="RuV-Xa-gcO"/>
                             <constraint firstItem="KfY-4n-t8s" firstAttribute="top" secondItem="7kb-Pd-iNu" secondAttribute="bottom" constant="8" id="SH3-hw-S2u"/>
                             <constraint firstItem="pb8-p9-C9O" firstAttribute="leading" secondItem="VZn-Fd-vsa" secondAttribute="leading" constant="20" id="U7T-vt-FX7"/>
                             <constraint firstItem="KfY-4n-t8s" firstAttribute="leading" secondItem="oOZ-a8-ksH" secondAttribute="leading" id="UEb-cZ-q2K"/>
                             <constraint firstItem="BkC-6i-BhN" firstAttribute="centerX" secondItem="YnZ-3H-1MF" secondAttribute="centerX" id="UWT-i3-xzM"/>
                             <constraint firstItem="7kb-Pd-iNu" firstAttribute="top" secondItem="oOZ-a8-ksH" secondAttribute="bottom" constant="8" id="WhY-Ce-Gio"/>
+                            <constraint firstItem="tvc-Q5-ehq" firstAttribute="top" secondItem="dXg-Ho-mT2" secondAttribute="bottom" constant="-23" id="YIM-7L-4ct"/>
                             <constraint firstItem="YnZ-3H-1MF" firstAttribute="leading" secondItem="oOZ-a8-ksH" secondAttribute="leading" constant="-4" id="Yn1-b9-MyM"/>
                             <constraint firstItem="YGb-ex-qIW" firstAttribute="top" secondItem="amS-Pv-fMT" secondAttribute="bottom" constant="8" id="ZJX-cc-1RX"/>
                             <constraint firstItem="amS-Pv-fMT" firstAttribute="trailing" secondItem="oOZ-a8-ksH" secondAttribute="trailing" id="eQ3-vz-t1Z"/>
@@ -1376,6 +1393,7 @@ DQ
                         <outlet property="contentLabel" destination="Gie-7u-Ba6" id="aUF-1G-6SO"/>
                         <outlet property="descriptionTextView" destination="0Xy-cr-Ed6" id="dUU-vf-1p9"/>
                         <outlet property="detailLoadingIndicator" destination="BkC-6i-BhN" id="Bgw-hy-x5t"/>
+                        <outlet property="downloadButton" destination="dXg-Ho-mT2" id="7xy-FL-cgP"/>
                         <outlet property="formatLabel" destination="KfY-4n-t8s" id="Pju-2O-Xch"/>
                         <outlet property="genreLabel" destination="amS-Pv-fMT" id="sOn-i5-lvf"/>
                         <outlet property="imageView" destination="Zwb-aB-6q5" id="Fvi-Iq-tTp"/>
@@ -1533,6 +1551,7 @@ DQ
     <resources>
         <image name="Bookmark" width="14" height="25"/>
         <image name="CoverPlaceholder" width="150" height="235"/>
+        <image name="Download" width="21" height="21"/>
         <image name="NSGoBackTemplate" width="9" height="12"/>
         <image name="NSMenuOnStateTemplate" width="12" height="12"/>
         <image name="NSRefreshTemplate" width="11" height="15"/>

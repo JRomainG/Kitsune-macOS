@@ -13,6 +13,7 @@ class MangaInfoViewController: PageContentViewController {
 
     @IBOutlet var imageView: NSImageView!
     @IBOutlet var bookmarkButton: NSButton!
+    @IBOutlet var downloadButton: DownloadButton!
     @IBOutlet var titleLabel: NSTextField!
     @IBOutlet var authorLabel: NSTextField!
     @IBOutlet var formatLabel: NSTextField!
@@ -35,6 +36,7 @@ class MangaInfoViewController: PageContentViewController {
                 self.updateChapterList()
                 self.toggleBookmarkButton()
                 self.linkButton?.isEnabled = (self.manga != nil)
+                self.downloadButton?.isEnabled = (self.manga != nil)
             }
         }
     }
@@ -56,14 +58,6 @@ class MangaInfoViewController: PageContentViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.doubleAction = #selector(goNext)
-    }
-
-    @IBAction func openInBrowser(_ sender: NSButton) {
-        guard let mangaId = manga?.mangaId else {
-            return
-        }
-        let url = MDPath.mangaDetails(mangaId: mangaId, mangaTitle: manga?.title)
-        NSWorkspace.shared.open(url)
     }
 
     override func handleKeyDown(with event: NSEvent) -> Bool {
@@ -317,6 +311,17 @@ extension MangaInfoViewController {
         resetManga?.author = nil
         manga = resetManga
         tableView.reloadData()
+    }
+
+    @IBAction func openInBrowser(_ sender: NSButton) {
+        guard let mangaId = manga?.mangaId else {
+            return
+        }
+        let url = MDPath.mangaDetails(mangaId: mangaId, mangaTitle: manga?.title)
+        NSWorkspace.shared.open(url)
+    }
+
+    @IBAction func download(_ sender: Any) {
     }
 
     @IBAction func bookmark(_ sender: Any) {

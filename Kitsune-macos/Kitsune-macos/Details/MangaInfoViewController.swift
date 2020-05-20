@@ -190,54 +190,6 @@ class MangaInfoViewController: PageContentViewController {
         bookmarkButton?.isHidden = (self.manga?.readingStatus == nil)
     }
 
-    func shouldDownloadDetails() -> Bool {
-        guard mangaProvider?.api.isLoggedIn() == true else {
-            return false
-        }
-        return manga?.readingStatus == nil
-    }
-
-    func shouldDownloadInfo() -> Bool {
-        return manga?.description == nil
-    }
-
-    func downloadDetails() {
-        guard shouldDownloadDetails() else {
-            return
-        }
-        let operation = MangaDetailOperation()
-        operation.manga = manga
-        operation.provider = mangaProvider
-        operation.completionBlock = {
-            guard !operation.isCancelled,
-                let manga = operation.manga,
-                let currentManga = self.manga else {
-                return
-            }
-            self.manga = MangaProvider.merged(first: currentManga, second: manga)
-        }
-        operationQueue.addOperation(operation)
-    }
-
-    func downloadInfo() {
-        guard shouldDownloadInfo() else {
-            return
-        }
-
-        let operation = MangaInfoOperation()
-        operation.manga = manga
-        operation.provider = mangaProvider
-        operation.completionBlock = {
-            guard !operation.isCancelled,
-                let manga = operation.manga,
-                let currentManga = self.manga else {
-                return
-            }
-            self.manga = MangaProvider.merged(first: currentManga, second: manga)
-        }
-        operationQueue.addOperation(operation)
-    }
-
     override func didBecomeContentController() {
         super.didBecomeContentController()
         configureToolbar()
@@ -285,10 +237,6 @@ class MangaInfoViewController: PageContentViewController {
         }
     }
 
-}
-
-extension MangaInfoViewController {
-
     @objc func goBack() {
         pageController?.navigateBack(nil)
     }
@@ -297,55 +245,12 @@ extension MangaInfoViewController {
         pageController?.navigateForward(nil)
     }
 
-    @objc func refresh() {
-        tableView.scroll(.zero)
-        var resetManga = manga
-        resetManga?.description = nil
-        resetManga?.chapters = nil
-        resetManga?.readingStatus = nil
-        resetManga?.publicationStatus = nil
-        resetManga?.lastChapter = nil
-        resetManga?.currentVolume = nil
-        resetManga?.currentChapter = nil
-        resetManga?.artist = nil
-        resetManga?.author = nil
-        manga = resetManga
-        tableView.reloadData()
-    }
-
     @IBAction func openInBrowser(_ sender: NSButton) {
         guard let mangaId = manga?.mangaId else {
             return
         }
         let url = MDPath.mangaDetails(mangaId: mangaId, mangaTitle: manga?.title)
         NSWorkspace.shared.open(url)
-    }
-
-    @IBAction func download(_ sender: Any) {
-    }
-
-    @IBAction func bookmark(_ sender: Any) {
-        guard let readingStatus = manga?.readingStatus,
-            let mangaId = manga?.mangaId else {
-            return
-        }
-
-        let newState: MDReadingStatus
-        switch readingStatus {
-        case .unfollowed:
-            newState = .reading
-        default:
-            newState = .unfollowed
-        }
-
-        mangaProvider?.api.setReadingStatus(mangaId: mangaId, status: newState, completion: { (response) in
-            guard response.error == nil else {
-                return
-            }
-            DispatchQueue.main.async {
-                self.refresh()
-            }
-        })
     }
 
 }

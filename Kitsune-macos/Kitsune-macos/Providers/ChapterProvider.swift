@@ -32,7 +32,8 @@ class ChapterProvider: NSObject {
             return nil
         }
 
-        if let archive = ArchiveManager.restoreChapter(chapterId: chapterId, mangaId: mangaId) {
+        if ArchiveManager.hasChapter(chapterId: chapterId, mangaId: mangaId),
+            let archive = ArchiveManager.restoreChapter(chapterId: chapterId, mangaId: mangaId) {
             // If this chapter has been downloaded, load it from disk
             var pages: [URL] = []
             for page in archive.pages {

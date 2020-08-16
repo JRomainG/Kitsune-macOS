@@ -29,6 +29,10 @@ class MangaInfoViewController: PageContentViewController {
 
     var mangaProvider: MangaProvider?
 
+    var isDownloadPage: Bool {
+        return mangaProvider!.type == .downloaded
+    }
+
     var manga: MDManga? {
         didSet {
             DispatchQueue.main.async {
@@ -58,6 +62,9 @@ class MangaInfoViewController: PageContentViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.doubleAction = #selector(goNext)
+        tableView.menu = NSMenu()
+        tableView.menu?.autoenablesItems = false
+        tableView.menu?.delegate = self
     }
 
     override func handleKeyDown(with event: NSEvent) -> Bool {

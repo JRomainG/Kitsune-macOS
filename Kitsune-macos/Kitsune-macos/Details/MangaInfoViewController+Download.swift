@@ -15,15 +15,17 @@ extension MangaInfoViewController {
         guard mangaProvider?.api.isLoggedIn() == true else {
             return false
         }
-        return manga?.readingStatus == nil
+        return !isDownloadPage && manga?.readingStatus == nil
     }
 
     func shouldDownloadInfo() -> Bool {
-        return manga?.description == nil
+        return !isDownloadPage && manga?.description == nil
     }
 
     func shouldDownloadChapters() -> Bool {
-        return !shouldDownloadInfo() && !shouldDownloadDetails() && (manga?.chapters == nil)
+        // For mangas that are not from DownloadedMangaProvider, this is not necessary
+        // because downloadInfo and downloadDetails will fill in the chapters
+        return isDownloadPage && (manga?.chapters == nil)
     }
 
     func downloadDetails() {
@@ -77,15 +79,18 @@ extension MangaInfoViewController {
     @objc func refresh() {
         tableView.scroll(.zero)
         var resetManga = manga
-        resetManga?.description = nil
+
+        if !isDownloadPage {
+            resetManga?.description = nil
+            resetManga?.readingStatus = nil
+            resetManga?.publicationStatus = nil
+            resetManga?.lastChapter = nil
+            resetManga?.currentVolume = nil
+            resetManga?.currentChapter = nil
+            resetManga?.artist = nil
+            resetManga?.author = nil
+        }
         resetManga?.chapters = nil
-        resetManga?.readingStatus = nil
-        resetManga?.publicationStatus = nil
-        resetManga?.lastChapter = nil
-        resetManga?.currentVolume = nil
-        resetManga?.currentChapter = nil
-        resetManga?.artist = nil
-        resetManga?.author = nil
         manga = resetManga
         tableView.reloadData()
     }

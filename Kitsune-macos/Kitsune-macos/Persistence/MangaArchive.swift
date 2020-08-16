@@ -61,7 +61,7 @@ class MangaArchive: NSObject, NSCoding {
 
         chapters = []
         for chapter in mdManga.chapters ?? [] {
-            chapters.append(ChapterArchive(from: chapter))
+            chapters.append(ChapterArchive(from: chapter, with: mangaId))
         }
 
         chapters = chapters.filter { (chapter) -> Bool in

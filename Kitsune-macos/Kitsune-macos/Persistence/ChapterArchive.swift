@@ -66,9 +66,9 @@ class ChapterArchive: NSObject, NSCoding {
         }
     }
 
-    init(from mdChapter: MDChapter) {
+    init(from mdChapter: MDChapter, with mdMangaId: Int = -1) {
         chapterId = mdChapter.chapterId!
-        mangaId = mdChapter.mangaId!
+        mangaId = (mdMangaId > 0) ? mdMangaId: mdChapter.mangaId!
         title = mdChapter.title
         volume = mdChapter.volume
         chapter = mdChapter.chapter

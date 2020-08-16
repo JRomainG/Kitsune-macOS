@@ -31,6 +31,41 @@ class ArchiveManager {
         }
     }
 
+    /// Delete a manga (and all its chapters) from the disk
+    static func deleteManga(_ manga: MangaArchive) {
+        do {
+            try ArchiveManager.delete(manga)
+        } catch {
+           print("Failed to delete manga archive: \(error)")
+       }
+    }
+
+    /// Delete a chapter (and all its pages) from the disk
+    static func deleteChapter(_ chapter: ChapterArchive) {
+        do {
+            try ArchiveManager.delete(chapter)
+        } catch {
+           print("Failed to delete chapter archive: \(error)")
+       }
+    }
+
+    static func hasManga(mangaId: Int) -> Bool {
+        guard let root = ArchiveManager.getMangaFolder(mangaId: mangaId) else {
+            return false
+        }
+        let url = root.appendingPathComponent("manga.xml")
+        return ArchiveManager.isFile(url)
+    }
+
+    static func hasChapter(chapterId: Int, mangaId: Int) -> Bool {
+        guard let root = ArchiveManager.getChapterFolder(chapterId: chapterId, mangaId: mangaId) else {
+            return false
+        }
+        let url = root.appendingPathComponent("chapter.xml")
+        return ArchiveManager.isFile(url)
+
+    }
+
     /// Reload all saved mangas
     static func restoreMangas() -> [MangaArchive]? {
         guard let root = ArchiveManager.getDownloadsFolder() else {
@@ -135,6 +170,22 @@ class ArchiveManager {
         try data.write(to: path)
     }
 
+    /// Delete a chapter's info, including all its chapters
+    private static func delete(_ manga: MangaArchive) throws {
+        guard let root = ArchiveManager.getMangaFolder(mangaId: manga.mangaId) else {
+            return
+        }
+        try ArchiveManager.deleteFolder(at: root)
+    }
+
+    /// Delete a chapter's info, including all its pages
+    private static func delete(_ chapter: ChapterArchive) throws {
+        guard let root = ArchiveManager.getChapterFolder(chapterId: chapter.chapterId, mangaId: chapter.mangaId) else {
+            return
+        }
+        try ArchiveManager.deleteFolder(at: root)
+    }
+
     private static func getDownloadsFolder() -> URL? {
         let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         guard var folderUrl = urls.last else {
@@ -160,6 +211,12 @@ class ArchiveManager {
         return folderUrl?.appendingPathComponent("\(chapterId)")
     }
 
+    private static func isFile(_ url: URL) -> Bool {
+        var isDir = ObjCBool(false)
+        let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir)
+        return exists && !isDir.boolValue
+    }
+
     private static func isFolder(_ url: URL) -> Bool {
         var isDir = ObjCBool(false)
         let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir)
@@ -174,6 +231,14 @@ class ArchiveManager {
         try fileManager.createDirectory(at: url, withIntermediateDirectories: true, attributes: [
             .extensionHidden: false
         ])
+    }
+
+    private static func deleteFolder(at url: URL) throws {
+        guard isFolder(url) else {
+            return
+        }
+        let fileManager = FileManager()
+        try fileManager.removeItem(at: url)
     }
 
     private static func getFolders(at root: URL) throws -> [URL] {

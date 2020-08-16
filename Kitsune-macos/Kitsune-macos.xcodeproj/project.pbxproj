@@ -16,6 +16,8 @@
 		332C42542465575100413940 /* MangaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332C42532465575100413940 /* MangaProvider.swift */; };
 		332C4257246558CB00413940 /* LatestMangaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332C4256246558CB00413940 /* LatestMangaProvider.swift */; };
 		332C425924657CBD00413940 /* QuickLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332C425824657CBD00413940 /* QuickLookViewController.swift */; };
+		333C372924E95AB0002D79D0 /* MangaInfoViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333C372824E95AB0002D79D0 /* MangaInfoViewController+Menu.swift */; };
+		333C372B24E95EB2002D79D0 /* HomeViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333C372A24E95EB2002D79D0 /* HomeViewController+Menu.swift */; };
 		33500E802465C96900A19B5C /* FeaturedMangaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33500E7F2465C96900A19B5C /* FeaturedMangaProvider.swift */; };
 		33500E822465C9A500A19B5C /* ListedMangaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33500E812465C9A500A19B5C /* ListedMangaProvider.swift */; };
 		33500E842465D1F500A19B5C /* FollowedMangaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33500E832465D1F500A19B5C /* FollowedMangaProvider.swift */; };
@@ -60,6 +62,8 @@
 		332C42532465575100413940 /* MangaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaProvider.swift; sourceTree = "<group>"; };
 		332C4256246558CB00413940 /* LatestMangaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestMangaProvider.swift; sourceTree = "<group>"; };
 		332C425824657CBD00413940 /* QuickLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookViewController.swift; sourceTree = "<group>"; };
+		333C372824E95AB0002D79D0 /* MangaInfoViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MangaInfoViewController+Menu.swift"; sourceTree = "<group>"; };
+		333C372A24E95EB2002D79D0 /* HomeViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Menu.swift"; sourceTree = "<group>"; };
 		33500E7F2465C96900A19B5C /* FeaturedMangaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedMangaProvider.swift; sourceTree = "<group>"; };
 		33500E812465C9A500A19B5C /* ListedMangaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListedMangaProvider.swift; sourceTree = "<group>"; };
 		33500E832465D1F500A19B5C /* FollowedMangaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedMangaProvider.swift; sourceTree = "<group>"; };
@@ -141,6 +145,7 @@
 				3350C1542467155900B1B1E3 /* HomeViewController+CollectionView.swift */,
 				3350C1592467159900B1B1E3 /* HomeViewController+MangaProvider.swift */,
 				3350C15B246715B500B1B1E3 /* HomeViewController+Toolbar.swift */,
+				333C372A24E95EB2002D79D0 /* HomeViewController+Menu.swift */,
 				33500E852465D7EF00A19B5C /* LoadingView.swift */,
 				337638952460882D00A1B042 /* MangaCVItem.swift */,
 				337638962460882D00A1B042 /* MangaCVItem.xib */,
@@ -164,6 +169,7 @@
 			children = (
 				33D367D5246800AF00858DB2 /* MangaInfoViewController.swift */,
 				33C565F4246EA8D700616654 /* MangaInfoViewController+Download.swift */,
+				333C372824E95AB0002D79D0 /* MangaInfoViewController+Menu.swift */,
 				338263752469AAEF00F537DA /* MDChapter+Display.swift */,
 				33C1D653246AF2B8009F0FD4 /* MDManga+Display.swift */,
 			);
@@ -325,7 +331,9 @@
 				33C8BDEF246C593400AE15E3 /* ChapterProvider.swift in Sources */,
 				3350C15C246715B500B1B1E3 /* HomeViewController+Toolbar.swift in Sources */,
 				3350C1532466FEFF00B1B1E3 /* SortOptionsViewController.swift in Sources */,
+				333C372924E95AB0002D79D0 /* MangaInfoViewController+Menu.swift in Sources */,
 				33A7E2C124606E3C00BB1103 /* HomeViewController.swift in Sources */,
+				333C372B24E95EB2002D79D0 /* HomeViewController+Menu.swift in Sources */,
 				33C8BDF3246C5FCA00AE15E3 /* ChapterPageView.swift in Sources */,
 				33500E822465C9A500A19B5C /* ListedMangaProvider.swift in Sources */,
 				33A9C172246C7685004BEFFB /* ChapterReaderViewController+Pagination.swift in Sources */,

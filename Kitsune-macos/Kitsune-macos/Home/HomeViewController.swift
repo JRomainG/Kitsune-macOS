@@ -55,6 +55,8 @@ class HomeViewController: PageContentViewController {
         // Do any additional setup after loading the view.
         configureCollectionView()
         collectionView.needsLayout = true
+        collectionView.menu = NSMenu()
+        collectionView.menu?.delegate = self
 
         // Init a QuickLookViewController for manga previews
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
@@ -132,10 +134,18 @@ class HomeViewController: PageContentViewController {
                                                object: clipView)
 
         // Receive double click events to show manga info
-        let gesture = NSClickGestureRecognizer(target: self, action: #selector(showMangaInfo(notification:)))
-        gesture.numberOfClicksRequired = 2
-        gesture.delaysPrimaryMouseButtonEvents = false
-        collectionView.addGestureRecognizer(gesture)
+        let doubleClickGesture = NSClickGestureRecognizer(target: self, action: #selector(showMangaInfo(gesture:)))
+        doubleClickGesture.numberOfClicksRequired = 2
+        doubleClickGesture.delaysPrimaryMouseButtonEvents = false
+        collectionView.addGestureRecognizer(doubleClickGesture)
+
+        // Receive singlke click events for right click
+        let rightClickGesture = NSClickGestureRecognizer(target: self, action: #selector(handleClick(gesture:)))
+        rightClickGesture.numberOfClicksRequired = 1
+        rightClickGesture.delaysSecondaryMouseButtonEvents = true
+        // https://developer.apple.com/documentation/appkit/nsclickgesturerecognizer/1530136-buttonmask
+        rightClickGesture.buttonMask = 0x2
+        collectionView.addGestureRecognizer(rightClickGesture)
 
         let nib = NSNib(nibNamed: "MangaCVItem", bundle: nil)
         collectionView.register(nib, forItemWithIdentifier: itemIdentifier)
@@ -150,7 +160,7 @@ class HomeViewController: PageContentViewController {
         switch event.keyCode {
         case 0x24, 0x4C:
             // Return / Enter
-            showMangaInfo(notification: nil)
+            showMangaInfo(gesture: nil)
             return true
         case 0x31:
             // Space
@@ -183,7 +193,7 @@ class HomeViewController: PageContentViewController {
         return false
     }
 
-    @objc func showMangaInfo(notification: NSNotification?) {
+    @objc func showMangaInfo(gesture: NSClickGestureRecognizer?) {
         guard collectionView.selectionIndexPaths.first != nil, isDisplayedViewController else {
             return
         }

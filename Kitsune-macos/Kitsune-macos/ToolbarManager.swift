@@ -65,7 +65,7 @@ class ToolbarManager {
         sortButton(in: view)?.isHidden = false
         refreshButton(in: view)?.isHidden = false
         segmentedControl(in: view)?.isHidden = false
-        searchBar(in: view)?.isHidden = false
+        searchBar(in: view)?.isHidden = true // TODO
         previousButton(in: view)?.isHidden = false
         previousButton(in: view)?.isEnabled = false
     }

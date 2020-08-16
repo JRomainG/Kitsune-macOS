@@ -53,7 +53,7 @@ extension HomeViewController {
         ToolbarManager.sortButton(in: view)?.isHidden = false
         ToolbarManager.refreshButton(in: view)?.isHidden = false
         ToolbarManager.segmentedControl(in: view)?.isHidden = false
-        ToolbarManager.searchBar(in: view)?.isHidden = false
+        ToolbarManager.searchBar(in: view)?.isHidden = true // TODO
         ToolbarManager.previousButton(in: view)?.isHidden = false
         ToolbarManager.previousButton(in: view)?.isEnabled = false
     }

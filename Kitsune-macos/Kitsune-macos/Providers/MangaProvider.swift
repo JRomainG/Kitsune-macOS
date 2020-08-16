@@ -36,7 +36,7 @@ class MangaProvider: NSObject {
         case listed
         case followed
         case downloaded
-        case search
+        case search // TODO
     }
 
     enum ProviderState {

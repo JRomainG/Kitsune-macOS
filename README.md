@@ -24,7 +24,7 @@ Kitsune is a macOS client for [MangaDex](https://mangadex.org), built using [Man
 
 ## Installing
 
-Simple grab the latest version from the [release page](https://github.com/JRomainG/Kitsune-macOS/releases).
+Simply grab the latest version from the [release page](https://github.com/JRomainG/Kitsune-macOS/releases) (or click [here](https://github.com/JRomainG/Kitsune-macOS/releases/latest/download/Kitsune.app.zip)).
 
 ## Development
 

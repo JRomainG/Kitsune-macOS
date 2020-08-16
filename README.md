@@ -4,6 +4,28 @@
 
 Kitsune is a macOS client for [MangaDex](https://mangadex.org), built using [MangaDexLib](https://github.com/JRomainG/MangaDexLib), to browse, read, and download your favorite mangas.
 
+## Features
+
+<table style="border: none">
+  <tr style="border: none">
+    <td style="border: none"><img src="Screenshots/MangaList.png"></td>
+    <td style="border: none"><img src="Screenshots/MangaQuickLook.png"></td>
+  </tr>
+  <tr style="border: none">
+    <td style="border: none"><img src="Screenshots/MangaDetails.png"></td>
+    <td style="border: none"><img src="Screenshots/MangaReader.png"></td>
+  </tr>
+</table>
+
+* Browse latest, featured or full list of mangas,
+* Login using your MangaDex account to manage followed mangas and save your reading progress,
+* Read mangas, in long-strip format or not, directly from the app,
+* Download chapters to read them offline.
+
+## Installing
+
+Simple grab the latest version from the [release page](https://github.com/JRomainG/Kitsune-macOS/releases).
+
 ## Development
 
 To install, simply checkout the `dev` branch of this repository:

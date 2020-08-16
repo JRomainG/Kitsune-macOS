@@ -82,6 +82,14 @@ extension MDManga {
         readingStatus = archive.readingStatus
         publicationStatus = archive.publicationStatus
         tags = archive.tags
+
+        // If there are any, convert chapter archives to MDChapters
+        if !archive.chapters.isEmpty {
+            chapters = []
+            for chapter in archive.chapters {
+                chapters?.append(MDChapter(from: chapter))
+            }
+        }
     }
 
 }

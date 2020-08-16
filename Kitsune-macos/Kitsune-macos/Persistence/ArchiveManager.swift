@@ -75,8 +75,6 @@ class ArchiveManager {
                     }
                 }
             }
-
-            print("Restored manga \(manga?.mangaId)")
             return manga
         } catch {
             print("Failed to restore manga: \(error)")
@@ -98,8 +96,6 @@ class ArchiveManager {
             let chapter = unarchiver.decodeObject() as? ChapterArchive
             chapter?.archiveRoot = root
             unarchiver.finishDecoding()
-
-            print("Restored chapter \(chapter?.chapterId)")
             return chapter
         } catch {
             print("Failed to restore chapter: \(error)")
@@ -146,6 +142,11 @@ class ArchiveManager {
         }
         folderUrl.appendPathComponent(Bundle.main.bundleIdentifier ?? "")
         folderUrl.appendPathComponent("downloads")
+        do {
+            try initFolder(at: folderUrl)
+        } catch {
+            return nil
+        }
         return folderUrl
     }
 

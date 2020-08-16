@@ -25,8 +25,9 @@ class ChapterArchive: NSObject, NSCoding {
 
     var archiveRoot: URL? {
         didSet {
+            let root = archiveRoot
             for page in pages {
-                page.archiveRoot = archiveRoot
+                page.archiveRoot = root
             }
         }
     }
@@ -76,11 +77,36 @@ class ChapterArchive: NSObject, NSCoding {
         timestamp = mdChapter.timestamp
         originalLang = mdChapter.getOriginalLang()
         longStrip = mdChapter.longStrip
+        pages = []
+        super.init()
+        updatedPages(with: mdChapter)
+    }
 
-        self.pages = []
+    func updatedPages(with mdChapter: MDChapter) {
+        pages = []
         for page in mdChapter.getPageUrls() ?? [] {
             pages.append(PageArchive(url: page))
         }
+    }
+
+    func downloadPages(save: Bool = true, maxConcurrentOperationCount: Int = 5, completion: @escaping () -> Void) {
+        let semaphore = DispatchSemaphore(value: maxConcurrentOperationCount)
+
+        for page in pages {
+            semaphore.wait()
+            page.downloadImage(save: save) { (_) in
+                semaphore.signal()
+            }
+        }
+
+        // Wait for all operations to finish
+        for _ in 0..<maxConcurrentOperationCount {
+            semaphore.wait()
+        }
+        for _ in 0..<maxConcurrentOperationCount {
+            semaphore.signal()
+        }
+        completion()
     }
 
 }
@@ -97,6 +123,17 @@ extension MDChapter {
         timestamp = archive.timestamp
         originalLangCode = "gb"
         longStrip = archive.longStrip
+
+        // If there are any, convert page archives to MDChapters
+        if !archive.pages.isEmpty {
+            pages = []
+            for page in archive.pages {
+                if let url = page.getImagePath() {
+                    pages?.append(url.absoluteString)
+                }
+            }
+        }
+
     }
 
 }

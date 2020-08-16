@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		332B3DBF24753A1700C43648 /* DownloadedMangaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332B3DBE24753A1700C43648 /* DownloadedMangaProvider.swift */; };
 		332B3DC22475400600C43648 /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332B3DC12475400600C43648 /* ArchiveManager.swift */; };
 		332B3DC42475405400C43648 /* MangaArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332B3DC32475405400C43648 /* MangaArchive.swift */; };
 		332B3DC6247540F000C43648 /* ChapterArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332B3DC5247540F000C43648 /* ChapterArchive.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		332B3DBE24753A1700C43648 /* DownloadedMangaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedMangaProvider.swift; sourceTree = "<group>"; };
 		332B3DC12475400600C43648 /* ArchiveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveManager.swift; sourceTree = "<group>"; };
 		332B3DC32475405400C43648 /* MangaArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaArchive.swift; sourceTree = "<group>"; };
 		332B3DC5247540F000C43648 /* ChapterArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterArchive.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				33500E7F2465C96900A19B5C /* FeaturedMangaProvider.swift */,
 				33500E812465C9A500A19B5C /* ListedMangaProvider.swift */,
 				33500E832465D1F500A19B5C /* FollowedMangaProvider.swift */,
+				332B3DBE24753A1700C43648 /* DownloadedMangaProvider.swift */,
 				33826373246982F600F537DA /* MangaOperation.swift */,
 			);
 			path = Providers;
@@ -326,6 +329,7 @@
 				33C8BDF3246C5FCA00AE15E3 /* ChapterPageView.swift in Sources */,
 				33500E822465C9A500A19B5C /* ListedMangaProvider.swift in Sources */,
 				33A9C172246C7685004BEFFB /* ChapterReaderViewController+Pagination.swift in Sources */,
+				332B3DBF24753A1700C43648 /* DownloadedMangaProvider.swift in Sources */,
 				332B3DC6247540F000C43648 /* ChapterArchive.swift in Sources */,
 				3382637A2469BC3500F537DA /* PageContentViewController.swift in Sources */,
 				332B3DC8247553C000C43648 /* PageArchive.swift in Sources */,

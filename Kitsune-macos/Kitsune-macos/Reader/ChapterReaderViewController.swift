@@ -262,7 +262,7 @@ class ChapterReaderViewController: PageContentViewController {
             }
         }
 
-        for url in chapter?.getPageUrls() ?? [] {
+        for url in chapterProvider.getChapterPageUrls() ?? [] {
             let imageView: ChapterPageView
             if paginationEnabled {
                 imageView = newHorizontalContentImageView()

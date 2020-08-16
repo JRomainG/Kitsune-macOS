@@ -35,6 +35,7 @@ class MangaProvider: NSObject {
         case featured
         case listed
         case followed
+        case downloaded
         case search
     }
 

@@ -27,6 +27,26 @@ class ChapterProvider: NSObject {
         operationQueue.cancelAllOperations()
     }
 
+    func getChapterPageUrls() -> [URL]? {
+        guard let chapterId = chapter?.chapterId, let mangaId = manga?.mangaId else {
+            return nil
+        }
+
+        if let archive = ArchiveManager.restoreChapter(chapterId: chapterId, mangaId: mangaId) {
+            // If this chapter has been downloaded, load it from disk
+            var pages: [URL] = []
+            for page in archive.pages {
+                if let path = page.getImagePath() {
+                    pages.append(path)
+                }
+            }
+            return pages
+        } else {
+            // Otherwise, load it from MangaDex
+            return chapter?.getPageUrls()
+        }
+    }
+
     func getChapters() -> [MDChapter]? {
         guard var chapters = manga?.chapters, let currentChapter = chapter else {
             return nil

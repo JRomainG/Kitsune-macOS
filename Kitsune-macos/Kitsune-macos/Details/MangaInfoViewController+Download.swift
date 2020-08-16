@@ -22,6 +22,10 @@ extension MangaInfoViewController {
         return manga?.description == nil
     }
 
+    func shouldDownloadChapters() -> Bool {
+        return !shouldDownloadInfo() && !shouldDownloadDetails() && (manga?.chapters == nil)
+    }
+
     func downloadDetails() {
         guard shouldDownloadDetails() else {
             return
@@ -57,6 +61,17 @@ extension MangaInfoViewController {
             self.manga = MangaProvider.merged(first: currentManga, second: manga)
         }
         operationQueue.addOperation(operation)
+    }
+
+    func downloadChapters() {
+        guard shouldDownloadChapters(), let manga = self.manga else {
+            return
+        }
+        mangaProvider?.getChapters(for: manga, page: 0, completion: { (newManga, _) in
+            if newManga != nil {
+                self.manga = newManga
+            }
+        })
     }
 
     @objc func refresh() {
@@ -110,18 +125,32 @@ extension MangaInfoViewController {
     }
 
     @objc func downloadSelected() {
-        guard !tableView.selectedRowIndexes.isEmpty else {
+        guard !tableView.selectedRowIndexes.isEmpty, let manga = self.manga else {
             return
         }
-        print("downloadSelected")
+
+        var chapters: [MDChapter] = []
+        for index in tableView.selectedRowIndexes {
+            chapters.append(self.chapters[index])
+        }
+        DownloadedMangaProvider.shared.download(chapters: chapters, for: manga)
     }
 
     @objc func downloadUnread() {
-        print("downloadUnread")
+        guard let manga = self.manga else {
+            return
+        }
+        let chapters = self.chapters.filter { (chapter) -> Bool in
+            return !chapter.isRead(for: manga)
+        }
+        DownloadedMangaProvider.shared.download(chapters: chapters, for: manga)
     }
 
     @objc func downloadAll() {
-        print("downloadAll")
+        guard let manga = self.manga else {
+            return
+        }
+        DownloadedMangaProvider.shared.download(chapters: chapters, for: manga)
     }
 
 }

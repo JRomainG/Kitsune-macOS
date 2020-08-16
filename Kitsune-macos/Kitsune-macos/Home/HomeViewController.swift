@@ -81,7 +81,8 @@ class HomeViewController: PageContentViewController {
             LatestMangaProvider(api: api),
             FeaturedMangaProvider(api: api),
             ListedMangaProvider(api: api),
-            FollowedMangaProvider(api: api)
+            FollowedMangaProvider(api: api),
+            DownloadedMangaProvider(api: api)
         ]
         savedOffsets = [NSPoint](repeating: .zero, count: mangaProviders.count)
         quickLookVC?.mangaProvider = currentProvider

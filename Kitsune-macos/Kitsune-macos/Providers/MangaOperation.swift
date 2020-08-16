@@ -111,3 +111,42 @@ class ChapterInfoOperation: MangaOperation {
     }
 
 }
+
+class ChapterPagesOperation: MangaOperation {
+
+    var chapter: ChapterArchive?
+    var api: MDApi?
+
+    override func main() {
+        guard let chapter = self.chapter else {
+            return
+        }
+
+        if isCancelled {
+            return
+        }
+
+        // Wait a bit before fetching so as not to flood
+        _ = semaphore.wait(timeout: .now() + delay)
+
+        if isCancelled {
+            return
+        }
+
+        api?.getChapterInfo(chapterId: chapter.chapterId, completion: { (response) in
+            if let mdChapter = response.chapter {
+                chapter.updatedPages(with: mdChapter)
+                chapter.downloadPages {
+                    ArchiveManager.saveChapter(chapter)
+                    self.semaphore.signal()
+                }
+            } else {
+                self.semaphore.signal()
+            }
+        })
+
+        // Wait until download is done
+        semaphore.wait()
+    }
+
+}

@@ -8,6 +8,7 @@
 
 import Cocoa
 import MangaDexLib
+import SDWebImage
 
 class PageArchive: NSObject, NSCoding {
 
@@ -24,12 +25,7 @@ class PageArchive: NSObject, NSCoding {
         }
     }
     private var _image: NSImage?
-
-    var archiveRoot: URL? {
-        didSet {
-            loadImage()
-        }
-    }
+    var archiveRoot: URL?
 
     func encode(with coder: NSCoder) {
         coder.encode(url, forKey: "url")
@@ -46,25 +42,43 @@ class PageArchive: NSObject, NSCoding {
         self.image = image
     }
 
-    func loadImage() {
+    func getImagePath() -> URL? {
         guard var path = archiveRoot else {
-            return
+            return nil
         }
         path.appendPathComponent(url?.lastPathComponent ?? "")
+        return path
+    }
+
+    func loadImage() {
+        guard let path = getImagePath() else {
+            return
+        }
         image = NSImage(contentsOf: path)
     }
 
     func saveImage() {
-        guard var path = archiveRoot, let imageRep = _image?.representations.first as? NSBitmapImageRep else {
+        guard let path = getImagePath(), let imageRep = _image?.representations.first as? NSBitmapImageRep else {
             return
         }
-        path.appendPathComponent(url?.lastPathComponent ?? "")
         do {
             print("Saving image to \(path)")
             let data = imageRep.representation(using: .jpeg, properties: [:])
             try data?.write(to: path)
         } catch {
             print("Failed to save image: \(error)")
+        }
+    }
+
+    func downloadImage(save: Bool = true, completion: @escaping (Error?) -> Void) {
+        SDWebImageManager.shared.loadImage(with: url,
+                                           options: .decodeFirstFrameOnly,
+                                           progress: nil) { (image, _, error, _, _, _) in
+            self.image = image
+            if save {
+                self.saveImage()
+            }
+            completion(error)
         }
     }
 

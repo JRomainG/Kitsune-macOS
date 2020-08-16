@@ -418,7 +418,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="40" y="-205"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -426,8 +426,7 @@
                 <windowController showSeguePresentationStyle="single" id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" title="Kitsune" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="658" height="270"/>
+                        <rect key="contentRect" x="240" y="240" width="720" height="480"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
                         <toolbar key="toolbar" implicitIdentifier="969DFC67-70BE-42CD-9434-117768C54A79" centeredItem="u8F-NG-y3y" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="Oxq-RJ-uSy">
                             <allowedToolbarItems>
@@ -524,7 +523,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="164" y="250"/>
+            <point key="canvasLocation" x="164" y="151"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="hIz-AP-VOD">

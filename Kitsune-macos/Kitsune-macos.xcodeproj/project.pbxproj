@@ -569,7 +569,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JRomainG/MangaDexLib";
 			requirement = {
-				branch = dev;
+				branch = master;
 				kind = branch;
 			};
 		};

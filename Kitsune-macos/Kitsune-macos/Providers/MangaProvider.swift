@@ -57,6 +57,10 @@ class MangaProvider: NSObject {
         case errored
     }
 
+    var title: String {
+        return ""
+    }
+
     var type: ProviderType = .latest
     var state: ProviderState = .waiting
     var error: Error?

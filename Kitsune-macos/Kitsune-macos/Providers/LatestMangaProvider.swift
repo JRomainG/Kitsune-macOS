@@ -11,6 +11,10 @@ import MangaDexLib
 
 class LatestMangaProvider: MangaProvider {
 
+    override var title: String {
+        return "Latest"
+    }
+
     override init(api: MDApi) {
         super.init(api: api)
         type = .latest

@@ -82,6 +82,13 @@ class MangaInfoViewController: PageContentViewController {
             }
             goNext()
             return true
+        case 0x35:
+            // Escape
+            guard !optionModifier else {
+                break
+            }
+            tableView.deselectAll(nil)
+            return true
         case 0x7D:
             // Down arrow
             let newRow = optionModifier ? chapters.count - 1 : tableView.selectedRow + 1
@@ -98,7 +105,7 @@ class MangaInfoViewController: PageContentViewController {
         return false
     }
 
-    private func select(row: Int) {
+    func select(row: Int) {
         guard row >= 0, row < chapters.count else {
             return
         }
@@ -109,6 +116,7 @@ class MangaInfoViewController: PageContentViewController {
     @objc private func updateContent() {
         downloadDetails()
         downloadInfo()
+        downloadChapters()
         toggleLoadingIndicator()
 
         titleLabel.stringValue = manga?.title ?? "-"
@@ -204,7 +212,7 @@ class MangaInfoViewController: PageContentViewController {
     }
 
     override func canNavigateForward() -> Bool {
-        return tableView.selectedRow != -1
+        return tableView.selectedRowIndexes.count == 1
     }
 
     override func pageControllerWillTransition(to controller: PageContentViewController) {

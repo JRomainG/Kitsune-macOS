@@ -11,6 +11,10 @@ import MangaDexLib
 
 class FollowedMangaProvider: MangaProvider {
 
+    override var title: String {
+        return "Followed"
+    }
+
     override init(api: MDApi) {
         super.init(api: api)
         type = .followed

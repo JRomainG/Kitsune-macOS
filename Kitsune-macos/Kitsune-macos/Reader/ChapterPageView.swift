@@ -35,9 +35,9 @@ class ChapterPageView: NSImageView {
     private(set) var isLoading = false {
         didSet {
             if isLoading {
-                loadingIndicator.startAnimation(nil)
+                loadingIndicator.isHidden = false
             } else {
-                loadingIndicator.stopAnimation(nil)
+                loadingIndicator.isHidden = true
             }
         }
     }
@@ -48,7 +48,7 @@ class ChapterPageView: NSImageView {
                 errorLabel.isHidden = true
                 reloadButton.isHidden = true
             } else {
-                errorLabel.stringValue = String(describing: error)
+                errorLabel.stringValue = error?.localizedDescription ?? String(describing: error)
                 errorLabel.sizeToFit()
                 errorLabel.isHidden = false
                 reloadButton.isHidden = false
@@ -78,11 +78,10 @@ class ChapterPageView: NSImageView {
         loadingIndicator.autoresizingMask = [.maxXMargin, .maxYMargin, .minXMargin, .minYMargin]
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.style = .spinning
-        loadingIndicator.isIndeterminate = true
+        loadingIndicator.isIndeterminate = false
         loadingIndicator.controlSize = .regular
         loadingIndicator.sizeToFit()
-        loadingIndicator.isDisplayedWhenStopped = false
-        loadingIndicator.stopAnimation(nil)
+        loadingIndicator.isHidden = true
         addSubview(loadingIndicator)
         loadingIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         loadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
@@ -116,10 +115,18 @@ class ChapterPageView: NSImageView {
         self.url = url
         isLoading = true
         error = nil
-        delegate?.didStartLoading(view: self)
+        loadingIndicator.doubleValue = Double(0)
+        loadingIndicator.maxValue = Double(1)
         sd_setImage(with: url,
                     placeholderImage: NSImage(named: "PagePlaceholder"),
-                    options: .decodeFirstFrameOnly) { (_, error, _, _) in
+                    options: .decodeFirstFrameOnly,
+                    progress: { (current, total, _) in
+                        DispatchQueue.main.async {
+                            self.loadingIndicator.maxValue = Double(total)
+                            self.loadingIndicator.doubleValue = Double(current)
+                        }
+                    },
+                    completed: { (_, error, _, _) in
                         DispatchQueue.main.async {
                             if error != nil {
                                 self.error = error
@@ -129,7 +136,7 @@ class ChapterPageView: NSImageView {
                             }
                             self.isLoading = false
                         }
-        }
+        })
     }
 
     func getHorizontalMargin() -> CGFloat {

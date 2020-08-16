@@ -21,11 +21,14 @@ extension HomeViewController {
         }
 
         let control = ToolbarManager.segmentedControl(in: view)
-        control?.segmentCount = 4
-        control?.setLabel("Latest", forSegment: 0)
-        control?.setLabel("Featured", forSegment: 1)
-        control?.setLabel("Browse", forSegment: 2)
-        control?.setLabel("Followed", forSegment: 3)
+
+        // Create a segment for each manga provider
+        control?.segmentCount = mangaProviders.count
+        for index in 0..<mangaProviders.count {
+            let provider = mangaProviders[index]
+            control?.setLabel(provider.title, forSegment: index)
+        }
+
         control?.selectSegment(withTag: currentProviderIndex)
         control?.target = self
         control?.action = #selector(segmentSelected(_:))
@@ -34,7 +37,6 @@ extension HomeViewController {
             accountButton.target = self
             accountButton.action = #selector(toggleAccountPanel)
         }
-
         if let sortButton = ToolbarManager.sortButton(in: view) {
             sortButton.target = self
             sortButton.action = #selector(toggleSortPanel)

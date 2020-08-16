@@ -89,6 +89,7 @@ class HomeViewController: PageContentViewController {
         // Perform a first request, and then setup providers
         api.getHomepage { (response) in
             print("Should show announcement:", response.announcement?.textBody)
+            print("Should show alerts:", response.alerts)
 
             for provider in self.mangaProviders {
                 provider.delegate = self
@@ -221,7 +222,7 @@ class HomeViewController: PageContentViewController {
     /// Show or hide the error label if necessary
     func toggleErrorView() {
         if let error = currentProvider.error {
-            errorLabel.stringValue = String(describing: error)
+            errorLabel.stringValue = error.localizedDescription
             errorView.isHidden = false
         } else {
             errorLabel.stringValue = ""

@@ -11,6 +11,10 @@ import MangaDexLib
 
 class FeaturedMangaProvider: MangaProvider {
 
+    override var title: String {
+        return "Featured"
+    }
+
     override init(api: MDApi) {
         super.init(api: api)
         type = .featured

@@ -11,6 +11,10 @@ import MangaDexLib
 
 class ListedMangaProvider: MangaProvider {
 
+    override var title: String {
+        return "Browse"
+    }
+
     override init(api: MDApi) {
         super.init(api: api)
         type = .listed

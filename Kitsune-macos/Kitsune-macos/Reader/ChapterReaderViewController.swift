@@ -43,6 +43,7 @@ class ChapterReaderViewController: PageContentViewController {
             DispatchQueue.main.async {
                 self.chapterProvider.manga = self.manga
                 self.configureFooter()
+                self.setupPages()
             }
         }
     }
